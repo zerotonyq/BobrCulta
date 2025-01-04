@@ -1,2 +1,2 @@
-# Stamiman
-Game about a man with stamina mechanic
+# BossRushJam2025
+Main Theme - SPIN
