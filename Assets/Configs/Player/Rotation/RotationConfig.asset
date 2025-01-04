@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 590d049f00f746e49ebda6eee61b7321, type: 3}
+  m_Name: RotationConfig
+  m_EditorClassIdentifier: 
+  modifiersConfigs:
+  - {fileID: 11400000, guid: 9f49bec3193239f459f428c75c75cbf9, type: 2}
