@@ -1,42 +1,46 @@
 ﻿using System.Threading.Tasks;
+using Binders;
 using Cysharp.Threading.Tasks;
-using Gameplay.Character;
+using Gameplay.Core.ComponentContainer;
+using Gameplay.Core.Pickup;
 using Gameplay.EntryPoint.Config;
-using Gameplay.Player;
+using Gameplay.Magic;
 using Signals;
+using UI.Magic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Utils.Initialize;
 using Zenject;
 
 namespace Gameplay.EntryPoint
 {
-    public class GameplayEntryPoint : IInitializableConcreteConfig<GameplayEntryPointConfig>
+    public class GameplayEntryPoint
     {
         [Inject] private SignalBus _signalBus;
-        
+
         [Inject]
-        public async Task Initialize(GameplayEntryPointConfig handler)
+        public async Task Initialize(GameplayEntryPointConfig handler, SignalBus signalBus, MagicAndUIBinder binder)
         {
-            var player = await CreatePlayer(handler.playerAssetReference);
-            
-            await player.Initialize(handler.playerConfig);
-            
+            var player = await InstantiateType<ComponentContainer>(handler.playerAssetReference);
+
+            var magicProjectilesUIManager =
+                await InstantiateType<MagicProjectilesUIManager>(handler.magicProjectilesUIManager);
+
+            magicProjectilesUIManager.Initialize();
+            await player.Initialize();
+
+            binder.Bind(
+                player.Components.Find(a => a.GetType() == typeof(MagicComponent)) as MagicComponent,
+                magicProjectilesUIManager);
+
             _signalBus.Fire<NextBossRequestSignal>();
-            _signalBus.Fire(new PlayerInitializedSignal(){Player = player});
+            _signalBus.Fire(new PlayerInitializedSignal() { Player = player });
         }
 
-        private async Task<CharacterComponent> CreatePlayer(AssetReferenceGameObject playerReference)
+        private async Task<T> InstantiateType<T>(AssetReferenceGameObject assetReference)
         {
-            var obj = await Addressables.InstantiateAsync(playerReference);
+            var obj = await Addressables.InstantiateAsync(assetReference);
 
-            if (!obj.TryGetComponent(out CharacterComponent playerComponent))
-            {
-                Debug.LogError("No player component on player prefab");
-                return null;
-            }
-
-            return playerComponent;
+            return obj.GetComponent<T>();
         }
     }
 }

@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4842648921295015809}
   - component: {fileID: 8517023509830417263}
-  - component: {fileID: 2925098711563894930}
   m_Layer: 0
   m_Name: RArm
   m_TagString: Untagged
@@ -90,20 +89,6 @@ MonoBehaviour:
     m_HintWeight: 1
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 1
---- !u!114 &2925098711563894930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397831255466898122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8ff33fdcc143d98c63534234e4ff86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Radius>k__BackingField: 1
-  <ControlledTransform>k__BackingField: {fileID: 4302645918928808670}
 --- !u!1 &2393372550027082797
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +210,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5041464243380069288}
   - component: {fileID: 7533670339689546679}
-  - component: {fileID: 3934937644701437032}
   m_Layer: 0
   m_Name: LArm
   m_TagString: Untagged
@@ -273,20 +257,6 @@ MonoBehaviour:
     m_HintWeight: 1
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 1
---- !u!114 &3934937644701437032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5594454994376126644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8ff33fdcc143d98c63534234e4ff86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Radius>k__BackingField: 1
-  <ControlledTransform>k__BackingField: {fileID: 1247871078692029676}
 --- !u!1 &6028700419674950951
 GameObject:
   m_ObjectHideFlags: 0

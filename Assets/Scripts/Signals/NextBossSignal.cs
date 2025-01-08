@@ -1,9 +1,9 @@
-﻿using Gameplay.Character;
+﻿using Gameplay.Core.ComponentContainer;
 
 namespace Signals
 {
     public class NextBossSignal
     {
-        public CharacterComponent Boss { get; set; }
+        public ComponentContainer Boss { get; set; }
     }
 }

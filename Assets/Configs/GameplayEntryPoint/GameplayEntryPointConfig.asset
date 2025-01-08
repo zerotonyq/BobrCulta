@@ -18,4 +18,9 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  playerConfig: {fileID: 11400000, guid: 7f7f3b644904fc74393de0bf467962a2, type: 2}
+  magicProjectilesUIManager:
+    m_AssetGUID: e41b1a5529dea4944a751f90d8fb86c0
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

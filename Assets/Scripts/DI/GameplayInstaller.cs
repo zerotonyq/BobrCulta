@@ -1,13 +1,11 @@
-﻿using Gameplay;
+﻿using Binders;
 using Gameplay.Boss;
-using Gameplay.Boss.Location;
-using Gameplay.Boss.Location.Config;
+using Gameplay.Boss.Config;
 using Gameplay.Camera;
 using Gameplay.Camera.Config;
 using Gameplay.EntryPoint;
 using Gameplay.EntryPoint.Config;
 using Signals;
-using Unity.Cinemachine;
 using UnityEngine;
 using Utils.Disposing;
 using Zenject;
@@ -32,6 +30,7 @@ namespace DI
             Container.BindInterfacesAndSelfTo<GameplayEntryPoint>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BossService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<CameraProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MagicAndUIBinder>().AsSingle().NonLazy();
             
             DeclareSignals();
         }

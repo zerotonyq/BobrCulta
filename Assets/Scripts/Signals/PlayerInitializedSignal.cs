@@ -1,9 +1,9 @@
-﻿using Gameplay.Character;
+﻿using Gameplay.Core.ComponentContainer;
 
 namespace Signals
 {
     public class PlayerInitializedSignal
     {
-        public CharacterComponent Player { get; set; }
+        public ComponentContainer Player { get; set; }
     }
 }

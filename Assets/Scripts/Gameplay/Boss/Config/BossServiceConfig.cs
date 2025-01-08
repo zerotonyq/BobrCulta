@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
 
-namespace Gameplay.Boss.Location.Config
+namespace Gameplay.Boss.Config
 {
     [CreateAssetMenu(menuName = "CreateConfig/" + nameof(BossServiceConfig), fileName = nameof(BossServiceConfig))]
-    public class BossServiceConfig : Utils.Initialize.Config
+    public class BossServiceConfig : ScriptableObject
     {
-        public override Type InitializableType { get; }
-
         public List<AssetReferenceGameObject> bossesReferences;
     }
 }
