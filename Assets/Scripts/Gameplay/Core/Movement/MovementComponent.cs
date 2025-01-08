@@ -24,5 +24,14 @@ namespace Gameplay.Core.Movement
 
             _rigidbody.linearVelocity = Vector3.ClampMagnitude(_rigidbody.linearVelocity, maxVelocity);
         }
+
+        public void AddAcceleration(Vector3 direction)
+        {
+            var resultVelocity = accelerationForce * direction.normalized;
+            
+            _rigidbody.AddForce(resultVelocity);
+            
+            _rigidbody.linearVelocity = Vector3.ClampMagnitude(_rigidbody.linearVelocity, maxVelocity);
+        }
     }
 }

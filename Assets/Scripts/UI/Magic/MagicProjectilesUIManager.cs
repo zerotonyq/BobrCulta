@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gameplay.Magic.Pickupables.Base;
+using Gameplay.Magic;
 using Input;
 using R3;
 using UnityEngine;
@@ -37,7 +37,7 @@ namespace UI.Magic
 
             GetComponent<Canvas>().worldCamera = Camera.main;
 
-            var subscription1 = Observable.EveryUpdate(UnityFrameProvider.Update).Subscribe(_ => Rotate());
+            var subscription1 = Observable.EveryUpdate(UnityFrameProvider.FixedUpdate).Subscribe(_ => Rotate());
 
             var subscription2 = InputProvider.InputSystemActions.Player.Attack.ToObservablePerformed()
                 .Subscribe(ctx => ChooseProjectile());
@@ -96,7 +96,7 @@ namespace UI.Magic
 
             if(current.Type != null)
                 MagicTypeRemoved?.Invoke(current.Type);
-            current.Set(magicPickupable.projectileUISprite, magicPickupable.MagicProjectilePrefab.GetType());
+            current.Set(magicPickupable.projectileUISprite, magicPickupable.magicAbilityPrefab.GetType());
         }
 
         private void ChooseProjectile()
@@ -133,7 +133,7 @@ namespace UI.Magic
 
         private void Rotate()
         {
-            var rotor = new Quaternion(0, 0, Mathf.Sin(rotateSpeed / 100 * Mathf.Deg2Rad),
+            var rotor = new Quaternion(0, 0, Mathf.Sin(rotateSpeed * Mathf.Deg2Rad),
                 Mathf.Cos(rotateSpeed / 100 * Mathf.Deg2Rad));
 
             rotateCircle.transform.rotation *= rotor;

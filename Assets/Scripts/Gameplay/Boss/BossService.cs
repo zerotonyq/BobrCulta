@@ -38,11 +38,11 @@ namespace Gameplay.Boss
             _currentBoss =
                 (await Addressables.InstantiateAsync(_bossesReferences[_bossIndex])).GetComponent<ComponentContainer>();
 
+            await _currentBoss.Initialize();
+
             _signalBus.Fire(new NextBossSignal { Boss = _currentBoss });
 
-            SetTargetForTargetProvider();
+            TargetProvider.SetBoss(_currentBoss.transform);
         }
-
-        private void SetTargetForTargetProvider() => TargetProvider.SetTarget(_currentBoss.transform);
     }
 }

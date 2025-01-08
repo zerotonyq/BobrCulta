@@ -35,7 +35,7 @@ namespace Gameplay.Camera
         private void AddLookAt(Transform target)
         {
             var targetGroup = _camera.GetComponentInChildren<CinemachineTargetGroup>(); 
-            targetGroup.Targets.Add(new CinemachineTargetGroup.Target {Object = target, Radius =  1, Weight = 1});
+            targetGroup.Targets.Add(new CinemachineTargetGroup.Target {Object = target, Radius =  2, Weight = 2});
         }
 
         private void SetTarget(Transform target) => _camera.Target.TrackingTarget = target;

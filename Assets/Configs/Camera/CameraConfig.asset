@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CameraConfig
   m_EditorClassIdentifier: 
   cameraReference:
-    m_AssetGUID: 07dc7bd1be5003d4887ff722ed35a8ba
+    m_AssetGUID: bf53f18ef3516e741974bcaff89ae634
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 

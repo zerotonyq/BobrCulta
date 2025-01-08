@@ -240,7 +240,7 @@ MonoBehaviour:
   rotateCircle: {fileID: 3121985738888134173}
   rotationOffset: {fileID: 7922199728694619289}
   sectorsCount: 8
-  rotateSpeed: 7
+  rotateSpeed: 1
   uiTilePrefab: {fileID: -4929832568241181114, guid: 2dc82e09d3135f44786ac75825f51fcf, type: 3}
 --- !u!1 &7245662600819790689
 GameObject:

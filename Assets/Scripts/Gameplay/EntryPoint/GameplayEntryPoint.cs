@@ -3,6 +3,7 @@ using Binders;
 using Cysharp.Threading.Tasks;
 using Gameplay.Core.ComponentContainer;
 using Gameplay.Core.Pickup;
+using Gameplay.Core.TargetTracking.Provider;
 using Gameplay.EntryPoint.Config;
 using Gameplay.Magic;
 using Signals;
@@ -27,10 +28,10 @@ namespace Gameplay.EntryPoint
 
             magicProjectilesUIManager.Initialize();
             await player.Initialize();
+            
+            TargetProvider.SetPlayer(player.transform);
 
-            binder.Bind(
-                player.Components.Find(a => a.GetType() == typeof(MagicComponent)) as MagicComponent,
-                magicProjectilesUIManager);
+            binder.Bind(player.GetComponent<MagicComponent>(), magicProjectilesUIManager);
 
             _signalBus.Fire<NextBossRequestSignal>();
             _signalBus.Fire(new PlayerInitializedSignal() { Player = player });
