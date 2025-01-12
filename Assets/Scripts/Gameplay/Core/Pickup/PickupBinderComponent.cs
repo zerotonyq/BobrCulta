@@ -13,12 +13,12 @@ namespace Gameplay.Core.Pickup
         {
             var pickupComponent = GetComponent<PickupComponent>();
 
-            var disposable = InputProvider.InputSystemActions.Player.Jump.ToObservablePerformed().Subscribe(ctx =>
+            var disposable = InputProvider.InputSystemActions.Player.InsertMagicProjectile.ToObservablePerformed().Subscribe(ctx =>
             {
                 pickupComponent.Pickup();
                 Debug.Log("trying to pickup");
             });
-            _disposableBag.Add(disposable);
+            DisposableBag.Add(disposable);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Gameplay.Core.Health
 
         public void ChangeHealth(int count)
         {
-            Debug.Log(count);
             if (!_allowDecreaseHealth && count < 0)
             {
                 Debug.Log("disalowed to decrease" );

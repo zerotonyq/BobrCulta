@@ -4,7 +4,7 @@ using Gameplay.Core.Base;
 using R3;
 using UnityEngine.AddressableAssets;
 
-namespace Gameplay.Core.ComponentContainer
+namespace Gameplay.Core.Container
 {
     public class ComponentContainer : MonoComponentContainer
     {
@@ -12,7 +12,7 @@ namespace Gameplay.Core.ComponentContainer
         
         private DisposableBag _disposableBag;
 
-        public override async Task Initialize()
+        public override Task Initialize()
         {
             foreach (var monoComponent in GetComponents<MonoComponent>())
             {
@@ -25,6 +25,8 @@ namespace Gameplay.Core.ComponentContainer
             {
                 inputBinder.Bind();
             }
+
+            return Task.CompletedTask;
         }
 
         public void Destroy() => Addressables.ReleaseInstance(gameObject);

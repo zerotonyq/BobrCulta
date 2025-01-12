@@ -5,10 +5,10 @@ namespace Gameplay.Core.Base
 {
     public abstract class Binder : MonoBehaviour
     {
-        protected DisposableBag _disposableBag;
+        protected DisposableBag DisposableBag;
         
         public abstract void Bind();
 
-        private void OnDestroy() => _disposableBag.Dispose();
+        private void OnDestroy() => DisposableBag.Dispose();
     }
 }

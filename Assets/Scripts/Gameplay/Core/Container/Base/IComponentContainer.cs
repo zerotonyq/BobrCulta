@@ -2,7 +2,7 @@
 using Gameplay.Core.Base;
 using UnityEngine;
 
-namespace Gameplay.Core.ComponentContainer.Base
+namespace Gameplay.Core.Container.Base
 {
     public interface IComponentContainer
     {

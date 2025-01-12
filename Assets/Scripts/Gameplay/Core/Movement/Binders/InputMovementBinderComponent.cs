@@ -16,7 +16,7 @@ namespace Gameplay.Core.Movement.Binders
                 movementComponent.AddAcceleration(InputProvider.InputSystemActions.Player.Move
                     .ReadValue<Vector2>())).AddTo(this);
 
-            _disposableBag.Add(subscription);
+            DisposableBag.Add(subscription);
         }
     }
 }

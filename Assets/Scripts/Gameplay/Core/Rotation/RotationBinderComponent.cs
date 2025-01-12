@@ -12,7 +12,7 @@ namespace Gameplay.Core.Rotation
             var disposable = Observable.EveryUpdate(UnityFrameProvider.FixedUpdate).Subscribe(_ =>
                 targetLookRotationComponent.Rotate());
 
-            _disposableBag.Add(disposable);
+            DisposableBag.Add(disposable);
         }
     }
 }

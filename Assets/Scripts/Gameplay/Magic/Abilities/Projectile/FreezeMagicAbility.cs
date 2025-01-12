@@ -1,6 +1,4 @@
-﻿using Gameplay.Magic.Abilities.Projectile;
-
-namespace Gameplay.Magic.Abilities
+﻿namespace Gameplay.Magic.Abilities.Projectile
 {
     public class FreezeMagicAbility : BulletMagicAbility
     {

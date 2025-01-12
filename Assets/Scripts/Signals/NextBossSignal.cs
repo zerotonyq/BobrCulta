@@ -1,4 +1,4 @@
-﻿using Gameplay.Core.ComponentContainer;
+﻿using Gameplay.Core.Container;
 
 namespace Signals
 {

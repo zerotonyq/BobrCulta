@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Gameplay.Core.TargetTracking.Provider
 {
+    //TODO: переписать под event bus
     public static class TargetProvider
     {
         private static Transform _bossTransform;

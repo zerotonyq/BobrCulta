@@ -8,8 +8,7 @@ namespace Gameplay.Core.Movement.Binders
     [RequireComponent(typeof(MovementComponent), typeof(TargetTrackingComponent))]
     public class TargetMovementBinderComponent : Binder
     {
-
-        private DisposableBag _disposableBag;
+        
         public override void Bind()
         {
             var movement = GetComponent<MovementComponent>();
@@ -24,12 +23,12 @@ namespace Gameplay.Core.Movement.Binders
                 movement.AddAcceleration(targetTracker.Target.position - transform.position);
             });
             
-            _disposableBag.Add(sub);
+            DisposableBag.Add(sub);
         }
 
-        public void Unbind() => _disposableBag.Dispose();
+        public void Unbind() => DisposableBag.Dispose();
 
-        public void OnDestroy() => _disposableBag.Dispose();
+        public void OnDestroy() => DisposableBag.Dispose();
 
         public void SetTarget(Transform target) => GetComponent<TargetTrackingComponent>().SetTarget(target);
     }
