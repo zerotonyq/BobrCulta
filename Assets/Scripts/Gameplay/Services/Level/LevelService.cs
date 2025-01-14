@@ -8,7 +8,7 @@ namespace Gameplay.Services.Level
 {
     public class LevelService : GameService, IInitializable
     {
-
+        
         [Inject] private BossService _bossService;
         [Inject] private DifficultyService _difficultyService;
         [Inject] private SignalBus _signalBus;

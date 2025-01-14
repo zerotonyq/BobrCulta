@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Linq;
+using Cysharp.Threading.Tasks;
 using Gameplay.Services.Base;
 using Gameplay.Services.Camera.Config;
 using Signals;
@@ -13,14 +14,17 @@ namespace Gameplay.Services.Camera
     {
         private CinemachineCamera _camera;
 
-
+        private Transform _defaultTarget;
+        
         [Inject] private CameraConfig _cameraConfig;
 
         public override async void Initialize()
         {
             _camera = (await Addressables.InstantiateAsync(_cameraConfig.cameraReference))
                 .GetComponent<CinemachineCamera>();
-
+            
+            _defaultTarget = (await Addressables.InstantiateAsync(_cameraConfig.defaultTarget)).transform;
+                
             _signalBus.Subscribe<PlayerInitializedSignal>(a =>
             {
                 SetTarget(a.Player.transform);
@@ -42,5 +46,16 @@ namespace Gameplay.Services.Camera
         }
 
         private void SetTarget(Transform target) => _camera.Target.TrackingTarget = target;
+        
+        private void TryRemoveLookAt(Transform target)
+        {
+            var targetGroup = _camera.GetComponentInChildren<CinemachineTargetGroup>();
+            var deleteTarget = targetGroup.Targets.Find(a => a.Object == target);
+            
+            if (deleteTarget == null)
+                return;
+            
+            targetGroup.Targets.Remove(deleteTarget);
+        }
     }
 }
