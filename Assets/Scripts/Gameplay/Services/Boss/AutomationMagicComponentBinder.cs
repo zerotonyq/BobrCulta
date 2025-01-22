@@ -5,6 +5,7 @@ using System.Linq;
 using Gameplay.Core.Base;
 using Gameplay.Magic;
 using Gameplay.Magic.Abilities;
+using Gameplay.Magic.Pickupables.Base;
 using Gameplay.Services.UI.Magic.Enum;
 using Gameplay.Services.UI.Magic.Views;
 using UnityEngine;

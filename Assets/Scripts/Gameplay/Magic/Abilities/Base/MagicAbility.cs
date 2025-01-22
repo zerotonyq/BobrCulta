@@ -7,13 +7,14 @@ using Gameplay.Magic.Effects;
 using Gameplay.Magic.Effects.Base;
 using Gameplay.Services.UI.Magic.Enum;
 using UnityEngine;
+using Utils.Initialize;
 using Utils.Pooling;
 using Utils.Reset;
 
 namespace Gameplay.Magic.Abilities.Base
 {
     [RequireComponent(typeof(TargetMovementBinderComponent))]
-    public abstract class MagicAbility : MonoBehaviour
+    public abstract class MagicAbility : MonoBehaviour, IInitializableMono
     {
         [SerializeField] private MagicAbilityConfig config;
 
@@ -31,20 +32,10 @@ namespace Gameplay.Magic.Abilities.Base
 
         public static MagicAbility Get(MagicAbility prefab)
         {
-            var abilityObj = PoolManager.GetFromPool(prefab.GetType());
-            
-            MagicAbility result;
-            
-            if (!abilityObj)
-            {
-                result = Instantiate(prefab);
-                result.Initialize();
-            }
-            else
-            {
-                result = abilityObj.GetComponent<MagicAbility>();
-            }
+            var abilityObj = PoolManager.GetFromPool(prefab.GetType(), prefab.gameObject);
 
+            var result = abilityObj.GetComponent<MagicAbility>();
+            
             result.Reset();
 
             result.gameObject.SetActive(false);
@@ -52,7 +43,7 @@ namespace Gameplay.Magic.Abilities.Base
             return result;
         }
         
-        private void Initialize()
+        public void Initialize()
         {
             _antagonistTypes = config.antagonistAbilities.Select(a => a.GetAbilityType()).ToList();
 
@@ -99,7 +90,7 @@ namespace Gameplay.Magic.Abilities.Base
             
             gameObject.SetActive(false);
 
-            PoolManager.AddToPool(GetType(), this);
+            PoolManager.AddToPool(GetType(), gameObject);
         }
         
         private void Reset()

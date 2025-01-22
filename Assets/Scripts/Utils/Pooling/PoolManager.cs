@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gameplay.Magic.Pickupables.Base;
 using UnityEngine;
+using Utils.Initialize;
 
 namespace Utils.Pooling
 {
     public static class PoolManager
     {
-        private static Dictionary<Type, Pool<MonoBehaviour>> _poolables = new();
+        private static Dictionary<Type, Pool<GameObject>> _poolables = new();
 
-        public static void AddToPool(Type t, MonoBehaviour poolable)
+        public static void AddToPool(Type t, GameObject poolable)
         {
-            Debug.Log(t.Name);
-            if (poolable.GetType() != t)
+            if (!poolable.TryGetComponent(t, out _))
             {
-                Debug.LogError("wrong type to pool!" + poolable.GetType() + " " + t);
+                Debug.LogError("wrong type to pool!" );
+                return;
+            }
+
+            if (!poolable.TryGetComponent(out IInitializableMono initializableMono))
+            {
+                Debug.LogError("type to pool must be derived from " + nameof(IInitializableMono));
                 return;
             }
 
@@ -22,14 +29,19 @@ namespace Utils.Pooling
             _poolables[t].PoolQueue.Enqueue(poolable);
         }
 
-        public static MonoBehaviour GetFromPool(Type t)
+        public static GameObject GetFromPool(Type t, GameObject prefab)
         {
             ValidatePool(t);
-            
-            if (_poolables[t].PoolQueue.Count == 0)
-                return null;
 
-            var result = _poolables[t].PoolQueue.Dequeue();
+            GameObject result;
+            if (_poolables[t].PoolQueue.Count == 0)
+            {
+                result = GameObject.Instantiate(prefab);
+                result.GetComponent<IInitializableMono>().Initialize();
+            }
+            else
+                result = _poolables[t].PoolQueue.Dequeue();
+
 
             return result;
         }
@@ -37,7 +49,7 @@ namespace Utils.Pooling
         private static void ValidatePool(Type t)
         {
             if (!_poolables.ContainsKey(t))
-                _poolables.Add(t, new Pool<MonoBehaviour>());
+                _poolables.Add(t, new Pool<GameObject>());
         }
 
         public static void ChangePoolCapacity(Type t, int capacity)

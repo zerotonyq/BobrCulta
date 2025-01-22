@@ -10,6 +10,7 @@ namespace DI
         public override void InstallBindings()
         {
             Addressables.InitializeAsync();
+            
             DeclareSignals();
         }
         

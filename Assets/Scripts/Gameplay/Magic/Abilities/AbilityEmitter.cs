@@ -5,6 +5,7 @@ using Gameplay.Core.Pickup;
 using Gameplay.Core.Pickup.Base;
 using Gameplay.Core.TargetTracking;
 using Gameplay.Magic.Abilities.Base;
+using Gameplay.Magic.Pickupables.Base;
 using Gameplay.Services.UI.Magic.Views;
 using UnityEngine;
 using Utils.Pooling;

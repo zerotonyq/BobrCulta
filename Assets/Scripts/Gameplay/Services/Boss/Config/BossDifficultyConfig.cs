@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gameplay.Magic;
+using Gameplay.Magic.Pickupables.Base;
 using Gameplay.Services.LevelActivity.Config;
 using Signals.Activities;
 using Signals.Activities.Base;

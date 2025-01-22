@@ -34,11 +34,10 @@ namespace Gameplay.Core.Pickup
                 if(Vector3.Distance(coll.transform.position, transform.position) > closestDistance)
                     continue;
                 
+                pickupable.Pickup();
                 PickedUp?.Invoke(pickupable);
                 return;
             }
-
-            PickedUp.Invoke(colliders[0].GetComponent<IPickupable>());
         }
     }
 }

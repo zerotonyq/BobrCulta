@@ -13,18 +13,14 @@ using Gameplay.Services.UI.Menu;
 using Gameplay.Services.UI.Menu.Config;
 using GameState;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Utils.Disposing;
 using Zenject;
 
 namespace DI
 {
     public class GameplayInstaller : MonoInstaller
     {
-        [SerializeField] private DisposeManager disposeManager;
-        
         [SerializeField] private CameraConfig cameraConfig;
-        [FormerlySerializedAs("difficultyConfig")] [SerializeField] private BossDifficultyConfig bossDifficultyConfig;
+        [SerializeField] private BossDifficultyConfig bossDifficultyConfig;
         [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
@@ -33,9 +29,7 @@ namespace DI
         public override void InstallBindings()
         {
             BindExecutionOrders();
-            
-            Container.BindInstance(disposeManager);
-            
+
             Container.BindInstance(cameraConfig);
             Container.BindInstance(bossDifficultyConfig);
             Container.BindInstance(menuUIManagerConfig);
@@ -44,19 +38,19 @@ namespace DI
             Container.BindInstance(treeServiceConfig);
 
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<BossService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<PlayerService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<CameraProvider>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<MagicProjectilesUIService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<MagicProjectilesUIBinder>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<MenuUIService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<TreeService>().AsSingle();
         }
 
