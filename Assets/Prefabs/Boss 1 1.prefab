@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2444486029390395665}
   - component: {fileID: 2551091718067549686}
   - component: {fileID: 8721996167373365196}
+  - component: {fileID: 8626967524356652490}
   m_Layer: 0
   m_Name: Boss 1 1
   m_TagString: Untagged
@@ -125,7 +126,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.55
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -167,11 +168,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52774a724154276bbb10609ebcb7322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityIntervals:
-  - abilityPrefab: {fileID: 6369660661056247218, guid: 4948150832c8206428402659724603f5, type: 3}
-    beforeInterval: 1
-  - abilityPrefab: {fileID: 941687645749267659, guid: 9266189aa5358654f971f0ad3c51e8b9, type: 3}
-    beforeInterval: 1
+  _abilityIntervals: []
+--- !u!114 &8626967524356652490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362665227816354846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17edc885f7354cb990530903bb00315e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _handledAbilities: []
 --- !u!1 &3923220905329950107
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 3923220905329950107}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.093}
+  m_LocalPosition: {x: 0, y: 1.027, z: 1.093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

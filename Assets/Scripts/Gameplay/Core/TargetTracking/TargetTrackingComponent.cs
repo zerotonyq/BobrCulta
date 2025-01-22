@@ -2,10 +2,11 @@
 using Gameplay.Core.Base;
 using Gameplay.Core.TargetTracking.Provider;
 using UnityEngine;
+using Utils.Reset;
 
 namespace Gameplay.Core.TargetTracking
 {
-    public class TargetTrackingComponent : MonoComponent
+    public class TargetTrackingComponent : MonoComponent,IResetable
     {
         [SerializeField] private TargetType targetType;
        [field: SerializeField] public Transform Target { get; private set; }
@@ -29,8 +30,6 @@ namespace Gameplay.Core.TargetTracking
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            
         }
 
         public void SetTarget(Transform target)
@@ -45,5 +44,7 @@ namespace Gameplay.Core.TargetTracking
             Enemy,
             Player
         }
+
+        public void Reset() => SetTarget(null);
     }
 }

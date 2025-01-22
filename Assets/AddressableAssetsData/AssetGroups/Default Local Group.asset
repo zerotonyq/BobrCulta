@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5538641d0783ba7439c2d487081dd24b
+    m_Address: Assets/Prefabs/Tree/TreePart.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf53f18ef3516e741974bcaff89ae634
     m_Address: Assets/Prefabs/CinemachineCamera.prefab
     m_ReadOnly: 0
@@ -37,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e41b1a5529dea4944a751f90d8fb86c0
     m_Address: Assets/Prefabs/MagicUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f40be33583aa3a54398793d6adf2e4d7
+    m_Address: Assets/Prefabs/Sphere.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

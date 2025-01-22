@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
+using System.Linq;
 using UnityEngine;
 
 namespace Utils.MeshGeneration
@@ -14,7 +14,8 @@ namespace Utils.MeshGeneration
             var triangles = new List<int>();
 
             var top = GenerateVerticesOnCircle(Vector3.zero, Vector3.up, Vector3.right, radiusTop, circleVerticesCount);
-            var bottom = GenerateVerticesOnCircle(Vector3.zero, Vector3.up, Vector3.right, radiusBottom, circleVerticesCount);
+            var bottom = GenerateVerticesOnCircle(Vector3.zero, Vector3.up, Vector3.right, radiusBottom,
+                circleVerticesCount);
 
             for (var i = 0; i < bottom.Count; i++) bottom[i] -= height / 2 * Vector3.up;
             for (var i = 0; i < top.Count; i++) top[i] += height / 2 * Vector3.up;
@@ -25,15 +26,19 @@ namespace Utils.MeshGeneration
             vertices.AddRange(top);
             vertices.AddRange(bottom);
 
-
             var trianglesSide = GenerateSideTriangles(vertices);
 
+            triangles.AddRange(trianglesSide);
             triangles.AddRange(trianglesBottom);
             triangles.AddRange(trianglesTop);
-            triangles.AddRange(trianglesSide);
+
+            mesh.Clear();
 
             mesh.vertices = vertices.ToArray();
             mesh.triangles = triangles.ToArray();
+
+            mesh.Optimize();
+            mesh.RecalculateNormals();
 
             return mesh;
         }
@@ -42,24 +47,47 @@ namespace Utils.MeshGeneration
         {
             var triangles = new List<int>();
 
-            for (var i = 0; i < vertices.Count / 2 - 2; ++i)
-            {
-                triangles.Add(i + 1);
-                triangles.Add(i + 1 + vertices.Count / 2);
-                triangles.Add(i + 2);
+            var sideVertices = new List<Vector3>();
 
-                triangles.Add(i + 2);
-                triangles.Add(i + 1 + vertices.Count / 2);
-                triangles.Add(i + 1 + vertices.Count / 2 + 1);
+            for (var i = 1; i < vertices.Count; i++)
+            {
+                if (i == vertices.Count / 2)
+                    continue;
+
+                sideVertices.Add(vertices[i]);
+                sideVertices.Add(vertices[i]);
             }
 
-            triangles.Add(vertices.Count / 2 - 1);
-            triangles.Add(vertices.Count - 1);
-            triangles.Add(1);
+            for (var i = 0; i < sideVertices.Count / 2 - 3; i += 2)
+            {
+                triangles.Add(i + 1);
+                triangles.Add(i + sideVertices.Count / 2);
+                triangles.Add(i + 2);
+                
+                triangles.Add(i + 2);
+                triangles.Add(i + sideVertices.Count / 2 );
+                triangles.Add(i + sideVertices.Count / 2 +3);
+            }
 
-            triangles.Add(1);
-            triangles.Add(vertices.Count - 1);
-            triangles.Add(vertices.Count / 2 + 1);
+            
+            triangles.Add(sideVertices.Count / 2 - 1);
+            triangles.Add(sideVertices.Count - 2);
+            triangles.Add(0);
+            
+            
+            triangles.Add(0);
+            triangles.Add(sideVertices.Count - 2);
+            triangles.Add(sideVertices.Count/2 + 1);
+            
+    
+            
+
+            for (var i = 0; i < triangles.Count; i++)
+            {
+                triangles[i] += vertices.Count;
+            }
+
+            vertices.AddRange(sideVertices);
 
             return triangles;
         }

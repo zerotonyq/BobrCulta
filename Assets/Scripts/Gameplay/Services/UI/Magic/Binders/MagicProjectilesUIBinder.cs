@@ -1,7 +1,9 @@
 ﻿using Gameplay.Magic;
+using Gameplay.Magic.Abilities;
 using Gameplay.Services.Base;
 using Gameplay.Services.UI.Magic.Views;
 using Signals;
+using UnityEngine;
 using Zenject;
 
 namespace Gameplay.Services.UI.Magic.Binders
@@ -10,7 +12,7 @@ namespace Gameplay.Services.UI.Magic.Binders
     {
         [Inject] private SignalBus _signalBus;
 
-        private MagicComponent _magicComponent;
+        private AbilityEmitter _abilityEmitter;
         private MagicProjectilesUIView _magicProjectilesUIView;
         
         public override void Initialize()
@@ -28,25 +30,25 @@ namespace Gameplay.Services.UI.Magic.Binders
 
         private void OnMagicComponentObtained(PlayerInitializedSignal obj)
         {
-            _magicComponent = obj.Player.GetComponent<MagicComponent>();
+            _abilityEmitter = obj.Player.GetComponent<AbilityEmitter>();
             CheckComponents();
         }
 
         private void CheckComponents()
         {
-            if (!_magicComponent || !_magicProjectilesUIView)
+            if (!_abilityEmitter || !_magicProjectilesUIView)
                 return;
-            
-            Bind(_magicComponent, _magicProjectilesUIView);
+
+            Bind(_abilityEmitter, _magicProjectilesUIView);
         }
 
 
-        private void Bind(MagicComponent magicComponent, MagicProjectilesUIView magicProjectilesUIView)
+        private void Bind(AbilityEmitter abilityEmitter, MagicProjectilesUIView magicProjectilesUIView)
         {
-            magicComponent.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
+            abilityEmitter.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
 
-            magicProjectilesUIView.MagicTypeProvided += magicComponent.FireProjectile;
-            magicProjectilesUIView.MagicTypeRemoved += magicComponent.RemoveProjectile;
+            magicProjectilesUIView.MagicTypeProvided += abilityEmitter.EmitMagicAbility;
+            magicProjectilesUIView.MagicTypeRemoved += abilityEmitter.RemoveProjectile;
         }
     }
 }

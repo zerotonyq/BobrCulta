@@ -16,7 +16,6 @@ namespace Gameplay.Core.Pickup
             var disposable = InputProvider.InputSystemActions.Player.InsertMagicProjectile.ToObservablePerformed().Subscribe(ctx =>
             {
                 pickupComponent.Pickup();
-                Debug.Log("trying to pickup");
             });
             DisposableBag.Add(disposable);
         }

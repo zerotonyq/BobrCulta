@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gameplay.Magic;
+using Gameplay.Services.UI.Magic.Enum;
 using Input;
 using R3;
 using UnityEngine;
@@ -19,8 +20,20 @@ namespace Gameplay.Services.UI.Magic.Views
         [SerializeField] private float rotateSpeed;
         [SerializeField] private ProjectileUIElement projectileUIElementPrefab;
 
-        public Action<Type> MagicTypeProvided;
-        public Action<Type> MagicTypeRemoved;
+        public Action<MagicTypeArgs> MagicTypeProvided;
+        public Action<MagicTypeArgs> MagicTypeRemoved;
+
+        public struct MagicTypeArgs
+        {
+            public readonly Type MagicType;
+            public readonly ApplicationType ApplicationType;
+
+            public MagicTypeArgs(Type magicType, ApplicationType applicationType)
+            {
+                MagicType = magicType;
+                ApplicationType = applicationType;
+            }
+        }
 
         private DisposableBag _disposableBag;
 
@@ -38,11 +51,15 @@ namespace Gameplay.Services.UI.Magic.Views
 
             var subscription1 = Observable.EveryUpdate(UnityFrameProvider.FixedUpdate).Subscribe(_ => Rotate());
 
-            var subscription2 = InputProvider.InputSystemActions.Player.Attack.ToObservablePerformed()
-                .Subscribe(ctx => ChooseProjectile());
+            var subscription2 = InputProvider.InputSystemActions.Player.Fire.ToObservablePerformed()
+                .Subscribe(ctx => ChooseProjectile(ApplicationType.Fire));
+            
+            var subscription3 = InputProvider.InputSystemActions.Player.ApplyToItself.ToObservablePerformed()
+                .Subscribe(ctx => ChooseProjectile(ApplicationType.ApplyToItself));
 
             _disposableBag.Add(subscription1);
             _disposableBag.Add(subscription2);
+            _disposableBag.Add(subscription3);
         }
 
         private void InstantiateTiles()
@@ -84,12 +101,12 @@ namespace Gameplay.Services.UI.Magic.Views
             var current = GetTileByAngle(90);
 
             if(current.Type != null)
-                MagicTypeRemoved?.Invoke(current.Type);
+                MagicTypeRemoved?.Invoke(new MagicTypeArgs(current.Type, ApplicationType.None));
             
             current.Set(magicPickupable.projectileUISprite, magicPickupable.magicAbilityPrefab.GetType());
         }
 
-        private void ChooseProjectile()
+        private void ChooseProjectile(ApplicationType type)
         {
             var tile = GetTileByAngle(90);
 
@@ -99,7 +116,7 @@ namespace Gameplay.Services.UI.Magic.Views
                 return;
             }
 
-            MagicTypeProvided?.Invoke(tile.Type);
+            MagicTypeProvided?.Invoke(new MagicTypeArgs(tile.Type, type));
             
             tile.Clear();
         }

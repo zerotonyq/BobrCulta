@@ -35,8 +35,17 @@ namespace Gameplay.Services.Camera
 
             _camera.Target.CustomLookAtTarget = true;
             _camera.Target.LookAtTarget = _camera.GetComponentInChildren<CinemachineTargetGroup>().transform;
+            
+            //SetTarget(_defaultTarget);
+            AddLookAt(_defaultTarget);
 
             base.Initialize();
+        }
+
+        public override void Boot()
+        {
+            TryRemoveLookAt(_defaultTarget);
+            base.Boot();
         }
 
         private void AddLookAt(Transform target)

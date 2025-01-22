@@ -11,7 +11,7 @@ namespace GameState.States
         public override void Enter()
         {
             base.Enter();
-            _gameStateMachine.SignalBus.Fire<NextLevelRequest>();
+            _gameStateMachine.SignalBus.Fire<EnterLevelRequest>();
         }
 
         public override void Exit()

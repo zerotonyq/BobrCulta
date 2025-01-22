@@ -3,43 +3,42 @@ using Cysharp.Threading.Tasks;
 using Gameplay.Core.Container;
 using Gameplay.Core.TargetTracking.Provider;
 using Gameplay.Services.Base;
-using Gameplay.Services.Difficulty.Config;
+using Gameplay.Services.Boss.Config;
 using Signals;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Gameplay.Services.Boss
 {
-    public class BossService :GameService, IInitializable 
+    public class BossService : GameService, IInitializable 
     {
         private ComponentContainer _currentBoss;
 
         private int _currentBossIndex;
 
-        private IList<DifficultyConfig.BossConfig> _bossesConfigs;
+        private IList<BossDifficultyConfig.BossConfig> _bossesConfigs;
+        
+        private int _currentDifficultySectionIndex;
 
-        [Inject] private SignalBus _signalBus;
+        [Inject] private BossDifficultyConfig _config;
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<NextBossRequestSignal>(SpawnNext);
-            _signalBus.Subscribe<NextDifficultySectionSignal>(SetBossesConfigs);
+            _signalBus.Subscribe<EnterLevelRequest>(SpawnNext);
+            
+            NextSection();
             
             base.Initialize();
         }
-
-        private void SetBossesConfigs(NextDifficultySectionSignal nextDifficultySectionSignal)
-        {
-            _bossesConfigs = nextDifficultySectionSignal.DifficultySection.bossesConfigs;
-        }
-
-        public async void SpawnNext()
+        
+        private async void SpawnNext()
         {
             if (_currentBoss) Addressables.ReleaseInstance(_currentBoss.gameObject);
 
             if (_currentBossIndex >= _bossesConfigs.Count)
             {
-                _signalBus.Fire<NextDifficultySectionRequestSignal>();
+                NextSection();
                 return;
             }
 
@@ -55,6 +54,23 @@ namespace Gameplay.Services.Boss
             _signalBus.Fire(new NextBossSignal { Boss = _currentBoss });
 
             TargetProvider.SetBoss(_currentBoss.transform);
+        }
+        
+        private void NextSection()
+        {
+            if (_currentDifficultySectionIndex >= _config.sections.Count)
+                _signalBus.Fire(new EndGameSignal() { Condition = true });
+
+            _config.sections[_currentDifficultySectionIndex].GenerateBossConfigs();
+            
+            _bossesConfigs = _config.sections[_currentDifficultySectionIndex].bossesConfigs;
+            
+            ++_currentDifficultySectionIndex;
+        }
+
+        public void OnBossDefeated()
+        {
+            _signalBus.Fire<LevelPassedSignal>();
         }
     }
 }

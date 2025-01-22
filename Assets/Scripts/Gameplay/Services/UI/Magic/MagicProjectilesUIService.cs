@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Gameplay.Services.UI.Magic
 {
-    public class MagicProjectilesUIService : GameService,  IInitializable 
+    public class MagicProjectilesUIService : GameService, IInitializable
     {
         [Inject] private SignalBus _signalBus;
         [Inject] private MagicProjectilesUIServiceConfig _config;
@@ -28,8 +28,8 @@ namespace Gameplay.Services.UI.Magic
                 .GetComponent<MagicProjectilesUIView>();
 
             _magicProjectilesUIView.Initialize();
-            
-            _signalBus.Fire<MagicProjectilesUIViewInitialized>();
+
+            _signalBus.Fire(new MagicProjectilesUIViewInitialized{ View = _magicProjectilesUIView });
         }
 
         public void ToggleView(bool i)

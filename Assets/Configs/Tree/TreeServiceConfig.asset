@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645912cae56d4506adfe0283985690c2, type: 3}
+  m_Name: TreeServiceConfig
+  m_EditorClassIdentifier: 
+  initialPartCount: 3
+  minPartRadius: 10
+  maxPartRadius: 20
+  partHeight: 5
+  partReference:
+    m_AssetGUID: 5538641d0783ba7439c2d487081dd24b
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
