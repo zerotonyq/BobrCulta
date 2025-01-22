@@ -28,7 +28,7 @@ namespace DI
             Container.DeclareSignal<PlayerInitializedSignal>();
             Container.DeclareSignal<InitializedServiceSignal>();
             
-            Container.DeclareSignal<EnterLevelRequest>();
+            Container.DeclareSignal<NextLevelRequest>();
             Container.DeclareSignal<ExitLevelRequest>();
             
             Container.DeclareSignal<BootRequest>().RunAsync();
@@ -37,6 +37,8 @@ namespace DI
             Container.DeclareSignal<MagicProjectilesUIViewInitialized>();
             
             Container.DeclareSignal<LevelPassedSignal>();
+
+            Container.DeclareSignal<TreeLevelChangedSignal>();
         }
     }
 }

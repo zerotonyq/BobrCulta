@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gameplay.Services.UI.Magic.Views
+namespace Gameplay.Services.UI.Magic.Elements
 {
     public class ProjectileUIElement : MonoBehaviour
     {

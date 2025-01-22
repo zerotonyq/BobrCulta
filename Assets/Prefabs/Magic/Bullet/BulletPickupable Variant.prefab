@@ -63,5 +63,27 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2442778462107354482, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4650514059843485190}
   m_SourcePrefab: {fileID: 100100000, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
+--- !u!1 &5837013699887787497 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2442778462107354482, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
+  m_PrefabInstance: {fileID: 8135545028132219035}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4650514059843485190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5837013699887787497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a310c716f0e43c0b8d99269f0a63e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicAbilityPrefab: {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}
+  projectileUISprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}

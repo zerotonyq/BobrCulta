@@ -10,9 +10,7 @@ namespace Gameplay.Services.UI.Magic.Binders
 {
     public class MagicProjectilesUIBinder : GameService, IInitializable
     {
-        [Inject] private SignalBus _signalBus;
-
-        private AbilityEmitter _abilityEmitter;
+        private MagicAbilityEmitter _magicAbilityEmitter;
         private MagicProjectilesUIView _magicProjectilesUIView;
         
         public override void Initialize()
@@ -30,25 +28,25 @@ namespace Gameplay.Services.UI.Magic.Binders
 
         private void OnMagicComponentObtained(PlayerInitializedSignal obj)
         {
-            _abilityEmitter = obj.Player.GetComponent<AbilityEmitter>();
+            _magicAbilityEmitter = obj.Player.GetComponent<MagicAbilityEmitter>();
             CheckComponents();
         }
 
         private void CheckComponents()
         {
-            if (!_abilityEmitter || !_magicProjectilesUIView)
+            if (!_magicAbilityEmitter || !_magicProjectilesUIView)
                 return;
 
-            Bind(_abilityEmitter, _magicProjectilesUIView);
+            Bind(_magicAbilityEmitter, _magicProjectilesUIView);
         }
 
 
-        private void Bind(AbilityEmitter abilityEmitter, MagicProjectilesUIView magicProjectilesUIView)
+        private void Bind(MagicAbilityEmitter magicAbilityEmitter, MagicProjectilesUIView magicProjectilesUIView)
         {
-            abilityEmitter.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
+            magicAbilityEmitter.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
 
-            magicProjectilesUIView.MagicTypeProvided += abilityEmitter.EmitMagicAbility;
-            magicProjectilesUIView.MagicTypeRemoved += abilityEmitter.RemoveProjectile;
+            magicProjectilesUIView.MagicTypeProvided += magicAbilityEmitter.EmitMagicAbility;
+            magicProjectilesUIView.MagicTypeRemoved += magicAbilityEmitter.RemoveProjectile;
         }
     }
 }

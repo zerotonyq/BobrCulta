@@ -13,6 +13,7 @@ using Gameplay.Services.UI.Menu;
 using Gameplay.Services.UI.Menu.Config;
 using GameState;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace DI
@@ -20,7 +21,7 @@ namespace DI
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private CameraConfig cameraConfig;
-        [SerializeField] private BossDifficultyConfig bossDifficultyConfig;
+        [SerializeField] private BossDifficultyConfig difficultyConfig;
         [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
@@ -31,7 +32,7 @@ namespace DI
             BindExecutionOrders();
 
             Container.BindInstance(cameraConfig);
-            Container.BindInstance(bossDifficultyConfig);
+            Container.BindInstance(difficultyConfig);
             Container.BindInstance(menuUIManagerConfig);
             Container.BindInstance(playerConfig);
             Container.BindInstance(magicProjectilesUIServiceConfig);

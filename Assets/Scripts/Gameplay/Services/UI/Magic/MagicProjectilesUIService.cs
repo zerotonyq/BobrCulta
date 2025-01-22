@@ -11,7 +11,6 @@ namespace Gameplay.Services.UI.Magic
 {
     public class MagicProjectilesUIService : GameService, IInitializable
     {
-        [Inject] private SignalBus _signalBus;
         [Inject] private MagicProjectilesUIServiceConfig _config;
 
         private MagicProjectilesUIView _magicProjectilesUIView;

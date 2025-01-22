@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gameplay.Services.UI.Menu.Canvas
+namespace Gameplay.Services.UI.Menu.Views
 {
     public class MenuView : MonoBehaviour
     {

@@ -6,12 +6,13 @@ namespace GameState.States
     {
         public LevelState(GameStateMachine gameStateMachine) : base(gameStateMachine)
         {
+            gameStateMachine.SignalBus.Subscribe<LevelPassedSignal>(Enter);
         }
 
         public override void Enter()
         {
             base.Enter();
-            _gameStateMachine.SignalBus.Fire<EnterLevelRequest>();
+            _gameStateMachine.SignalBus.Fire<NextLevelRequest>();
         }
 
         public override void Exit()

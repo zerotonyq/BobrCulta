@@ -15,7 +15,6 @@ namespace Gameplay.Services.Player
 {
     public class PlayerService : GameService, IInitializable 
     {
-        [Inject] private SignalBus _signalBus;
         [Inject] private PlayerConfig _playerConfig;
 
         private ComponentContainer _player;

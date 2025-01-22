@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gameplay.Magic;
-using Gameplay.Magic.Pickupables.Base;
-using Gameplay.Services.LevelActivity.Config;
+using Gameplay.Magic.Abilities.Base.Pickupable;
+using Gameplay.Services.LevelActivity.Base;
 using Signals.Activities;
 using Signals.Activities.Base;
 using UnityEngine;
@@ -18,6 +18,8 @@ namespace Gameplay.Services.Boss.Config
         
         public override ActivitySignal ConstructSignal() => new BossActivitySignal();
 
+        //TODO difficulty section вынести в отдельный конфиг, а тут оставить просто list<bossconfig>
+        //boss service будет подсасывать разрешенные pickupables из другого места
         [Serializable]
         public struct DifficultySection
         {

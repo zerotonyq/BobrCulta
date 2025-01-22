@@ -25,7 +25,7 @@ namespace Gameplay.Services.Boss
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<EnterLevelRequest>(SpawnNext);
+            _signalBus.Subscribe<NextLevelRequest>(SpawnNext);
             
             NextSection();
             

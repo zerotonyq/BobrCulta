@@ -9,10 +9,9 @@ namespace Gameplay.Services.Base
     {
         [Inject] protected SignalBus _signalBus;
 
-        public virtual async void Boot()
+        public virtual void Boot()
         {
             _signalBus.Fire<ServiceBootEndRequest>();
-
         }
 
         public virtual void Initialize()

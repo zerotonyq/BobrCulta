@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gameplay.Magic.Pickupables.Base;
 using UnityEngine;
-using Utils.Initialize;
 
 namespace Utils.Pooling
 {
@@ -14,13 +12,7 @@ namespace Utils.Pooling
         {
             if (!poolable.TryGetComponent(t, out _))
             {
-                Debug.LogError("wrong type to pool!" );
-                return;
-            }
-
-            if (!poolable.TryGetComponent(out IInitializableMono initializableMono))
-            {
-                Debug.LogError("type to pool must be derived from " + nameof(IInitializableMono));
+                Debug.LogError("wrong type to pool!");
                 return;
             }
 
@@ -33,16 +25,11 @@ namespace Utils.Pooling
         {
             ValidatePool(t);
 
-            GameObject result;
-            if (_poolables[t].PoolQueue.Count == 0)
-            {
-                result = GameObject.Instantiate(prefab);
-                result.GetComponent<IInitializableMono>().Initialize();
-            }
-            else
-                result = _poolables[t].PoolQueue.Dequeue();
-
-
+            if (_poolables[t].PoolQueue.Count != 0) 
+                return _poolables[t].PoolQueue.Dequeue();
+            
+            var result = GameObject.Instantiate(prefab);
+            result.SetActive(false);
             return result;
         }
 

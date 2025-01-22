@@ -5,7 +5,7 @@ using Gameplay.Core.Pickup;
 using Gameplay.Core.Pickup.Base;
 using Gameplay.Core.TargetTracking;
 using Gameplay.Magic.Abilities.Base;
-using Gameplay.Magic.Pickupables.Base;
+using Gameplay.Magic.Abilities.Base.Pickupable;
 using Gameplay.Services.UI.Magic.Views;
 using UnityEngine;
 using Utils.Pooling;
@@ -13,7 +13,7 @@ using Utils.Pooling;
 namespace Gameplay.Magic.Abilities
 {
     [RequireComponent(typeof(PickupComponent), typeof(TargetTrackingComponent))]
-    public class AbilityEmitter : MonoComponent
+    public class MagicAbilityEmitter : MonoComponent
     {
         [SerializeField] private Transform firePoint;
 
@@ -28,7 +28,7 @@ namespace Gameplay.Magic.Abilities
         {
             _pickupComponent = GetComponent<PickupComponent>();
             _targetTrackingComponent = GetComponent<TargetTrackingComponent>();
-            
+
             _pickupComponent.PickedUp += OnPickupObtained;
         }
 
@@ -46,11 +46,14 @@ namespace Gameplay.Magic.Abilities
         {
             var abilityPrefab = _projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
 
-            var ability = MagicAbility.Get(abilityPrefab);
+            var ability = PoolManager.GetFromPool(abilityPrefab.GetType(), abilityPrefab.gameObject)
+                .GetComponent<MagicAbility>();
 
-            ability.transform.position = firePoint.position;
-            
-            ability.Activate(transform, _targetTrackingComponent.Target, args.ApplicationType);
+            ability.Initialize();
+
+            ability.Activate(firePoint.position);
+
+            ability.Use(transform, _targetTrackingComponent.Target, args.ApplicationType);
 
             _projectilesPrefabs.Remove(abilityPrefab);
         }

@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Gameplay.Services.Base;
-using Gameplay.Services.UI.Menu.Canvas;
 using Gameplay.Services.UI.Menu.Config;
+using Gameplay.Services.UI.Menu.Views;
 using Signals;
 using UnityEngine.AddressableAssets;
 using Zenject;
@@ -11,7 +11,6 @@ namespace Gameplay.Services.UI.Menu
     public class MenuUIService : GameService, IInitializable 
     {
         [Inject] private MenuUIManagerConfig _config;
-        [Inject] private SignalBus _signalBus;
 
         private MenuView _menuView;
 

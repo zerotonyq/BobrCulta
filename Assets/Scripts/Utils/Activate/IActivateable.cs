@@ -1,8 +1,10 @@
-﻿namespace Utils.Activate
+﻿using UnityEngine;
+
+namespace Utils.Activate
 {
     public interface IActivateable
     {
-        void Activate();
+        void Activate(Vector3 position);
         void Deactivate();
     }
 }

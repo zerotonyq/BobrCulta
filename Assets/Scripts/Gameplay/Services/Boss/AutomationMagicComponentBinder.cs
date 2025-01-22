@@ -5,17 +5,17 @@ using System.Linq;
 using Gameplay.Core.Base;
 using Gameplay.Magic;
 using Gameplay.Magic.Abilities;
-using Gameplay.Magic.Pickupables.Base;
+using Gameplay.Magic.Abilities.Base.Pickupable;
 using Gameplay.Services.UI.Magic.Enum;
 using Gameplay.Services.UI.Magic.Views;
 using UnityEngine;
 
 namespace Gameplay.Services.Boss
 {
-    [RequireComponent(typeof(AbilityEmitter))]
+    [RequireComponent(typeof(MagicAbilityEmitter))]
     public class AutomationMagicComponentBinder : Binder
     {
-        private AbilityEmitter _abilityEmitter;
+        private MagicAbilityEmitter _magicAbilityEmitter;
 
         [SerializeField] private List<AbilityInterval> _abilityIntervals = new();
 
@@ -24,7 +24,7 @@ namespace Gameplay.Services.Boss
 
         public override void Bind()
         {
-            _abilityEmitter = GetComponent<AbilityEmitter>();
+            _magicAbilityEmitter = GetComponent<MagicAbilityEmitter>();
 
             _automationCoroutine = StartCoroutine(AutomationCoroutine());
         }
@@ -44,11 +44,11 @@ namespace Gameplay.Services.Boss
 
             while (true)
             {
-                _abilityEmitter.AddMagicAbilityPrefab(_abilityIntervals[index].pickupablePrefab.magicAbilityPrefab);
+                _magicAbilityEmitter.AddMagicAbilityPrefab(_abilityIntervals[index].pickupablePrefab.magicAbilityPrefab);
 
                 var type = _abilityIntervals[index].pickupablePrefab.magicAbilityPrefab.GetType();
                 
-                _abilityEmitter.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].applicationType));
+                _magicAbilityEmitter.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].applicationType));
 
                 var current = instructions[index];
 

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gameplay.Magic;
-using Gameplay.Magic.Pickupables.Base;
+using Gameplay.Magic.Abilities.Base.Pickupable;
+using Gameplay.Services.UI.Magic.Elements;
 using Gameplay.Services.UI.Magic.Enum;
 using Input;
 using R3;

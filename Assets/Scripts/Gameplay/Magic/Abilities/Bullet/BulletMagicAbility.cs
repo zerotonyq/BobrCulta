@@ -2,7 +2,7 @@
 using Gameplay.Magic.Abilities.Base;
 using UnityEngine;
 
-namespace Gameplay.Magic.Abilities
+namespace Gameplay.Magic.Abilities.Bullet
 {
     [RequireComponent(typeof(TargetMovementBinderComponent))]
     public class BulletMagicAbility : MagicAbility

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Gameplay.Magic;
-using Gameplay.Magic.Pickupables.Base;
+using Gameplay.Magic.Abilities.Base.Pickupable;
 
 namespace Signals
 {

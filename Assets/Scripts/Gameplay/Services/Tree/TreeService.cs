@@ -48,18 +48,27 @@ namespace Gameplay.Services.Tree
                 var part = await CreateTreePart(radius, radius);
 
                 var connector = await CreateTreePart(_lastPart.PartRadius, radius);
-                
+
                 MovePartDown(part, 2);
                 MovePartDown(connector);
-                
+
                 _lastPart = new TreePart
                 {
                     PartRadius = radius,
                     ConnectorTransform = connector,
                     PartTransform = part
                 };
-                
+
                 _treeParts.Enqueue(_lastPart);
+
+                if (i == 0)
+                {
+                    _signalBus.Fire(new TreeLevelChangedSignal
+                    {
+                        LevelPosition = _lastPart.PartTransform.position + new Vector3(0, _config.partHeight / 2, 0),
+                        Radius = _lastPart.PartRadius
+                    });
+                }
 
                 await Task.Delay(2);
             }
@@ -73,14 +82,23 @@ namespace Gameplay.Services.Tree
                 return;
             }
 
+            var nextPart = _treeParts.Peek();
+
+            _signalBus.Fire(new TreeLevelChangedSignal
+            {
+                LevelPosition = nextPart.PartTransform.position + new Vector3(0, _config.partHeight / 2, 0),
+                Radius = nextPart.PartRadius
+            });
+
             var radius = Random.Range(_config.minPartRadius, _config.maxPartRadius);
-            
+
             var mesh = TruncatedConeMeshGenerator.Generate(radius, radius, _config.partHeight, 21);
-            var connectorMesh = TruncatedConeMeshGenerator.Generate(_lastPart.PartRadius, radius, _config.partHeight, 21);
+            var connectorMesh =
+                TruncatedConeMeshGenerator.Generate(_lastPart.PartRadius, radius, _config.partHeight, 21);
 
             UpdateMeshAndCollider(part.PartTransform.gameObject, mesh);
             UpdateMeshAndCollider(part.ConnectorTransform.gameObject, connectorMesh);
-            
+
             part.PartRadius = radius;
 
             MovePartDown(part.PartTransform, 2);

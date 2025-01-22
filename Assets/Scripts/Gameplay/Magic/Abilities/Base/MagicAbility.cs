@@ -7,6 +7,7 @@ using Gameplay.Magic.Effects;
 using Gameplay.Magic.Effects.Base;
 using Gameplay.Services.UI.Magic.Enum;
 using UnityEngine;
+using Utils.Activate;
 using Utils.Initialize;
 using Utils.Pooling;
 using Utils.Reset;
@@ -14,8 +15,10 @@ using Utils.Reset;
 namespace Gameplay.Magic.Abilities.Base
 {
     [RequireComponent(typeof(TargetMovementBinderComponent))]
-    public abstract class MagicAbility : MonoBehaviour, IInitializableMono
+    public abstract class MagicAbility : MonoBehaviour, IInitializableMono, IActivateable
     {
+        public bool Initialized { get; private set; }
+        
         [SerializeField] private MagicAbilityConfig config;
 
         private List<Type> _antagonistTypes = new();
@@ -29,22 +32,12 @@ namespace Gameplay.Magic.Abilities.Base
         public Action<MagicAbility> Deactivated;
 
         private TargetMovementBinderComponent _targetMovementBinder;
-
-        public static MagicAbility Get(MagicAbility prefab)
-        {
-            var abilityObj = PoolManager.GetFromPool(prefab.GetType(), prefab.gameObject);
-
-            var result = abilityObj.GetComponent<MagicAbility>();
-            
-            result.Reset();
-
-            result.gameObject.SetActive(false);
-
-            return result;
-        }
         
         public void Initialize()
         {
+            if (Initialized)
+                return;
+            
             _antagonistTypes = config.antagonistAbilities.Select(a => a.GetAbilityType()).ToList();
 
             if (_effects.Count == 0)
@@ -55,14 +48,12 @@ namespace Gameplay.Magic.Abilities.Base
 
             _targetMovementBinder = GetComponent<TargetMovementBinderComponent>();
             _targetMovementBinder.Bind();
+
+            Initialized = true;
         }
 
-        public void Activate(Transform emitter, Transform target, ApplicationType applicationType)
+        public void Use(Transform emitter, Transform target, ApplicationType applicationType)
         {
-            Reset();
-
-            gameObject.SetActive(true);
-            
             switch (applicationType)
             {
                 case ApplicationType.Fire:
@@ -81,7 +72,14 @@ namespace Gameplay.Magic.Abilities.Base
                 }
             }
         }
-        
+
+        public void Activate(Vector3 position)
+        {
+            transform.position = position;
+
+            gameObject.SetActive(true);
+        }
+
         public void Deactivate()
         {
             Deactivated?.Invoke(this);
@@ -92,8 +90,8 @@ namespace Gameplay.Magic.Abilities.Base
 
             PoolManager.AddToPool(GetType(), gameObject);
         }
-        
-        private void Reset()
+
+        public void Reset()
         {
             ResetEffects();
             
