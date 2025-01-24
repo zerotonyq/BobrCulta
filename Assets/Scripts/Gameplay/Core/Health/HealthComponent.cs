@@ -1,4 +1,5 @@
-﻿using Gameplay.Core.Base;
+﻿using System;
+using Gameplay.Core.Base;
 using UnityEngine;
 
 namespace Gameplay.Core.Health
@@ -9,6 +10,8 @@ namespace Gameplay.Core.Health
         [SerializeField] private int health;
 
         private bool _allowDecreaseHealth = true;
+
+        public Action Dead;
         
         public override void Initialize()
         {
@@ -31,10 +34,11 @@ namespace Gameplay.Core.Health
                 return;
             }
 
-            if (health + count < 0)
+            if (health + count <= 0)
             {
                 health = 0;
-                Debug.Log("DEFEATED " + name);
+                Dead?.Invoke();
+                Debug.Log("DEAD " + name);
                 return;
             }
 

@@ -2,6 +2,8 @@
 using Gameplay.Services.Boss.Config;
 using Gameplay.Services.Camera;
 using Gameplay.Services.Camera.Config;
+using Gameplay.Services.Difficulty;
+using Gameplay.Services.Difficulty.Config;
 using Gameplay.Services.Player;
 using Gameplay.Services.Player.Config;
 using Gameplay.Services.Tree;
@@ -21,11 +23,12 @@ namespace DI
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private CameraConfig cameraConfig;
-        [SerializeField] private BossDifficultyConfig difficultyConfig;
+        [SerializeField] private BossDifficultyConfig bossDifficultyConfig;
         [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
         [SerializeField] private TreeServiceConfig treeServiceConfig;
+        [SerializeField] private DifficultyConfig difficultyConfig;
 
         public override void InstallBindings()
         {
@@ -33,6 +36,7 @@ namespace DI
 
             Container.BindInstance(cameraConfig);
             Container.BindInstance(difficultyConfig);
+            Container.BindInstance(bossDifficultyConfig);
             Container.BindInstance(menuUIManagerConfig);
             Container.BindInstance(playerConfig);
             Container.BindInstance(magicProjectilesUIServiceConfig);
@@ -53,6 +57,8 @@ namespace DI
             Container.BindInterfacesAndSelfTo<MenuUIService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<TreeService>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<DifficultyService>().AsSingle();
         }
 
         private void BindExecutionOrders()

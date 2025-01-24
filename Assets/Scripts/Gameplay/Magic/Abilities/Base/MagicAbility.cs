@@ -145,6 +145,9 @@ namespace Gameplay.Magic.Abilities.Base
 
         private bool CheckSelfCollision(Collider other)
         {
+            if (_emitterCollider == null)
+                return false;
+            
             if (other == _emitterCollider)
             {
                 Debug.Log("Same emitter");

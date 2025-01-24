@@ -38,8 +38,6 @@ namespace Gameplay.Services.Player
             TargetProvider.SetPlayer(_player.transform);
             
             _signalBus.Fire(new PlayerInitializedSignal {Player = _player});
-            
-            _signalBus.Fire<ServiceBootEndRequest>();
         }
     }
 }

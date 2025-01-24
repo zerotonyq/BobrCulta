@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Gameplay.Core.Container;
+using Gameplay.Core.Health;
 using Gameplay.Core.TargetTracking.Provider;
 using Gameplay.Services.Base;
 using Gameplay.Services.Boss.Config;
@@ -26,21 +27,23 @@ namespace Gameplay.Services.Boss
         public override void Initialize()
         {
             _signalBus.Subscribe<NextLevelRequest>(SpawnNext);
-            
-            NextSection();
+            _signalBus.Subscribe<NextDifficultySectionProvided>(NextSection);
             
             base.Initialize();
         }
-        
+
+        public override void Boot()
+        {
+            _signalBus.Fire<NextChapterRequest>();
+            base.Boot();
+        }
+
         private async void SpawnNext()
         {
             if (_currentBoss) Addressables.ReleaseInstance(_currentBoss.gameObject);
-
-            if (_currentBossIndex >= _bossesConfigs.Count)
-            {
-                NextSection();
-                return;
-            }
+            
+            if(_currentBossIndex == _bossesConfigs.Count)
+                _signalBus.Fire<NextChapterRequest>();
 
             _currentBoss =
                 (await Addressables.InstantiateAsync(_bossesConfigs[_currentBossIndex].bossReference))
@@ -51,25 +54,27 @@ namespace Gameplay.Services.Boss
 
             await _currentBoss.Initialize();
 
+            _currentBoss.GetComponent<HealthComponent>().Dead += OnBossDefeated;
+
             _signalBus.Fire(new NextBossSignal { Boss = _currentBoss });
 
             TargetProvider.SetBoss(_currentBoss.transform);
         }
         
-        private void NextSection()
+        private void NextSection(NextDifficultySectionProvided signal)
         {
-            if (_currentDifficultySectionIndex >= _config.sections.Count)
-                _signalBus.Fire(new EndGameSignal() { Condition = true });
-
-            _config.sections[_currentDifficultySectionIndex].GenerateBossConfigs();
+            var bossSection = _config.sections[_currentDifficultySectionIndex];
             
-            _bossesConfigs = _config.sections[_currentDifficultySectionIndex].bossesConfigs;
+            bossSection.Generate(signal.Section.allowedPickupables);
+            
+            _bossesConfigs = bossSection.configs;
             
             ++_currentDifficultySectionIndex;
         }
 
-        public void OnBossDefeated()
+        private void OnBossDefeated()
         {
+            _currentBoss.GetComponent<HealthComponent>().Dead -= OnBossDefeated;
             _signalBus.Fire<LevelPassedSignal>();
         }
     }

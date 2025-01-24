@@ -28,14 +28,14 @@ namespace Gameplay.Services.Tree
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<LevelPassedSignal>(RebuildTreePartFromBuffer);
+            _signalBus.Subscribe<NextLevelRequest>(RebuildTreePartFromBuffer);
             base.Initialize();
         }
 
         public override async void Boot()
         {
             await BuildPartsAndConnectors();
-
+            
             base.Boot();
         }
 
@@ -76,6 +76,7 @@ namespace Gameplay.Services.Tree
 
         private void RebuildTreePartFromBuffer()
         {
+            Debug.Log("rebuild request");
             if (!_treeParts.TryDequeue(out var part))
             {
                 Debug.Log("cannot dequeue tree part from buffer");

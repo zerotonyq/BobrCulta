@@ -18,8 +18,6 @@ namespace DI
         {
             SignalBusInstaller.Install(Container);
             
-            Container.DeclareSignal<AllowedPickupablesSignal>();
-            
             Container.DeclareSignal<EndGameSignal>();
             Container.DeclareSignal<StartGameRequest>();
             
@@ -39,6 +37,9 @@ namespace DI
             Container.DeclareSignal<LevelPassedSignal>();
 
             Container.DeclareSignal<TreeLevelChangedSignal>();
+            
+            Container.DeclareSignal<NextChapterRequest>();
+            Container.DeclareSignal<NextDifficultySectionProvided>();
         }
     }
 }

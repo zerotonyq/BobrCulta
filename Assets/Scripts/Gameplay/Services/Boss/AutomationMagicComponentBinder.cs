@@ -6,6 +6,7 @@ using Gameplay.Core.Base;
 using Gameplay.Magic;
 using Gameplay.Magic.Abilities;
 using Gameplay.Magic.Abilities.Base.Pickupable;
+using Gameplay.Services.Boss.Config;
 using Gameplay.Services.UI.Magic.Enum;
 using Gameplay.Services.UI.Magic.Views;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Gameplay.Services.Boss
     {
         private MagicAbilityEmitter _magicAbilityEmitter;
 
-        [SerializeField] private List<AbilityInterval> _abilityIntervals = new();
+        [SerializeField] private List<BossDifficultyConfig.BossConfig.AbilityInterval> _abilityIntervals = new();
 
 
         private Coroutine _automationCoroutine;
@@ -29,7 +30,7 @@ namespace Gameplay.Services.Boss
             _automationCoroutine = StartCoroutine(AutomationCoroutine());
         }
 
-        public void SetAbilityIntervals(List<AbilityInterval> abilityIntervals)
+        public void SetAbilityIntervals(List<BossDifficultyConfig.BossConfig.AbilityInterval> abilityIntervals)
         {
             _abilityIntervals = abilityIntervals;
         }
@@ -60,12 +61,6 @@ namespace Gameplay.Services.Boss
 
         public void OnStopped() => StopCoroutine(_automationCoroutine);
 
-        [Serializable]
-        public struct AbilityInterval
-        {
-            public MagicPickupable pickupablePrefab;
-            public ApplicationType applicationType;
-            public float beforeInterval;
-        }
+        
     }
 }

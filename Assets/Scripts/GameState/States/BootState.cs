@@ -13,6 +13,8 @@ namespace GameState.States
         {
             gameStateMachine.SignalBus.Subscribe<ServiceBootEndRequest>(CheckBootEnd);
             _initializeCount = gameStateMachine.Services.Count;
+            
+            Debug.Log(_initializeCount);
         }
 
         private void CheckBootEnd()
