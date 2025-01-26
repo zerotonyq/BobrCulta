@@ -50,8 +50,6 @@ namespace Gameplay.Magic.Effects.Base
             {
                 Execute(component);
 
-                float delta = Time.fixedDeltaTime;
-
                 _currentDuration += delay;
 
                 yield return instr;

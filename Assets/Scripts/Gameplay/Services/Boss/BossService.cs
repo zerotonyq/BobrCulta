@@ -6,44 +6,52 @@ using Gameplay.Core.TargetTracking.Provider;
 using Gameplay.Services.Base;
 using Gameplay.Services.Boss.Config;
 using Signals;
+using Signals.Activities;
+using Signals.Activities.Base;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Gameplay.Services.Boss
 {
-    public class BossService : GameService, IInitializable 
+    public class BossService : GameService, IInitializable
     {
+        [Inject] private BossActivityConfig _config;
+        
         private ComponentContainer _currentBoss;
 
         private int _currentBossIndex;
 
-        private IList<BossDifficultyConfig.BossConfig> _bossesConfigs;
-        
-        private int _currentDifficultySectionIndex;
+        private Vector3 _bossInitPosition;
 
-        [Inject] private BossDifficultyConfig _config;
+        private IList<BossActivityConfig.BossConfig> _bossesConfigs;
+
+        private int _currentBossSectionIndex;
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<NextLevelRequest>(SpawnNext);
-            _signalBus.Subscribe<NextDifficultySectionProvided>(NextSection);
-            
+            _signalBus.Subscribe<TreeLevelChangedSignal>(SetBossInitPosition);
+            _signalBus.Subscribe<IActivitySignal>(SpawnNext);
+
             base.Initialize();
         }
+
+        private void SetBossInitPosition(TreeLevelChangedSignal signal) => _bossInitPosition = signal.LevelPosition;
 
         public override void Boot()
         {
             _signalBus.Fire<NextChapterRequest>();
+            NextSection();
             base.Boot();
         }
 
-        private async void SpawnNext()
+        private async void SpawnNext(IActivitySignal signal)
         {
-            if (_currentBoss) Addressables.ReleaseInstance(_currentBoss.gameObject);
+            if (signal is not BossActivitySignal)
+                return;
             
-            if(_currentBossIndex == _bossesConfigs.Count)
-                _signalBus.Fire<NextChapterRequest>();
+            if (_currentBoss) 
+                Addressables.ReleaseInstance(_currentBoss.gameObject);
 
             _currentBoss =
                 (await Addressables.InstantiateAsync(_bossesConfigs[_currentBossIndex].bossReference))
@@ -56,20 +64,31 @@ namespace Gameplay.Services.Boss
 
             _currentBoss.GetComponent<HealthComponent>().Dead += OnBossDefeated;
 
+            _currentBoss.transform.position = _bossInitPosition;
+
             _signalBus.Fire(new NextBossSignal { Boss = _currentBoss });
 
             TargetProvider.SetBoss(_currentBoss.transform);
+
+            if(_currentBossIndex == _bossesConfigs.Count)
+                NextSection();
+            
+            ++_currentBossIndex;
         }
-        
-        private void NextSection(NextDifficultySectionProvided signal)
+
+        private void NextSection()
         {
-            var bossSection = _config.sections[_currentDifficultySectionIndex];
+            var bossSectionReference = _config.sections[_currentBossSectionIndex];
+
+            var bossSectionTemp = new BossActivityConfig.BossSection(bossSectionReference);
             
-            bossSection.Generate(signal.Section.allowedPickupables);
-            
-            _bossesConfigs = bossSection.configs;
-            
-            ++_currentDifficultySectionIndex;
+            bossSectionTemp.Generate();
+
+            _bossesConfigs = bossSectionTemp.configs;
+
+            _currentBossIndex = 0;
+
+            ++_currentBossSectionIndex;
         }
 
         private void OnBossDefeated()

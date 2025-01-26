@@ -39,6 +39,12 @@ namespace Gameplay.Core.Movement
             _rigidbody.linearVelocity = Vector3.ClampMagnitude(_rigidbody.linearVelocity, maxVelocity);
         }
 
-        public void Reset() => _rigidbody.linearVelocity = Vector3.zero;
+        public void Reset()
+        {
+            if (_rigidbody.isKinematic)
+                return;
+            
+            _rigidbody.linearVelocity = Vector3.zero;
+        }
     }
 }

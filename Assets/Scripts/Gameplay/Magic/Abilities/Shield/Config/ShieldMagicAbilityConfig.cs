@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay.Magic.Abilities.Base;
+using Gameplay.Magic.Abilities.Base.Config;
 using UnityEngine;
 
 namespace Gameplay.Magic.Abilities.Shield

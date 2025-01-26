@@ -1,5 +1,4 @@
 ﻿using Signals;
-using UnityEngine;
 
 namespace GameState.States
 {
@@ -9,12 +8,11 @@ namespace GameState.States
         private readonly int _initializeCount;
         
         private int _currentInitializeCount;
+        
         public BootState(GameStateMachine gameStateMachine) : base(gameStateMachine)
         {
             gameStateMachine.SignalBus.Subscribe<ServiceBootEndRequest>(CheckBootEnd);
             _initializeCount = gameStateMachine.Services.Count;
-            
-            Debug.Log(_initializeCount);
         }
 
         private void CheckBootEnd()

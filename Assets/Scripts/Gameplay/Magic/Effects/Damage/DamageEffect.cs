@@ -18,8 +18,6 @@ namespace Gameplay.Magic.Effects.Damage
             var c = component.Components.Find(a => a.GetType() == typeof(HealthComponent));
             
             (c as HealthComponent)?.ChangeHealth(-1);
-            
-            Debug.Log("DAMAGE");
         }
 
     }

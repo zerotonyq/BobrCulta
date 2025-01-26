@@ -12,7 +12,6 @@ namespace Gameplay.Magic.Effects.Resistance
 
         protected override void Execute(ComponentContainer component)
         {
-            Debug.Log("RESIST");
         }
 
         public override Action<Effect> EffectElapsed { get; set; }

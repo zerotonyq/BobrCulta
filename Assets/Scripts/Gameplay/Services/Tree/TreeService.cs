@@ -15,6 +15,8 @@ namespace Gameplay.Services.Tree
     {
         [Inject] private TreeServiceConfig _config;
 
+        private Transform _container;
+
         private struct TreePart
         {
             public float PartRadius;
@@ -28,12 +30,16 @@ namespace Gameplay.Services.Tree
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<NextLevelRequest>(RebuildTreePartFromBuffer);
+            _signalBus.Subscribe<NextLevelRequest>(RebuildNextTreePartFromBuffer);
             base.Initialize();
         }
 
         public override async void Boot()
         {
+            _container = new GameObject("TreePartsContainer").transform;
+            
+            _container.transform.position = Vector3.zero;
+            
             await BuildPartsAndConnectors();
             
             base.Boot();
@@ -47,7 +53,7 @@ namespace Gameplay.Services.Tree
 
                 var part = await CreateTreePart(radius, radius);
 
-                var connector = await CreateTreePart(_lastPart.PartRadius, radius);
+                var connector = await CreateTreePart(_lastPart.PartRadius, radius, "Connector");
 
                 MovePartDown(part, 2);
                 MovePartDown(connector);
@@ -61,35 +67,29 @@ namespace Gameplay.Services.Tree
 
                 _treeParts.Enqueue(_lastPart);
 
-                if (i == 0)
-                {
-                    _signalBus.Fire(new TreeLevelChangedSignal
-                    {
-                        LevelPosition = _lastPart.PartTransform.position + new Vector3(0, _config.partHeight / 2, 0),
-                        Radius = _lastPart.PartRadius
-                    });
-                }
-
                 await Task.Delay(2);
             }
         }
 
-        private void RebuildTreePartFromBuffer()
+        private void RebuildNextTreePartFromBuffer()
         {
-            Debug.Log("rebuild request");
             if (!_treeParts.TryDequeue(out var part))
             {
                 Debug.Log("cannot dequeue tree part from buffer");
                 return;
             }
+            
+            part.ConnectorTransform.gameObject.SetActive(true);
 
             var nextPart = _treeParts.Peek();
-
+            
             _signalBus.Fire(new TreeLevelChangedSignal
             {
                 LevelPosition = nextPart.PartTransform.position + new Vector3(0, _config.partHeight / 2, 0),
                 Radius = nextPart.PartRadius
             });
+
+            nextPart.ConnectorTransform.gameObject.SetActive(false);
 
             var radius = Random.Range(_config.minPartRadius, _config.maxPartRadius);
 
@@ -102,15 +102,21 @@ namespace Gameplay.Services.Tree
 
             part.PartRadius = radius;
 
+            _treeParts.Enqueue(part);
+            
             MovePartDown(part.PartTransform, 2);
             MovePartDown(part.ConnectorTransform);
+
+            _lastPart = part;
         }
 
-        private async Task<Transform> CreateTreePart(float radiusTop, float radiusBottom)
+        private async Task<Transform> CreateTreePart(float radiusTop, float radiusBottom, string name = "TreePart")
         {
             var part = await Addressables.InstantiateAsync(_config.partReference);
+            
+            part.transform.SetParent(_container);
 
-            part.name = "TreePart_" + _treeParts.Count;
+            part.name = name + "_" + _treeParts.Count;
 
             var mesh = TruncatedConeMeshGenerator.Generate(radiusTop, radiusBottom, _config.partHeight, 21);
 

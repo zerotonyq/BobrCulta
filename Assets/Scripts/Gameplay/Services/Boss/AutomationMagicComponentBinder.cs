@@ -18,7 +18,7 @@ namespace Gameplay.Services.Boss
     {
         private MagicAbilityEmitter _magicAbilityEmitter;
 
-        [SerializeField] private List<BossDifficultyConfig.BossConfig.AbilityInterval> _abilityIntervals = new();
+        [SerializeField] private List<BossActivityConfig.BossConfig.AbilityInterval> _abilityIntervals = new();
 
 
         private Coroutine _automationCoroutine;
@@ -30,7 +30,7 @@ namespace Gameplay.Services.Boss
             _automationCoroutine = StartCoroutine(AutomationCoroutine());
         }
 
-        public void SetAbilityIntervals(List<BossDifficultyConfig.BossConfig.AbilityInterval> abilityIntervals)
+        public void SetAbilityIntervals(List<BossActivityConfig.BossConfig.AbilityInterval> abilityIntervals)
         {
             _abilityIntervals = abilityIntervals;
         }
@@ -45,11 +45,11 @@ namespace Gameplay.Services.Boss
 
             while (true)
             {
-                _magicAbilityEmitter.AddMagicAbilityPrefab(_abilityIntervals[index].pickupablePrefab.magicAbilityPrefab);
+                _magicAbilityEmitter.AddMagicAbilityPrefab(_abilityIntervals[index].abilityConfig.abilityPrefab);
 
-                var type = _abilityIntervals[index].pickupablePrefab.magicAbilityPrefab.GetType();
+                var type = _abilityIntervals[index].abilityConfig.abilityPrefab.GetType();
                 
-                _magicAbilityEmitter.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].applicationType));
+                _magicAbilityEmitter.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].abilityConfig.primaryApplicationType));
 
                 var current = instructions[index];
 

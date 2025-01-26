@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Gameplay.Core.Base;
 using Gameplay.Core.Pickup.Base;
 using UnityEngine;
@@ -25,19 +26,26 @@ namespace Gameplay.Core.Pickup
                 return;
 
             var closestDistance = Vector3.Distance(transform.position, colliders[0].transform.position);
+
+            IPickupable pickupable = null;
             
             foreach (var coll in colliders)
             {
-                if(!coll.TryGetComponent(out IPickupable pickupable))
+                if(!coll.TryGetComponent(out IPickupable p))
                     continue;
                 
                 if(Vector3.Distance(coll.transform.position, transform.position) > closestDistance)
                     continue;
                 
-                pickupable.Pickup();
-                PickedUp?.Invoke(pickupable);
-                return;
+                closestDistance = Vector3.Distance(coll.transform.position, transform.position);
+                pickupable = p;
             }
+
+            if (pickupable == null)
+                return;
+            
+            pickupable.Pickup();
+            PickedUp?.Invoke(pickupable);
         }
     }
 }

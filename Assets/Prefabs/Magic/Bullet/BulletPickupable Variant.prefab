@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.762193
+      value: -7.8584757
       objectReference: {fileID: 0}
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.25002
+      value: -6.850733
       objectReference: {fileID: 0}
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.915784
+      value: -8.019996
       objectReference: {fileID: 0}
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -87,3 +87,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magicAbilityPrefab: {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}
   projectileUISprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  primaryApplicationType: 0

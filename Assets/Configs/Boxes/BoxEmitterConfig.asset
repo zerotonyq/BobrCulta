@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e497ecfa0148af8d5dfafb386a00e5, type: 3}
+  m_Name: BoxEmitterConfig
+  m_EditorClassIdentifier: 
+  pickupables:
+  - {fileID: 6580154663338574538, guid: d94b886ecabe42b4795483f9a0972a24, type: 3}
+  boxPrefab: {fileID: 3649412395768236408, guid: ae5eea73d281e6b4a87b53d3d8a9904c, type: 3}

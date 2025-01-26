@@ -2,7 +2,7 @@
 
 namespace Signals.Activities
 {
-    public class BossActivitySignal : ActivitySignal
+    public class BossActivitySignal : IActivitySignal
     {
         
     }

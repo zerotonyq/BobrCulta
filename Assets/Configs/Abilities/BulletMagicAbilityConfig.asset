@@ -16,3 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 193726e653c6930499a12a2990d17769, type: 2}
   antagonistAbilities:
   - {fileID: 11400000, guid: ed9166abb910b8b438e518795dfbd866, type: 2}
+  primaryApplicationType: 1
+  abilityPrefab: {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}

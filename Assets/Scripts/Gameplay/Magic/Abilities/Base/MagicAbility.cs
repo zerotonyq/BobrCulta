@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Core.Container;
 using Gameplay.Core.Movement.Binders;
+using Gameplay.Magic.Abilities.Base.Config;
 using Gameplay.Magic.Effects;
 using Gameplay.Magic.Effects.Base;
 using Gameplay.Services.UI.Magic.Enum;
@@ -58,6 +59,8 @@ namespace Gameplay.Magic.Abilities.Base
             {
                 case ApplicationType.Fire:
                 {
+                    GetComponent<Collider>().enabled = true;
+                    GetComponent<Rigidbody>().isKinematic = false;
                     _emitterCollider = emitter.GetComponent<Collider>();
                     
                     GetComponent<TargetMovementBinderComponent>().SetTarget(target);
@@ -66,6 +69,10 @@ namespace Gameplay.Magic.Abilities.Base
                 }
                 case ApplicationType.ApplyToItself:
                 {
+                    //TODO hide gfx too
+                    GetComponent<Collider>().enabled = false;
+                    GetComponent<Rigidbody>().isKinematic = true;
+                    
                     emitter.GetComponent<AbilityHandler>().AttachAbility(this, _antagonistTypes);
 
                     break;
@@ -78,6 +85,11 @@ namespace Gameplay.Magic.Abilities.Base
             transform.position = position;
 
             gameObject.SetActive(true);
+
+            foreach (var component in GetComponents<MonoBehaviour>())
+            {
+                component.enabled = true;
+            }
         }
 
         public void Deactivate()
@@ -171,6 +183,9 @@ namespace Gameplay.Magic.Abilities.Base
                 return;
             }
 
+            GetComponent<Collider>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+            Reset();
             container.AttachAbility(this, _antagonistTypes);
         }
 

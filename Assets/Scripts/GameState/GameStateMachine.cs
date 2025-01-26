@@ -14,6 +14,7 @@ namespace GameState
         [Inject] private List<IGameService> _services;
 
         public List<IGameService> Services => _services;
+        
         public SignalBus SignalBus => _signalBus;
         
         private Dictionary<Type, Base.GameState> _states = new();

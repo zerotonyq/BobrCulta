@@ -27,7 +27,6 @@ namespace Gameplay.Magic.Effects
                 {
                     magicAbility.Deactivate();
                     handledAbility.Deactivate();
-                    Debug.Log("have antagonist, deactivate both");
                     return;
                 }
 
@@ -35,15 +34,14 @@ namespace Gameplay.Magic.Effects
                 {
                     magicAbility.Deactivate();
                     handledAbility.ApplyEffects(GetComponent<ComponentContainer>());
-                    Debug.Log("same ability. restart it!");
                     return;
                 }
             }
 
             _handledAbilities.Add(magicAbility);
-            
+
             magicAbility.transform.SetParent(transform);
-            
+
             magicAbility.Deactivated += DetachAbility;
 
             magicAbility.ApplyEffects(GetComponent<ComponentContainer>());
@@ -57,11 +55,9 @@ namespace Gameplay.Magic.Effects
                 return;
             }
 
-            Debug.Log("Detached " + ability.name);
-            
             ability.transform.SetParent(null);
             ability.Deactivated -= DetachAbility;
-            
+
             _handledAbilities.Remove(ability);
         }
     }

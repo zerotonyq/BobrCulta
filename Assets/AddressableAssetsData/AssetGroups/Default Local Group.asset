@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37b355521540cf94385e907b195c2b3c
+    m_Address: Assets/Prefabs/DeadZone/DeadZone.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a27184db2398c04d9c092c043d98a14
     m_Address: Assets/Prefabs/Player.prefab
     m_ReadOnly: 0

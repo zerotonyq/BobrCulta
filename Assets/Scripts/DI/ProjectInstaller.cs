@@ -1,5 +1,6 @@
-﻿using GameState;
-using Signals;
+﻿using Signals;
+using Signals.Activities;
+using Signals.GameStates;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
@@ -39,7 +40,8 @@ namespace DI
             Container.DeclareSignal<TreeLevelChangedSignal>();
             
             Container.DeclareSignal<NextChapterRequest>();
-            Container.DeclareSignal<NextDifficultySectionProvided>();
+            
+            Container.DeclareSignalWithInterfaces<BossActivitySignal>();
         }
     }
 }

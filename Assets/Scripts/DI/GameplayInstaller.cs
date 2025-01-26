@@ -1,9 +1,14 @@
-﻿using Gameplay.Services.Boss;
+﻿using Gameplay.Magic.Boxes.Emitter;
+using Gameplay.Magic.Boxes.Emitter.Config;
+using Gameplay.Services.Activity;
+using Gameplay.Services.Activity.Base;
+using Gameplay.Services.Boss;
 using Gameplay.Services.Boss.Config;
+using Gameplay.Services.Boxes.Emitter;
 using Gameplay.Services.Camera;
 using Gameplay.Services.Camera.Config;
-using Gameplay.Services.Difficulty;
-using Gameplay.Services.Difficulty.Config;
+using Gameplay.Services.DeadZone;
+using Gameplay.Services.DeadZone.Config;
 using Gameplay.Services.Player;
 using Gameplay.Services.Player.Config;
 using Gameplay.Services.Tree;
@@ -23,24 +28,28 @@ namespace DI
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private CameraConfig cameraConfig;
-        [SerializeField] private BossDifficultyConfig bossDifficultyConfig;
+        [FormerlySerializedAs("bossDifficultyConfig")] [SerializeField] private BossActivityConfig bossActivityConfig;
         [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
         [SerializeField] private TreeServiceConfig treeServiceConfig;
-        [SerializeField] private DifficultyConfig difficultyConfig;
+        [SerializeField] private BoxEmitterConfig boxEmitterConfig;
+        [SerializeField] private ActivityServiceConfig activityServiceConfig;
+        [SerializeField] private DeadZoneConfig deadZoneConfig;
 
         public override void InstallBindings()
         {
             BindExecutionOrders();
 
             Container.BindInstance(cameraConfig);
-            Container.BindInstance(difficultyConfig);
-            Container.BindInstance(bossDifficultyConfig);
+            Container.BindInstance(bossActivityConfig);
             Container.BindInstance(menuUIManagerConfig);
             Container.BindInstance(playerConfig);
             Container.BindInstance(magicProjectilesUIServiceConfig);
             Container.BindInstance(treeServiceConfig);
+            Container.BindInstance(boxEmitterConfig);
+            Container.BindInstance(activityServiceConfig);
+            Container.BindInstance(deadZoneConfig);
 
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
 
@@ -58,7 +67,11 @@ namespace DI
 
             Container.BindInterfacesAndSelfTo<TreeService>().AsSingle();
             
-            Container.BindInterfacesAndSelfTo<DifficultyService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BoxEmitter>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<ActivityService>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<DeadZoneService>().AsSingle();
         }
 
         private void BindExecutionOrders()
