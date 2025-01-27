@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Gameplay.Core.Pickup.Base;
 using UnityEngine;
@@ -62,9 +63,12 @@ namespace Gameplay.Services.Boxes
             Deactivate();
         }
 
+        public Action<GameObject> Deactivated { get; set; }
+
         public void Activate(Vector3 position)
         {
             transform.position = position;
+            Deactivated?.Invoke(gameObject);
             gameObject.SetActive(true);
         }
 

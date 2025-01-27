@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay.Core.Base;
+using Gameplay.Core.Container;
 using UnityEngine;
 
 namespace Gameplay.Core.Health
@@ -9,25 +10,12 @@ namespace Gameplay.Core.Health
         [SerializeField] private int maxHealth = 10;
         [SerializeField] private int health;
 
-        private bool _allowDecreaseHealth = true;
-
         public Action Dead;
-        
-        public override void Initialize()
-        {
-            health = maxHealth;
-        }
 
-        public void AllowDecreaseHealth(bool i) => _allowDecreaseHealth = i;
+        public override void Initialize() => Reset();
 
         public void ChangeHealth(int count)
         {
-            if (!_allowDecreaseHealth && count < 0)
-            {
-                Debug.Log("disalowed to decrease" );
-                return;
-            }
-            
             if (health + count > maxHealth)
             {
                 health = maxHealth;
@@ -38,11 +26,12 @@ namespace Gameplay.Core.Health
             {
                 health = 0;
                 Dead?.Invoke();
-                Debug.Log("DEAD " + name);
                 return;
             }
 
             health += count;
         }
+
+        public override void Reset() => health = maxHealth;
     }
 }

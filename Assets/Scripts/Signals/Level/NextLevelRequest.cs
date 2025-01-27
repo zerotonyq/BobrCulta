@@ -1,4 +1,4 @@
-﻿namespace Signals
+﻿namespace Signals.Level
 {
     public class NextLevelRequest
     {

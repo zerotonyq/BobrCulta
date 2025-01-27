@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Core.Base;
-using Gameplay.Magic;
 using Gameplay.Magic.Abilities;
-using Gameplay.Magic.Abilities.Base.Pickupable;
 using Gameplay.Services.Boss.Config;
-using Gameplay.Services.UI.Magic.Enum;
-using Gameplay.Services.UI.Magic.Views;
+using Gameplay.Services.UI.Gameplay.Magic.Views;
 using UnityEngine;
 
 namespace Gameplay.Services.Boss

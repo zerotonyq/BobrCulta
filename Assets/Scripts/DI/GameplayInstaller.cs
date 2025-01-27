@@ -1,10 +1,9 @@
-﻿using Gameplay.Magic.Boxes.Emitter;
-using Gameplay.Magic.Boxes.Emitter.Config;
-using Gameplay.Services.Activity;
+﻿using Gameplay.Services.Activity;
 using Gameplay.Services.Activity.Base;
 using Gameplay.Services.Boss;
 using Gameplay.Services.Boss.Config;
 using Gameplay.Services.Boxes.Emitter;
+using Gameplay.Services.Boxes.Emitter.Config;
 using Gameplay.Services.Camera;
 using Gameplay.Services.Camera.Config;
 using Gameplay.Services.DeadZone;
@@ -13,14 +12,15 @@ using Gameplay.Services.Player;
 using Gameplay.Services.Player.Config;
 using Gameplay.Services.Tree;
 using Gameplay.Services.Tree.Config;
-using Gameplay.Services.UI.Magic;
-using Gameplay.Services.UI.Magic.Binders;
-using Gameplay.Services.UI.Magic.Config;
+using Gameplay.Services.UI.Gameplay.EndGame;
+using Gameplay.Services.UI.Gameplay.EndGame.Config;
+using Gameplay.Services.UI.Gameplay.Magic;
+using Gameplay.Services.UI.Gameplay.Magic.Binders;
+using Gameplay.Services.UI.Gameplay.Magic.Config;
 using Gameplay.Services.UI.Menu;
 using Gameplay.Services.UI.Menu.Config;
 using GameState;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace DI
@@ -28,7 +28,7 @@ namespace DI
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private CameraConfig cameraConfig;
-        [FormerlySerializedAs("bossDifficultyConfig")] [SerializeField] private BossActivityConfig bossActivityConfig;
+        [SerializeField] private BossActivityConfig bossActivityConfig;
         [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
@@ -36,6 +36,7 @@ namespace DI
         [SerializeField] private BoxEmitterConfig boxEmitterConfig;
         [SerializeField] private ActivityServiceConfig activityServiceConfig;
         [SerializeField] private DeadZoneConfig deadZoneConfig;
+        [SerializeField] private EndGameUIServiceConfig endGameUIServiceConfig;
 
         public override void InstallBindings()
         {
@@ -50,6 +51,7 @@ namespace DI
             Container.BindInstance(boxEmitterConfig);
             Container.BindInstance(activityServiceConfig);
             Container.BindInstance(deadZoneConfig);
+            Container.BindInstance(endGameUIServiceConfig);
 
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
 
@@ -72,6 +74,8 @@ namespace DI
             Container.BindInterfacesAndSelfTo<ActivityService>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<DeadZoneService>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<EndGameUIService>().AsSingle();
         }
 
         private void BindExecutionOrders()

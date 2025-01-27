@@ -1,6 +1,6 @@
 ﻿namespace Signals.GameStates
 {
-    public class StartGameRequest
+    public struct StartGameRequest
     {
         
     }

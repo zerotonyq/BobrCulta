@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gameplay.Magic.Abilities.Base.Config;
-using Gameplay.Magic.Abilities.Base.Pickupable;
 using Gameplay.Services.Activity.Base;
-using Gameplay.Services.UI.Magic.Enum;
-using Signals.Activities;
 using Signals.Activities.Base;
+using Signals.Activities.Boss;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Services.Boss.Config
@@ -19,7 +16,7 @@ namespace Gameplay.Services.Boss.Config
     {
         public List<BossSection> sections = new();
 
-        protected override IActivitySignal ConstructSignal() => new BossActivitySignal();
+        protected override IActivityRequest ConstructSignal() => new BossActivityRequest();
 
         [Serializable]
         public struct BossSection

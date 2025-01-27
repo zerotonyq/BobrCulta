@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gameplay.Core.Base;
-using R3;
-using UnityEngine.AddressableAssets;
+using Gameplay.Core.Container.Base;
+using UnityEngine;
+using Utils.Activate;
+using Utils.Reset;
 
 namespace Gameplay.Core.Container
 {
-    public class ComponentContainer : MonoComponentContainer
+    public class ComponentContainer : MonoComponentContainer, IActivateable, IResetable
     {
         public override List<MonoComponent> Components { get; } = new();
-        
-        private DisposableBag _disposableBag;
 
         public override Task Initialize()
         {
@@ -29,8 +30,26 @@ namespace Gameplay.Core.Container
             return Task.CompletedTask;
         }
 
-        public void Destroy() => Addressables.ReleaseInstance(gameObject);
+        public Action<GameObject> Deactivated { get; set; }
 
-        private void OnDestroy() => _disposableBag.Dispose();
+        public void Activate(Vector3 position)
+        {
+            transform.position = position;
+            gameObject.SetActive(true);
+        }
+
+        public void Deactivate()
+        {
+            gameObject.SetActive(false);
+            Deactivated?.Invoke(gameObject);
+        }
+
+        public void Reset()
+        {
+            foreach (var component in Components)
+            {
+                component.Reset();
+            }
+        }
     }
 }

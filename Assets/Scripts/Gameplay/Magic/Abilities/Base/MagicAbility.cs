@@ -6,7 +6,7 @@ using Gameplay.Core.Movement.Binders;
 using Gameplay.Magic.Abilities.Base.Config;
 using Gameplay.Magic.Effects;
 using Gameplay.Magic.Effects.Base;
-using Gameplay.Services.UI.Magic.Enum;
+using Gameplay.Services.UI.Gameplay.Magic.Enum;
 using UnityEngine;
 using Utils.Activate;
 using Utils.Initialize;
@@ -30,7 +30,7 @@ namespace Gameplay.Magic.Abilities.Base
 
         private Collider _emitterCollider;
 
-        public Action<MagicAbility> Deactivated;
+        public Action<GameObject> Deactivated { get; set; }
 
         private TargetMovementBinderComponent _targetMovementBinder;
         
@@ -94,7 +94,7 @@ namespace Gameplay.Magic.Abilities.Base
 
         public void Deactivate()
         {
-            Deactivated?.Invoke(this);
+            Deactivated?.Invoke(gameObject);
 
             Reset();
             
@@ -185,7 +185,9 @@ namespace Gameplay.Magic.Abilities.Base
 
             GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
+            
             Reset();
+            
             container.AttachAbility(this, _antagonistTypes);
         }
 

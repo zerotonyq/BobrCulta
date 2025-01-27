@@ -1,5 +1,4 @@
-﻿using Gameplay.Services.UI.Magic;
-using Gameplay.Services.UI.Magic.Views;
+﻿using Gameplay.Services.UI.Gameplay.Magic.Views;
 
 namespace Signals
 {

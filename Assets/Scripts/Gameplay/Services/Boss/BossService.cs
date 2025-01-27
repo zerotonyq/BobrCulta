@@ -8,13 +8,17 @@ using Gameplay.Services.Boss.Config;
 using Signals;
 using Signals.Activities;
 using Signals.Activities.Base;
+using Signals.Activities.Boss;
+using Signals.Chapter;
+using Signals.GameStates;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Utils.Reset;
 using Zenject;
 
 namespace Gameplay.Services.Boss
 {
-    public class BossService : GameService, IInitializable
+    public class BossService : GameService, IInitializable, IResetable
     {
         [Inject] private BossActivityConfig _config;
         
@@ -31,23 +35,35 @@ namespace Gameplay.Services.Boss
         public override void Initialize()
         {
             _signalBus.Subscribe<TreeLevelChangedSignal>(SetBossInitPosition);
-            _signalBus.Subscribe<IActivitySignal>(SpawnNext);
+            _signalBus.Subscribe<IActivityRequest>(SpawnNextBoss);
 
             base.Initialize();
         }
 
-        private void SetBossInitPosition(TreeLevelChangedSignal signal) => _bossInitPosition = signal.LevelPosition;
+
+        public void Reset()
+        {
+            _currentBossSectionIndex = 0;
+            NextSection();
+        }
 
         public override void Boot()
         {
-            _signalBus.Fire<NextChapterRequest>();
             NextSection();
             base.Boot();
         }
+        
+        private void SetBossInitPosition(TreeLevelChangedSignal signal) => _bossInitPosition = signal.LevelPosition;
 
-        private async void SpawnNext(IActivitySignal signal)
+        private async void SpawnNextBoss(IActivityRequest request)
         {
-            if (signal is not BossActivitySignal)
+            if (request is not BossActivityRequest)
+                return;
+            
+            if(_currentBossIndex == _bossesConfigs.Count)
+                NextSection();
+
+            if (_bossesConfigs == null)
                 return;
             
             if (_currentBoss) 
@@ -66,21 +82,25 @@ namespace Gameplay.Services.Boss
 
             _currentBoss.transform.position = _bossInitPosition;
 
-            _signalBus.Fire(new NextBossSignal { Boss = _currentBoss });
-
             TargetProvider.SetBoss(_currentBoss.transform);
 
-            if(_currentBossIndex == _bossesConfigs.Count)
-                NextSection();
+  
             
             ++_currentBossIndex;
+            
+            _signalBus.Fire(new BossObtainedSignal { Boss = _currentBoss });
         }
 
         private void NextSection()
         {
-            var bossSectionReference = _config.sections[_currentBossSectionIndex];
-
-            var bossSectionTemp = new BossActivityConfig.BossSection(bossSectionReference);
+            if (_currentBossSectionIndex == _config.sections.Count)
+            {
+                _signalBus.Fire(new EndGameRequest{IsWin = true});
+                _bossesConfigs = null;
+                return;
+            }
+            
+            var bossSectionTemp = new BossActivityConfig.BossSection(_config.sections[_currentBossSectionIndex]);
             
             bossSectionTemp.Generate();
 
@@ -89,12 +109,14 @@ namespace Gameplay.Services.Boss
             _currentBossIndex = 0;
 
             ++_currentBossSectionIndex;
+            
+            _signalBus.Fire<NextChapterRequest>();
         }
 
         private void OnBossDefeated()
         {
             _currentBoss.GetComponent<HealthComponent>().Dead -= OnBossDefeated;
-            _signalBus.Fire<LevelPassedSignal>();
+            _signalBus.Fire<ActivityPassedSignal>();
         }
     }
 }

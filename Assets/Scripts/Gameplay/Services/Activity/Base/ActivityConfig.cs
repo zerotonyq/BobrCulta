@@ -7,10 +7,10 @@ namespace Gameplay.Services.Activity.Base
     {
         public int repeatCount;
         
-        public IActivitySignal Signal => _signal ??= ConstructSignal();
+        public IActivityRequest Request => _request ??= ConstructSignal();
 
-        private IActivitySignal _signal;
+        private IActivityRequest _request;
 
-        protected abstract IActivitySignal ConstructSignal();
+        protected abstract IActivityRequest ConstructSignal();
     }
 }

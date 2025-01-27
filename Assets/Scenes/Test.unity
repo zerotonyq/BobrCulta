@@ -498,6 +498,7 @@ MonoBehaviour:
   boxEmitterConfig: {fileID: 11400000, guid: 3e86c301507ab044294c3cf9e006dc45, type: 2}
   activityServiceConfig: {fileID: 11400000, guid: 60bf34c5f6e7f354db487b04bba864e2, type: 2}
   deadZoneConfig: {fileID: 11400000, guid: 4dde812ea67b93f45ae07b83d14e53d1, type: 2}
+  endGameUIServiceConfig: {fileID: 11400000, guid: f7b30ee8356697646836f02f2cc8e895, type: 2}
 --- !u!114 &1226955529
 MonoBehaviour:
   m_ObjectHideFlags: 0

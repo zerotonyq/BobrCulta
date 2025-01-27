@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MenuUIServiceConfig
   m_EditorClassIdentifier: 
   menuCanvas:
-    m_AssetGUID: 02658c27ebec1a84abf7e857cbbf19fe
+    m_AssetGUID: 8e1e1c77c625d1545b6da8c46c76ea74
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 

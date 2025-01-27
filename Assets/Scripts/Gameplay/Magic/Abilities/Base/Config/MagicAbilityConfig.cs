@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gameplay.Magic.Effects.Base;
-using Gameplay.Services.UI.Magic.Enum;
+using Gameplay.Services.UI.Gameplay.Magic.Enum;
 using UnityEngine;
 
 namespace Gameplay.Magic.Abilities.Base.Config

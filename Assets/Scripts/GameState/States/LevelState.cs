@@ -1,4 +1,8 @@
-﻿using Signals;
+﻿using System.Linq;
+using Signals;
+using Signals.GameStates;
+using Signals.Level;
+using Utils.Reset;
 
 namespace GameState.States
 {
@@ -6,19 +10,35 @@ namespace GameState.States
     {
         public LevelState(GameStateMachine gameStateMachine) : base(gameStateMachine)
         {
-            gameStateMachine.SignalBus.Subscribe<LevelPassedSignal>(Enter);
+            gameStateMachine.SignalBus.Subscribe<LevelPassedSignal>(OnLevelPassed);
+        }
+
+        private void OnLevelPassed(LevelPassedSignal signal)
+        {
+            if (signal.IsWin)
+            {
+                _gameStateMachine.SignalBus.Fire<NextLevelRequest>();
+                return;
+            }
+            
+            _gameStateMachine.SignalBus.Fire(new EndGameRequest{IsWin = false});
         }
 
         public override void Enter()
         {
             base.Enter();
-            _gameStateMachine.SignalBus.Fire<NextLevelRequest>();
+            
+            ResetServices();
+            
+            _gameStateMachine.SignalBus.Fire(new LevelPassedSignal{IsWin = true});
         }
 
-        public override void Exit()
+        private void ResetServices()
         {
-            base.Exit();
-            _gameStateMachine.SignalBus.Fire<ExitLevelRequest>();
+            var services = _gameStateMachine.Services.OfType<IResetable>().ToList();
+
+            foreach (var service in services) 
+                service.Reset();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Gameplay.Core.Character;
 using Gameplay.Services.Base;
 using Gameplay.Services.DeadZone.Config;
 using Signals;
@@ -14,7 +15,7 @@ namespace Gameplay.Services.DeadZone
         [Inject] private DeadZoneConfig _config;
 
         private DeadZoneComponent _deadZoneComponent;
-        
+
         public override void Initialize()
         {
             _signalBus.Subscribe<TreeLevelChangedSignal>(ModeDeadZone);
@@ -23,7 +24,7 @@ namespace Gameplay.Services.DeadZone
 
         private void ModeDeadZone(TreeLevelChangedSignal signal)
         {
-            _deadZoneComponent.transform.position = signal.LevelPosition - Vector3.up * 5;
+            _deadZoneComponent.transform.position = signal.LevelPosition - Vector3.up * _config.verticalOffset;
         }
 
         public override async void Boot()
@@ -32,18 +33,19 @@ namespace Gameplay.Services.DeadZone
                 .GetComponent<DeadZoneComponent>();
 
             _deadZoneComponent.Initialize(_config.deadZoneDimension);
-            
+
             _deadZoneComponent.ColliderDetected += ProcessDetectedCollider;
-            
+
             base.Boot();
         }
 
         private void ProcessDetectedCollider(Collider coll)
         {
-            if (!coll.TryGetComponent(out IActivateable activateable))
-                return;
+            if(coll.TryGetComponent(out CharacterComponent character))
+                character.Die();
             
-            activateable.Deactivate();
+            if (coll.TryGetComponent(out IActivateable activateable))
+                activateable.Deactivate();
         }
     }
 }

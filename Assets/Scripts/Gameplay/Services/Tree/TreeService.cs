@@ -4,18 +4,24 @@ using Cysharp.Threading.Tasks;
 using Gameplay.Services.Base;
 using Gameplay.Services.Tree.Config;
 using Signals;
+using Signals.Activities.Base;
+using Signals.Activities.Boss;
+using Signals.Level;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utils.MeshGeneration;
+using Utils.Reset;
 using Zenject;
 
 namespace Gameplay.Services.Tree
 {
-    public class TreeService : GameService, IInitializable
+    public class TreeService : GameService, IInitializable, IResetable
     {
         [Inject] private TreeServiceConfig _config;
 
         private Transform _container;
+
+        private int _currentMovePartDownCount;
 
         private struct TreePart
         {
@@ -31,17 +37,34 @@ namespace Gameplay.Services.Tree
         public override void Initialize()
         {
             _signalBus.Subscribe<NextLevelRequest>(RebuildNextTreePartFromBuffer);
+
             base.Initialize();
+        }
+
+        public void Reset()
+        {
+            
+            foreach (var treePart in _treeParts)
+            {
+                treePart.PartTransform.SetPositionAndRotation(
+                    treePart.PartTransform.position +
+                    new Vector3(0, _config.partHeight * 2 * (_currentMovePartDownCount), 0), Quaternion.identity);
+                treePart.ConnectorTransform.SetPositionAndRotation(
+                    treePart.ConnectorTransform.position +
+                    new Vector3(0, _config.partHeight * 2*(_currentMovePartDownCount), 0), Quaternion.identity);
+            }
+
+            _currentMovePartDownCount = 0;
         }
 
         public override async void Boot()
         {
             _container = new GameObject("TreePartsContainer").transform;
-            
+
             _container.transform.position = Vector3.zero;
-            
+
             await BuildPartsAndConnectors();
-            
+
             base.Boot();
         }
 
@@ -78,11 +101,11 @@ namespace Gameplay.Services.Tree
                 Debug.Log("cannot dequeue tree part from buffer");
                 return;
             }
-            
+
             part.ConnectorTransform.gameObject.SetActive(true);
 
             var nextPart = _treeParts.Peek();
-            
+
             _signalBus.Fire(new TreeLevelChangedSignal
             {
                 LevelPosition = nextPart.PartTransform.position + new Vector3(0, _config.partHeight / 2, 0),
@@ -103,17 +126,19 @@ namespace Gameplay.Services.Tree
             part.PartRadius = radius;
 
             _treeParts.Enqueue(part);
-            
+
             MovePartDown(part.PartTransform, 2);
             MovePartDown(part.ConnectorTransform);
 
             _lastPart = part;
+
+            ++_currentMovePartDownCount;
         }
 
         private async Task<Transform> CreateTreePart(float radiusTop, float radiusBottom, string name = "TreePart")
         {
             var part = await Addressables.InstantiateAsync(_config.partReference);
-            
+
             part.transform.SetParent(_container);
 
             part.name = name + "_" + _treeParts.Count;
@@ -138,6 +163,11 @@ namespace Gameplay.Services.Tree
             else
                 partTransform.transform.position =
                     _lastPart.PartTransform.position - new Vector3(0, _config.partHeight * heightCount, 0);
+        }
+
+        private void MovePartUp(Transform part, int heightCount)
+        {
+            part.position += new Vector3(0, _config.partHeight * heightCount, 0);
         }
     }
 }

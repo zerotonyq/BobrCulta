@@ -6,12 +6,13 @@ using Utils.Reset;
 namespace Gameplay.Core.Movement
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class MovementComponent : MonoComponent, IResetable
+    public class MovementComponent : MonoComponent
     {
         private Rigidbody _rigidbody;
 
         [SerializeField] private float accelerationForce;
-        [SerializeField] private float maxVelocity;
+        [SerializeField] private float maxHorizontalVelocity;
+        [SerializeField] private float maxVerticalVelocity;
 
         public override void Initialize() => _rigidbody = GetComponent<Rigidbody>();
 
@@ -24,10 +25,8 @@ namespace Gameplay.Core.Movement
                  tr.right * direction.x) * accelerationForce;
 
             _rigidbody.AddForce(resultVelocity);
-            
-            _rigidbody.linearVelocity =
-                Vector3.ClampMagnitude(new Vector3(_rigidbody.linearVelocity.x, 0, _rigidbody.linearVelocity.z),
-                    maxVelocity) + new Vector3(0, Mathf.Clamp(_rigidbody.linearVelocity.y, -maxVelocity, maxVelocity), 0);
+
+            ClampVelocity();
         }
 
         public void AddAcceleration(Vector3 direction)
@@ -36,14 +35,22 @@ namespace Gameplay.Core.Movement
 
             _rigidbody.AddForce(resultVelocity);
 
-            _rigidbody.linearVelocity = Vector3.ClampMagnitude(_rigidbody.linearVelocity, maxVelocity);
+            ClampVelocity();
+        }
+        
+        private void ClampVelocity()
+        {
+            _rigidbody.linearVelocity =
+                Vector3.ClampMagnitude(new Vector3(_rigidbody.linearVelocity.x, 0, _rigidbody.linearVelocity.z),
+                    maxHorizontalVelocity) + new Vector3(0,
+                    Mathf.Clamp(_rigidbody.linearVelocity.y, -maxVerticalVelocity, maxVerticalVelocity), 0);
         }
 
-        public void Reset()
+        public override void Reset()
         {
             if (_rigidbody.isKinematic)
                 return;
-            
+
             _rigidbody.linearVelocity = Vector3.zero;
         }
     }

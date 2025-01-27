@@ -9,7 +9,6 @@ namespace Gameplay.Core.Rotation
     {
         private Transform _target;
 
-
         public override void Initialize()
         {
             GetComponent<TargetTrackingComponent>().TargetChanged += SetTarget;

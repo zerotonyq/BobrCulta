@@ -1,4 +1,5 @@
 ﻿using Signals;
+using Signals.Initialization;
 
 namespace GameState.States
 {

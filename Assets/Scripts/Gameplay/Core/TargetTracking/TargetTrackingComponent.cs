@@ -6,7 +6,7 @@ using Utils.Reset;
 
 namespace Gameplay.Core.TargetTracking
 {
-    public class TargetTrackingComponent : MonoComponent,IResetable
+    public class TargetTrackingComponent : MonoComponent
     {
         [SerializeField] private TargetType targetType;
        [field: SerializeField] public Transform Target { get; private set; }
@@ -45,6 +45,6 @@ namespace Gameplay.Core.TargetTracking
             Player
         }
 
-        public void Reset() => SetTarget(null);
+        public override void Reset() => SetTarget(null);
     }
 }

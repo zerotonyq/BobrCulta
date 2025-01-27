@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 using Gameplay.Services.Base;
 using Gameplay.Services.Camera.Config;
 using Signals;
+using Signals.GameStates;
+using Signals.Player;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -25,36 +27,46 @@ namespace Gameplay.Services.Camera
             
             _defaultTarget = (await Addressables.InstantiateAsync(_cameraConfig.defaultTarget)).transform;
                 
+            _signalBus.Subscribe<EndGameRequest>(SetDefaultTarget);
+            _signalBus.Subscribe<StartGameRequest>(RemoveDefaultTarget);
+            
             _signalBus.Subscribe<PlayerInitializedSignal>(a =>
             {
                 SetTarget(a.Player.transform);
                 AddLookAt(a.Player.transform);
             });
 
-            _signalBus.Subscribe<NextBossSignal>(a => { AddLookAt(a.Boss.transform); });
+            _signalBus.Subscribe<BossObtainedSignal>(a => { AddLookAt(a.Boss.transform); });
 
             _camera.Target.CustomLookAtTarget = true;
             _camera.Target.LookAtTarget = _camera.GetComponentInChildren<CinemachineTargetGroup>().transform;
             
-            //SetTarget(_defaultTarget);
-            AddLookAt(_defaultTarget);
+            SetDefaultTarget();
 
             base.Initialize();
         }
 
+
         public override void Boot()
         {
-            TryRemoveLookAt(_defaultTarget);
+            RemoveDefaultTarget();
             base.Boot();
         }
+        
+        private void SetDefaultTarget()
+        {
+            SetTarget(_defaultTarget);
+            AddLookAt(_defaultTarget);
+        }
+        private void RemoveDefaultTarget() => TryRemoveLookAt(_defaultTarget);
+
+        private void SetTarget(Transform target) => _camera.Target.TrackingTarget = target;
 
         private void AddLookAt(Transform target)
         {
             var targetGroup = _camera.GetComponentInChildren<CinemachineTargetGroup>();
             targetGroup.Targets.Add(new CinemachineTargetGroup.Target { Object = target, Radius = 2, Weight = 2 });
         }
-
-        private void SetTarget(Transform target) => _camera.Target.TrackingTarget = target;
         
         private void TryRemoveLookAt(Transform target)
         {

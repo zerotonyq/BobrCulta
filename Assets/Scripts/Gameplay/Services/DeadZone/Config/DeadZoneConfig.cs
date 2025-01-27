@@ -8,5 +8,6 @@ namespace Gameplay.Services.DeadZone.Config
     {
         public AssetReferenceGameObject deadZoneReference;
         public float deadZoneDimension;
+        public float verticalOffset;
     }
 }

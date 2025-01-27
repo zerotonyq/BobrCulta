@@ -40,6 +40,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e1e1c77c625d1545b6da8c46c76ea74
+    m_Address: Assets/Prefabs/UI/Gameplay/EndGame/EndGameView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf53f18ef3516e741974bcaff89ae634
     m_Address: Assets/Prefabs/CinemachineCamera.prefab
     m_ReadOnly: 0

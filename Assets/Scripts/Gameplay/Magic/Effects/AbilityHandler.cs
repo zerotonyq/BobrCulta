@@ -47,8 +47,10 @@ namespace Gameplay.Magic.Effects
             magicAbility.ApplyEffects(GetComponent<ComponentContainer>());
         }
 
-        private void DetachAbility(MagicAbility ability)
+        private void DetachAbility(GameObject obj)
         {
+            var ability = obj.GetComponent<MagicAbility>();
+            
             if (!_handledAbilities.Contains(ability))
             {
                 Debug.LogError("there is no such ability to detach " + ability.name);

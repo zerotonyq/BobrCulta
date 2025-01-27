@@ -1,32 +1,55 @@
-﻿using Gameplay.Magic.Boxes;
-using Gameplay.Magic.Boxes.Emitter.Config;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Gameplay.Services.Base;
+using Gameplay.Services.Boxes.Emitter.Config;
 using Signals;
+using Signals.Chapter;
+using Signals.GameStates;
+using Signals.Level;
 using UnityEngine;
+using Utils.Coroutines;
 using Utils.Pooling;
+using Utils.Reset;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.Services.Boxes.Emitter
 {
-    public class BoxEmitter : GameService, IInitializable
+    public class BoxEmitter : GameService, IInitializable, IResetable
     {
         [Inject] private BoxEmitterConfig _config;
 
+        private CoroutineExecutor _coroutineExecutor;
+        private Coroutine _currentEmissionCoroutine;
+        private YieldInstruction _currentWaitInstruction;
+        
+        private float _currentEmissionPeriod;
+        
         private Transform _container;
 
         private float _radius;
         private Vector3 _position;
 
+        private List<BoxComponent> _boxes = new();
+
         public override void Initialize()
         {
             _signalBus.Subscribe<TreeLevelChangedSignal>(ChangeEmissionField);
-            _signalBus.Subscribe<NextBossSignal>(EmitBoxes);
-
+            _signalBus.Subscribe<NextLevelRequest>(EmitBoxes);
+            _signalBus.Subscribe<EndGameRequest>(StopEmission);
+            _signalBus.Subscribe<NextChapterRequest>(UpdateEmissionPeriod);
+            
+            _currentEmissionPeriod = _config.emissionPeriod;
+            _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
+            
             base.Initialize();
         }
 
         public override void Boot()
         {
+            _coroutineExecutor =
+                new GameObject(nameof(BoxEmitter) + "_CoroutineExecutor").AddComponent<CoroutineExecutor>();
             _container = new GameObject("BoxContainer").transform;
             _container.transform.position = Vector3.zero;
             base.Boot();
@@ -34,15 +57,28 @@ namespace Gameplay.Services.Boxes.Emitter
 
         private void EmitBoxes()
         {
-            for (var i = 0; i < 5; ++i)
-            {
-                var position = _position +
-                               new Vector3(Random.Range(-_radius, _radius), 1, Random.Range(-_radius, _radius));
-
-                CreateBox(position);
-            }
+            if (_currentEmissionCoroutine != null)
+                return;
+            
+            _currentEmissionCoroutine = _coroutineExecutor.Add(EmissionCoroutine());
         }
 
+        private IEnumerator EmissionCoroutine()
+        {
+            while (true)
+            {
+                for (var i = 0; i < 5; ++i)
+                {
+                    var position = _position +
+                                   new Vector3(Random.Range(-_radius, _radius), 5, Random.Range(-_radius, _radius));
+
+                    CreateBox(position);
+                }
+                Debug.Log(_currentEmissionPeriod);
+                yield return _currentWaitInstruction;
+            }
+        }
+        
         private void CreateBox(Vector3 position)
         {
             var box = PoolManager.GetFromPool(_config.boxPrefab.GetType(), _config.boxPrefab.gameObject)
@@ -53,12 +89,31 @@ namespace Gameplay.Services.Boxes.Emitter
             box.Initialize(_config.pickupables);
 
             box.Activate(position);
+            
+            _boxes.Add(box);
         }
-
+        
+        private void UpdateEmissionPeriod()
+        {
+            _currentEmissionPeriod += _config.emissionPeriodIncreaseFactor;
+            _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
+        }
+        
         private void ChangeEmissionField(TreeLevelChangedSignal signal)
         {
             _radius = signal.Radius;
             _position = signal.LevelPosition;
+        }
+        
+        private void StopEmission()
+        {
+            if(_currentEmissionCoroutine != null)
+                _coroutineExecutor.Remove(_currentEmissionCoroutine);
+        }
+
+        public void Reset()
+        {
+            foreach (var box in _boxes) box.Deactivate();
         }
     }
 }

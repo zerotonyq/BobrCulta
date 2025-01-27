@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerationForce: 100
-  maxVelocity: 10
+  maxHorizontalVelocity: 5
+  maxVerticalVelocity: 10
 --- !u!114 &6751692181518132500
 MonoBehaviour:
   m_ObjectHideFlags: 0

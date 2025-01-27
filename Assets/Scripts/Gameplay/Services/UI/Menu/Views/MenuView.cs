@@ -6,5 +6,6 @@ namespace Gameplay.Services.UI.Menu.Views
     public class MenuView : MonoBehaviour
     {
         public Button startGameButton;
+        public Button exitGameButton;
     }
 }

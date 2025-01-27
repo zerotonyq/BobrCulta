@@ -6,8 +6,9 @@ using Gameplay.Core.Pickup.Base;
 using Gameplay.Core.TargetTracking;
 using Gameplay.Magic.Abilities.Base;
 using Gameplay.Magic.Abilities.Base.Pickupable;
-using Gameplay.Services.UI.Magic.Views;
+using Gameplay.Services.UI.Gameplay.Magic.Views;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils.Pooling;
 
 namespace Gameplay.Magic.Abilities
@@ -17,7 +18,7 @@ namespace Gameplay.Magic.Abilities
     {
         [SerializeField] private Transform firePoint;
 
-        private readonly List<MagicAbility> _projectilesPrefabs = new();
+        [SerializeField] private List<MagicAbility> projectilesPrefabs = new();
 
         public Action<MagicPickupable> MagicPickupableProvided;
 
@@ -36,15 +37,15 @@ namespace Gameplay.Magic.Abilities
         {
             if (pickupable is not MagicPickupable magicPickupable) return;
 
-            _projectilesPrefabs.Add(magicPickupable.magicAbilityPrefab);
+            projectilesPrefabs.Add(magicPickupable.magicAbilityPrefab);
             MagicPickupableProvided?.Invoke(magicPickupable);
         }
 
-        public void AddMagicAbilityPrefab(MagicAbility magicAbility) => _projectilesPrefabs.Add(magicAbility);
+        public void AddMagicAbilityPrefab(MagicAbility magicAbility) => projectilesPrefabs.Add(magicAbility);
 
         public void EmitMagicAbility(MagicProjectilesUIView.MagicTypeArgs args)
         {
-            var abilityPrefab = _projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
+            var abilityPrefab = projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
 
             var ability = PoolManager.GetFromPool(abilityPrefab.GetType(), abilityPrefab.gameObject)
                 .GetComponent<MagicAbility>();
@@ -55,12 +56,12 @@ namespace Gameplay.Magic.Abilities
 
             ability.Use(transform, _targetTrackingComponent.Target, args.ApplicationType);
 
-            _projectilesPrefabs.Remove(abilityPrefab);
+            projectilesPrefabs.Remove(abilityPrefab);
         }
 
         public void RemoveProjectile(MagicProjectilesUIView.MagicTypeArgs args)
         {
-            var projectilePrefab = _projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
+            var projectilePrefab = projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
 
             if (projectilePrefab == null)
             {
@@ -68,7 +69,12 @@ namespace Gameplay.Magic.Abilities
                 return;
             }
 
-            _projectilesPrefabs.Remove(projectilePrefab);
+            projectilesPrefabs.Remove(projectilePrefab);
+        }
+
+        public override void Reset()
+        {
+            projectilesPrefabs.Clear();
         }
     }
 }

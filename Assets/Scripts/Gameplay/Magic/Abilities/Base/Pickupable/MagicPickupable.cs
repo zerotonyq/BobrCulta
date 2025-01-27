@@ -1,4 +1,4 @@
-﻿using Gameplay.Services.UI.Magic.Enum;
+﻿using Gameplay.Services.UI.Gameplay.Magic.Enum;
 using UnityEngine;
 
 namespace Gameplay.Magic.Abilities.Base.Pickupable
