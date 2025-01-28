@@ -9,10 +9,10 @@ using UnityEngine;
 
 namespace Gameplay.Services.Boss
 {
-    [RequireComponent(typeof(MagicAbilityEmitter))]
+    [RequireComponent(typeof(MagicAbilityComponent))]
     public class AutomationMagicComponentBinder : Binder
     {
-        private MagicAbilityEmitter _magicAbilityEmitter;
+        private MagicAbilityComponent _magicAbilityComponent;
 
         [SerializeField] private List<BossActivityConfig.BossConfig.AbilityInterval> _abilityIntervals = new();
 
@@ -21,7 +21,7 @@ namespace Gameplay.Services.Boss
 
         public override void Bind()
         {
-            _magicAbilityEmitter = GetComponent<MagicAbilityEmitter>();
+            _magicAbilityComponent = GetComponent<MagicAbilityComponent>();
 
             _automationCoroutine = StartCoroutine(AutomationCoroutine());
         }
@@ -41,11 +41,11 @@ namespace Gameplay.Services.Boss
 
             while (true)
             {
-                _magicAbilityEmitter.AddMagicAbilityPrefab(_abilityIntervals[index].abilityConfig.abilityPrefab);
+                _magicAbilityComponent.AddMagicAbilityPrefab(_abilityIntervals[index].abilityConfig.abilityPrefab);
 
                 var type = _abilityIntervals[index].abilityConfig.abilityPrefab.GetType();
                 
-                _magicAbilityEmitter.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].abilityConfig.primaryApplicationType));
+                _magicAbilityComponent.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].abilityConfig.primaryApplicationType));
 
                 var current = instructions[index];
 

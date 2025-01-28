@@ -57,8 +57,7 @@ namespace Gameplay.Services.Boxes.Emitter
 
         private void EmitBoxes()
         {
-            if (_currentEmissionCoroutine != null)
-                return;
+            StopEmission();
             
             _currentEmissionCoroutine = _coroutineExecutor.Add(EmissionCoroutine());
         }
@@ -74,7 +73,6 @@ namespace Gameplay.Services.Boxes.Emitter
 
                     CreateBox(position);
                 }
-                Debug.Log(_currentEmissionPeriod);
                 yield return _currentWaitInstruction;
             }
         }
@@ -84,6 +82,8 @@ namespace Gameplay.Services.Boxes.Emitter
             var box = PoolManager.GetFromPool(_config.boxPrefab.GetType(), _config.boxPrefab.gameObject)
                 .GetComponent<BoxComponent>();
 
+            box.Reset();
+            
             box.transform.SetParent(_container);
             
             box.Initialize(_config.pickupables);
@@ -109,11 +109,16 @@ namespace Gameplay.Services.Boxes.Emitter
         {
             if(_currentEmissionCoroutine != null)
                 _coroutineExecutor.Remove(_currentEmissionCoroutine);
+
+            _currentEmissionCoroutine = null;
         }
 
         public void Reset()
         {
+            StopEmission();
             foreach (var box in _boxes) box.Deactivate();
+            _currentEmissionPeriod = _config.emissionPeriod;
+            _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
         }
     }
 }

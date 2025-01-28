@@ -66,6 +66,6 @@ namespace Gameplay.Services.Player
         }
 
         private void OnPlayerDead() =>
-            _signalBus.Fire(new LevelPassedSignal { IsWin = false });
+            _signalBus.Fire(new LevelPassedSignal { PassedType = LevelPassedSignal.LevelPassedType.Loose });
     }
 }

@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Gameplay.Services.Boxes
 {
-    public class BoxComponent : MonoBehaviour, IPickupable, IActivateable, IResetable
+    public class BoxComponent : Pickupable
     {
         [SerializeField] private float emissionDelay;
         [SerializeField] private float emissionHorizontalForce;
@@ -29,7 +29,7 @@ namespace Gameplay.Services.Boxes
             _delayInstruction = new WaitForSeconds(emissionDelay);
         }
 
-        public void Pickup()
+        public override void Pickup()
         {
             if (_currentEmissionCoroutine != null)
                 return;
@@ -63,16 +63,16 @@ namespace Gameplay.Services.Boxes
             Deactivate();
         }
 
-        public Action<GameObject> Deactivated { get; set; }
+        
 
-        public void Activate(Vector3 position)
+        public override void Activate(Vector3 position)
         {
             transform.position = position;
             Deactivated?.Invoke(gameObject);
             gameObject.SetActive(true);
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
             if (_currentEmissionCoroutine != null)
             {
@@ -85,6 +85,10 @@ namespace Gameplay.Services.Boxes
             gameObject.SetActive(false);
         }
 
-        public void Reset() => transform.rotation = Quaternion.identity;
+        public override void Reset()
+        {
+            base.Reset();
+            transform.rotation = Quaternion.identity;
+        }
     }
 }

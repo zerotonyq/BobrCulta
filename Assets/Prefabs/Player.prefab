@@ -346,6 +346,7 @@ GameObject:
   - component: {fileID: 2617749319780534689}
   - component: {fileID: 7122692594244755304}
   - component: {fileID: 6102649874927396228}
+  - component: {fileID: 4942743614455056443}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -535,6 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 6429897924449193593}
+  projectilesPrefabs: []
 --- !u!114 &2617749319780534689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,3 +576,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23f3e85c2e5470d955e4777cab69781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4942743614455056443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8111428072681933137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090448d834ca41c18994e039ff2bc1e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialAmount: 0

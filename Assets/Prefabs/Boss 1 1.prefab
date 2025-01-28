@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2551091718067549686}
   - component: {fileID: 8721996167373365196}
   - component: {fileID: 8626967524356652490}
+  - component: {fileID: 5349273005891108080}
   m_Layer: 0
   m_Name: Boss 1 1
   m_TagString: Untagged
@@ -105,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454bbab2471c4bcd9e6a942e946f33b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 2
   health: 0
 --- !u!136 &2790789243297073936
 CapsuleCollider:
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 5306764486407984746}
+  projectilesPrefabs: []
 --- !u!114 &8721996167373365196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +184,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _handledAbilities: []
+--- !u!114 &5349273005891108080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362665227816354846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090448d834ca41c18994e039ff2bc1e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialAmount: 5
 --- !u!1 &3923220905329950107
 GameObject:
   m_ObjectHideFlags: 0

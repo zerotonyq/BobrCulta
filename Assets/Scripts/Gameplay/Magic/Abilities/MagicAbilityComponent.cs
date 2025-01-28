@@ -14,7 +14,7 @@ using Utils.Pooling;
 namespace Gameplay.Magic.Abilities
 {
     [RequireComponent(typeof(PickupComponent), typeof(TargetTrackingComponent))]
-    public class MagicAbilityEmitter : MonoComponent
+    public class MagicAbilityComponent : MonoComponent
     {
         [SerializeField] private Transform firePoint;
 
@@ -27,8 +27,8 @@ namespace Gameplay.Magic.Abilities
 
         public override void Initialize()
         {
-            _pickupComponent = GetComponent<PickupComponent>();
             _targetTrackingComponent = GetComponent<TargetTrackingComponent>();
+            _pickupComponent = GetComponent<PickupComponent>();
 
             _pickupComponent.PickedUp += OnPickupObtained;
         }

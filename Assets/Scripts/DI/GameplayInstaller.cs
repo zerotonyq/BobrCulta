@@ -10,6 +10,10 @@ using Gameplay.Services.DeadZone;
 using Gameplay.Services.DeadZone.Config;
 using Gameplay.Services.Player;
 using Gameplay.Services.Player.Config;
+using Gameplay.Services.Pool;
+using Gameplay.Services.PoolablesRegistration.Config;
+using Gameplay.Services.Shop;
+using Gameplay.Services.Shop.Config;
 using Gameplay.Services.Tree;
 using Gameplay.Services.Tree.Config;
 using Gameplay.Services.UI.Gameplay.EndGame;
@@ -28,8 +32,13 @@ namespace DI
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private CameraConfig cameraConfig;
+
+        [Space, Header("Activities")] 
+        
         [SerializeField] private BossActivityConfig bossActivityConfig;
-        [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
+        [SerializeField] private ShopActivityConfig shopActivityConfig;
+
+        [Space] [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
         [SerializeField] private TreeServiceConfig treeServiceConfig;
@@ -37,6 +46,7 @@ namespace DI
         [SerializeField] private ActivityServiceConfig activityServiceConfig;
         [SerializeField] private DeadZoneConfig deadZoneConfig;
         [SerializeField] private EndGameUIServiceConfig endGameUIServiceConfig;
+        [SerializeField] private PoolableRegistrationServiceConfig poolableRegistrationServiceConfig;
 
         public override void InstallBindings()
         {
@@ -52,6 +62,8 @@ namespace DI
             Container.BindInstance(activityServiceConfig);
             Container.BindInstance(deadZoneConfig);
             Container.BindInstance(endGameUIServiceConfig);
+            Container.BindInstance(poolableRegistrationServiceConfig);
+            Container.BindInstance(shopActivityConfig);
 
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
 
@@ -68,14 +80,18 @@ namespace DI
             Container.BindInterfacesAndSelfTo<MenuUIService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<TreeService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<BoxEmitter>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<ActivityService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<DeadZoneService>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<EndGameUIService>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<PoolableRegistrationService>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<ShopService>().AsSingle();
         }
 
         private void BindExecutionOrders()

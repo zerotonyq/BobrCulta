@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645912cae56d4506adfe0283985690c2, type: 3}
   m_Name: TreeServiceConfig
   m_EditorClassIdentifier: 
-  initialPartCount: 3
+  initialPartCount: 20
   minPartRadius: 10
   maxPartRadius: 20
   partHeight: 5

@@ -46,6 +46,7 @@ namespace DI
             Container.DeclareSignal<TreeLevelChangedSignal>();
 
             Container.DeclareSignalWithInterfaces<BossActivityRequest>();
+            Container.DeclareSignalWithInterfaces<ShopActivityRequest>();
 
             Container.DeclareSignal<ActivityPassedSignal>();
 

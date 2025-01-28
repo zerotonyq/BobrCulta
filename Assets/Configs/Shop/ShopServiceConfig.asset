@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e08f255983244bbbacf9b53a354dc4b, type: 3}
-  m_Name: ActivityServiceConfig
+  m_Script: {fileID: 11500000, guid: b78a8b90217f4df78b239d4357e4a075, type: 3}
+  m_Name: ShopServiceConfig
   m_EditorClassIdentifier: 
-  activityConfigs:
-  - {fileID: 11400000, guid: 3a1e80ab16519e240bee0ca53d3a07b2, type: 2}
-  - {fileID: 11400000, guid: 2f8b21bc388a2c74e9386bc174a064fd, type: 2}
+  repeatCount: 1
+  goodPrefabs: []

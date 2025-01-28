@@ -491,6 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraConfig: {fileID: 11400000, guid: 8090874d1f8be0544a8a53253dfe3b3a, type: 2}
   bossActivityConfig: {fileID: 11400000, guid: 3a1e80ab16519e240bee0ca53d3a07b2, type: 2}
+  shopActivityConfig: {fileID: 11400000, guid: 2f8b21bc388a2c74e9386bc174a064fd, type: 2}
   menuUIManagerConfig: {fileID: 11400000, guid: 89b8fed65e60f3c4ab1738f7ea36f2c1, type: 2}
   playerConfig: {fileID: 11400000, guid: db15040d9d73ecb4b9c255bbaa1ef05d, type: 2}
   magicProjectilesUIServiceConfig: {fileID: 11400000, guid: 5e3fb867032d8784a9a1db7edc8de5f6, type: 2}
@@ -499,6 +500,7 @@ MonoBehaviour:
   activityServiceConfig: {fileID: 11400000, guid: 60bf34c5f6e7f354db487b04bba864e2, type: 2}
   deadZoneConfig: {fileID: 11400000, guid: 4dde812ea67b93f45ae07b83d14e53d1, type: 2}
   endGameUIServiceConfig: {fileID: 11400000, guid: f7b30ee8356697646836f02f2cc8e895, type: 2}
+  poolableRegistrationServiceConfig: {fileID: 11400000, guid: 911339f427eaf2a43be676a0b3f1e157, type: 2}
 --- !u!114 &1226955529
 MonoBehaviour:
   m_ObjectHideFlags: 0

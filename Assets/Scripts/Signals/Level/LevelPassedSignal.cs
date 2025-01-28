@@ -2,6 +2,14 @@
 {
     public class LevelPassedSignal
     {
-        public bool IsWin;
+        public LevelPassedType PassedType;
+
+        public enum LevelPassedType
+        {
+            None,
+            Loose,
+            Next,
+            Win
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Signals;
 using Signals.GameStates;
 using Signals.Level;
@@ -15,13 +16,22 @@ namespace GameState.States
 
         private void OnLevelPassed(LevelPassedSignal signal)
         {
-            if (signal.IsWin)
+            switch (signal.PassedType)
             {
-                _gameStateMachine.SignalBus.Fire<NextLevelRequest>();
-                return;
+                case LevelPassedSignal.LevelPassedType.None:
+                    break;
+                case LevelPassedSignal.LevelPassedType.Loose:
+                    _gameStateMachine.SignalBus.Fire(new EndGameRequest{IsWin = false});
+                    break;
+                case LevelPassedSignal.LevelPassedType.Next:
+                    _gameStateMachine.SignalBus.Fire<NextLevelRequest>();
+                    break;
+                case LevelPassedSignal.LevelPassedType.Win:
+                    _gameStateMachine.SignalBus.Fire(new EndGameRequest{IsWin = true});
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            
-            _gameStateMachine.SignalBus.Fire(new EndGameRequest{IsWin = false});
         }
 
         public override void Enter()
@@ -30,7 +40,7 @@ namespace GameState.States
             
             ResetServices();
             
-            _gameStateMachine.SignalBus.Fire(new LevelPassedSignal{IsWin = true});
+            _gameStateMachine.SignalBus.Fire(new LevelPassedSignal{PassedType = LevelPassedSignal.LevelPassedType.Next});
         }
 
         private void ResetServices()

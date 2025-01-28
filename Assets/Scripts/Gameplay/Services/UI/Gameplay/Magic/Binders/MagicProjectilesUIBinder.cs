@@ -9,7 +9,7 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Binders
 {
     public class MagicProjectilesUIBinder : GameService, IInitializable
     {
-        private MagicAbilityEmitter _magicAbilityEmitter;
+        private MagicAbilityComponent _magicAbilityComponent;
         private MagicProjectilesUIView _magicProjectilesUIView;
 
         private bool _isBinded;
@@ -29,28 +29,28 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Binders
 
         private void OnMagicComponentObtained(PlayerInitializedSignal obj)
         {
-            _magicAbilityEmitter = obj.Player.GetComponent<MagicAbilityEmitter>();
+            _magicAbilityComponent = obj.Player.GetComponent<MagicAbilityComponent>();
             CheckComponents();
         }
 
         private void CheckComponents()
         {
-            if (!_magicAbilityEmitter || !_magicProjectilesUIView)
+            if (!_magicAbilityComponent || !_magicProjectilesUIView)
                 return;
 
             if (_isBinded)
                 return;
             
-            Bind(_magicAbilityEmitter, _magicProjectilesUIView);
+            Bind(_magicAbilityComponent, _magicProjectilesUIView);
         }
 
 
-        private void Bind(MagicAbilityEmitter magicAbilityEmitter, MagicProjectilesUIView magicProjectilesUIView)
+        private void Bind(MagicAbilityComponent magicAbilityComponent, MagicProjectilesUIView magicProjectilesUIView)
         {
-            magicAbilityEmitter.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
+            magicAbilityComponent.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
 
-            magicProjectilesUIView.MagicTypeProvided += magicAbilityEmitter.EmitMagicAbility;
-            magicProjectilesUIView.MagicTypeRemoved += magicAbilityEmitter.RemoveProjectile;
+            magicProjectilesUIView.MagicTypeProvided += magicAbilityComponent.EmitMagicAbility;
+            magicProjectilesUIView.MagicTypeRemoved += magicAbilityComponent.RemoveProjectile;
 
             _isBinded = true;
         }

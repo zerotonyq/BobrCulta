@@ -10,6 +10,7 @@ namespace Gameplay.Core.Health
         [SerializeField] private int maxHealth = 10;
         [SerializeField] private int health;
 
+        public Action HealthDecreased;
         public Action Dead;
 
         public override void Initialize() => Reset();
@@ -21,14 +22,17 @@ namespace Gameplay.Core.Health
                 health = maxHealth;
                 return;
             }
-
+            
+            if(count < 0)
+                HealthDecreased?.Invoke();
+            
             if (health + count <= 0)
             {
                 health = 0;
                 Dead?.Invoke();
                 return;
             }
-
+            
             health += count;
         }
 

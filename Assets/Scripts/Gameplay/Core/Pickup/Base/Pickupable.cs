@@ -11,13 +11,13 @@ namespace Gameplay.Core.Pickup.Base
     {
         public Action<GameObject> Deactivated { get; set; }
 
-        public void Activate(Vector3 position)
+        public virtual void Activate(Vector3 position)
         {
             transform.position = position;
             gameObject.SetActive(true);
         }
 
-        public void Deactivate()
+        public virtual void Deactivate()
         {
             Reset();
             Deactivated?.Invoke(gameObject);
@@ -25,7 +25,11 @@ namespace Gameplay.Core.Pickup.Base
             PoolManager.AddToPool(GetType(), gameObject);
         }
 
-        public abstract void Reset();
+        public virtual void Reset()
+        {
+            GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        }
 
         public virtual void Pickup() => Deactivate();
     }

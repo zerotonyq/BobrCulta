@@ -7,6 +7,13 @@ namespace Utils.Pooling
     public static class PoolManager
     {
         private static Dictionary<Type, Pool<GameObject>> _poolables = new();
+        private static Dictionary<Type, GameObject> _prefabs = new();
+
+        public static void RegisterPrefab(Type t, GameObject prefab)
+        {
+            ValidatePool(t);
+            _prefabs.TryAdd(t, prefab);
+        }
 
         public static void AddToPool(Type t, GameObject poolable)
         {
@@ -30,6 +37,23 @@ namespace Utils.Pooling
             
             var result = GameObject.Instantiate(prefab);
             result.SetActive(false);
+            return result;
+        }
+        
+        public static GameObject GetFromPool(Type t)
+        {
+            ValidatePool(t);
+
+            if (_poolables[t].PoolQueue.Count != 0) 
+                return _poolables[t].PoolQueue.Dequeue();
+            
+            if(!_prefabs.TryGetValue(t, out var prefab))
+                Debug.LogError("There is no prefab to get from pool");
+            
+            var result = GameObject.Instantiate(prefab);
+            
+            result.SetActive(false);
+            
             return result;
         }
 

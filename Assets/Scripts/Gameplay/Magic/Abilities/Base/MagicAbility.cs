@@ -117,6 +117,9 @@ namespace Gameplay.Magic.Abilities.Base
 
         public void ApplyEffects(ComponentContainer componentContainer)
         {
+            if (!gameObject.activeSelf)
+                return;
+            
             ResetEffects();
 
             foreach (var effectAndConfig in _effects)
@@ -174,6 +177,7 @@ namespace Gameplay.Magic.Abilities.Base
 
         public virtual void OnTriggerEnter(Collider other)
         {
+            
             if (CheckSelfCollision(other))
                 return;
 
@@ -182,6 +186,7 @@ namespace Gameplay.Magic.Abilities.Base
                 Deactivate();
                 return;
             }
+            
 
             GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
