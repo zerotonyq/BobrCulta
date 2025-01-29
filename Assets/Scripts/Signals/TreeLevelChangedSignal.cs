@@ -2,7 +2,7 @@
 
 namespace Signals
 {
-    public class TreeLevelChangedSignal
+    public struct TreeLevelChangedSignal
     {
         public Vector3 LevelPosition;
         public float Radius;

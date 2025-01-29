@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: ShopServiceConfig
   m_EditorClassIdentifier: 
   repeatCount: 1
-  goodPrefabs: []
+  shopExitPickupable: {fileID: 9088792514070511704, guid: 9087b5795b043984fb2853680ea850ab, type: 3}
+  shopBoxConfigs:
+  - pickupablePrefab: {fileID: -6840826719187674903, guid: 28fad6047d6f96346bee73c4f6c06e1f, type: 3}
+    price: 1

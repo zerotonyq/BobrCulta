@@ -43,15 +43,14 @@ namespace Gameplay.Services.Tree
 
         public void Reset()
         {
-            
             foreach (var treePart in _treeParts)
             {
                 treePart.PartTransform.SetPositionAndRotation(
                     treePart.PartTransform.position +
-                    new Vector3(0, _config.partHeight * 2 * (_currentMovePartDownCount), 0), Quaternion.identity);
+                    new Vector3(0, _config.partHeight * 2 * _currentMovePartDownCount, 0), Quaternion.identity);
                 treePart.ConnectorTransform.SetPositionAndRotation(
                     treePart.ConnectorTransform.position +
-                    new Vector3(0, _config.partHeight * 2*(_currentMovePartDownCount), 0), Quaternion.identity);
+                    new Vector3(0, _config.partHeight * 2 * _currentMovePartDownCount, 0), Quaternion.identity);
             }
 
             _currentMovePartDownCount = 0;

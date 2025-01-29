@@ -4,6 +4,6 @@ namespace Signals
 {
     public class MagicProjectilesUIViewInitialized
     {
-        public MagicProjectilesUIView View;
+        public MagicProjectilesBarrel View;
     }
 }

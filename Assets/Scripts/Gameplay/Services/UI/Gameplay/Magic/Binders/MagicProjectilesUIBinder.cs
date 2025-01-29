@@ -10,7 +10,7 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Binders
     public class MagicProjectilesUIBinder : GameService, IInitializable
     {
         private MagicAbilityComponent _magicAbilityComponent;
-        private MagicProjectilesUIView _magicProjectilesUIView;
+        private MagicProjectilesBarrel _magicProjectilesBarrel;
 
         private bool _isBinded;
         
@@ -23,7 +23,7 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Binders
 
         private void OnMagicProjectilesUIViewObtained(MagicProjectilesUIViewInitialized obj)
         {
-            _magicProjectilesUIView = obj.View;
+            _magicProjectilesBarrel = obj.View;
             CheckComponents();
         }
 
@@ -35,22 +35,22 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Binders
 
         private void CheckComponents()
         {
-            if (!_magicAbilityComponent || !_magicProjectilesUIView)
+            if (!_magicAbilityComponent || !_magicProjectilesBarrel)
                 return;
 
             if (_isBinded)
                 return;
             
-            Bind(_magicAbilityComponent, _magicProjectilesUIView);
+            Bind(_magicAbilityComponent, _magicProjectilesBarrel);
         }
 
 
-        private void Bind(MagicAbilityComponent magicAbilityComponent, MagicProjectilesUIView magicProjectilesUIView)
+        private void Bind(MagicAbilityComponent magicAbilityComponent, MagicProjectilesBarrel magicProjectilesBarrel)
         {
-            magicAbilityComponent.MagicPickupableProvided += magicProjectilesUIView.OnMagicProjectileProvided;
+            magicAbilityComponent.MagicPickupableProvided += magicProjectilesBarrel.OnMagicProjectileProvided;
 
-            magicProjectilesUIView.MagicTypeProvided += magicAbilityComponent.EmitMagicAbility;
-            magicProjectilesUIView.MagicTypeRemoved += magicAbilityComponent.RemoveProjectile;
+            magicProjectilesBarrel.MagicTypeProvided += magicAbilityComponent.EmitMagicAbility;
+            magicProjectilesBarrel.MagicTypeRemoved += magicAbilityComponent.RemoveProjectile;
 
             _isBinded = true;
         }

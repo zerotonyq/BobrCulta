@@ -2,8 +2,8 @@
 
 namespace Signals.Activities
 {
-    public class ShopActivityRequest : IActivityRequest
+    public struct ShopActivityRequest : IActivityRequest
     {
-        
+        public TreeLevelChangedSignal TreeLevelChangedSignal { get; set; }
     }
 }

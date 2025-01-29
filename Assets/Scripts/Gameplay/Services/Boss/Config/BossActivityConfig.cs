@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Gameplay.Magic.Abilities.Base.Config;
 using Gameplay.Services.Activity.Base;
+using Signals;
 using Signals.Activities.Base;
 using Signals.Activities.Boss;
 using UnityEngine;
@@ -16,7 +17,10 @@ namespace Gameplay.Services.Boss.Config
     {
         public List<BossSection> sections = new();
 
-        protected override IActivityRequest ConstructSignal() => new BossActivityRequest();
+        public override IActivityRequest ConstructRequest(TreeLevelChangedSignal signal)
+        {
+            return new BossActivityRequest {TreeLevelChangedSignal = signal};
+        }
 
         [Serializable]
         public struct BossSection

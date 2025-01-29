@@ -45,7 +45,7 @@ namespace Gameplay.Services.Boss
 
                 var type = _abilityIntervals[index].abilityConfig.abilityPrefab.GetType();
                 
-                _magicAbilityComponent.EmitMagicAbility(new MagicProjectilesUIView.MagicTypeArgs(type, _abilityIntervals[index].abilityConfig.primaryApplicationType));
+                _magicAbilityComponent.EmitMagicAbility(new MagicProjectilesBarrel.MagicTypeArgs(type, _abilityIntervals[index].abilityConfig.primaryApplicationType));
 
                 var current = instructions[index];
 

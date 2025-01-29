@@ -2,6 +2,6 @@
 {
     public interface IActivityRequest
     {
-        
+        TreeLevelChangedSignal TreeLevelChangedSignal { get; set; }
     }
 }

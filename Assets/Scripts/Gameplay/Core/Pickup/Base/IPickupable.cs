@@ -1,7 +1,9 @@
-﻿namespace Gameplay.Core.Pickup.Base
+﻿using Gameplay.Core.Container;
+
+namespace Gameplay.Core.Pickup.Base
 {
     public interface IPickupable
     {
-        void Pickup();
+        void Pickup(ComponentContainer pickuper);
     }
 }

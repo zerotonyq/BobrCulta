@@ -35,12 +35,10 @@ namespace Gameplay.Services.Boss
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<TreeLevelChangedSignal>(SetBossInitPosition);
             _signalBus.Subscribe<IActivityRequest>(SpawnNextBoss);
 
             base.Initialize();
         }
-
 
         public void Reset()
         {
@@ -54,11 +52,9 @@ namespace Gameplay.Services.Boss
             base.Boot();
         }
 
-        private void SetBossInitPosition(TreeLevelChangedSignal signal) => _bossInitPosition = signal.LevelPosition;
-
         private async void SpawnNextBoss(IActivityRequest request)
         {
-            if (request is not BossActivityRequest)
+            if (request is not BossActivityRequest bossActivityRequest)
                 return;
 
             if (_currentBossIndex == _bossesConfigs.Count)
@@ -78,7 +74,8 @@ namespace Gameplay.Services.Boss
 
             _currentBoss.GetComponent<HealthComponent>().Dead += OnBossDefeated;
 
-            _currentBoss.transform.position = _bossInitPosition + Vector3.up*_currentBoss.GetComponent<Collider>().bounds.extents.y/2;
+            _currentBoss.transform.position = bossActivityRequest.TreeLevelChangedSignal.LevelPosition +
+                                              Vector3.up * _currentBoss.GetComponent<Collider>().bounds.extents.y / 2;
 
             TargetProvider.SetBoss(_currentBoss.transform);
 
@@ -112,9 +109,9 @@ namespace Gameplay.Services.Boss
         private void OnBossDefeated()
         {
             _currentBoss.GetComponent<HealthComponent>().Dead -= OnBossDefeated;
-            
+
             _signalBus.Fire(new LevelPassedSignal() { PassedType = LevelPassedSignal.LevelPassedType.Next });
-            
+
             if (_currentBoss)
                 Addressables.ReleaseInstance(_currentBoss.gameObject);
         }

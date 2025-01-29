@@ -43,7 +43,7 @@ namespace Gameplay.Magic.Abilities
 
         public void AddMagicAbilityPrefab(MagicAbility magicAbility) => projectilesPrefabs.Add(magicAbility);
 
-        public void EmitMagicAbility(MagicProjectilesUIView.MagicTypeArgs args)
+        public void EmitMagicAbility(MagicProjectilesBarrel.MagicTypeArgs args)
         {
             var abilityPrefab = projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
 
@@ -59,7 +59,7 @@ namespace Gameplay.Magic.Abilities
             projectilesPrefabs.Remove(abilityPrefab);
         }
 
-        public void RemoveProjectile(MagicProjectilesUIView.MagicTypeArgs args)
+        public void RemoveProjectile(MagicProjectilesBarrel.MagicTypeArgs args)
         {
             var projectilePrefab = projectilesPrefabs.Find(a => a.GetType() == args.MagicType);
 

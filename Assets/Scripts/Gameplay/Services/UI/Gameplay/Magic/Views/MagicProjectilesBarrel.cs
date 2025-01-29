@@ -14,23 +14,22 @@ using Observable = R3.Observable;
 namespace Gameplay.Services.UI.Gameplay.Magic.Views
 {
     [RequireComponent(typeof(Canvas))]
-    public class MagicProjectilesUIView : MonoComponent
+    public class MagicProjectilesBarrel : MonoComponent
     {
-        [SerializeField] private Image rotateCircle;
-        [SerializeField] private RectTransform rotationOffset;
+        [SerializeField] private Transform rotateBarrel;
+        [SerializeField] private Transform rotationOffset;
         [SerializeField] private int sectorsCount;
         [SerializeField] private float rotateSpeed;
-        [SerializeField] private ProjectileUIElement projectileUIElementPrefab;
 
         public Action<MagicTypeArgs> MagicTypeProvided;
         public Action<MagicTypeArgs> MagicTypeRemoved;
-        
+
         private DisposableBag _disposableBag;
 
-        [SerializeField] private List<ProjectileUIElement> _uiTiles;
+        [SerializeField] private List<Transform> _projectilePositions;
 
         public ReactiveProperty<int> CurrentSector = new();
-            
+
         public struct MagicTypeArgs
         {
             public readonly Type MagicType;
@@ -45,7 +44,7 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Views
 
         public override void Initialize()
         {
-            InstantiateTiles();
+            InstantiateProjectilePositions();
 
             InitializeRotationOffset();
 
@@ -55,7 +54,7 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Views
 
             var subscription2 = InputProvider.InputSystemActions.Player.Fire.ToObservablePerformed()
                 .Subscribe(ctx => ChooseProjectile(ApplicationType.Fire));
-            
+
             var subscription3 = InputProvider.InputSystemActions.Player.ApplyToItself.ToObservablePerformed()
                 .Subscribe(ctx => ChooseProjectile(ApplicationType.ApplyToItself));
 
@@ -64,27 +63,28 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Views
             _disposableBag.Add(subscription3);
         }
 
-        private void InstantiateTiles()
+        private void InstantiateProjectilePositions()
         {
-            _uiTiles = new List<ProjectileUIElement>();
+            _projectilePositions = new List<Transform>();
 
             for (var i = sectorsCount - 1; i >= 0; --i)
             {
                 var angle = i * (360.0f / sectorsCount / 2) * Mathf.Deg2Rad;
 
-                var uiTile = Instantiate(projectileUIElementPrefab, Vector3.zero, Quaternion.identity, rotateCircle.transform);
+                var projectilePosition = new GameObject("projectilePosition_" + i);
+                
+                projectilePosition.transform.SetParent(rotateBarrel);
+                
+                projectilePosition.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-                uiTile.transform.localPosition = Vector3.zero;
-
-                uiTile.transform.localRotation = rotationOffset.transform.localRotation = new Quaternion(
+                projectilePosition.transform.localRotation = rotationOffset.transform.localRotation = new Quaternion(
                     0,
                     0,
                     Mathf.Sin(angle),
                     Mathf.Cos(angle));
 
-                uiTile.name += _uiTiles.Count;
-                
-                _uiTiles.Add(uiTile);
+
+                _projectilePositions.Add(projectilePosition.transform);
             }
         }
 
@@ -100,17 +100,17 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Views
 
         private void TryInsertProjectile(MagicPickupable magicPickupable)
         {
-            var tile = GetTileByAngle(90);
+            var tile = GetProjectilePositionByAngle(90);
 
-            if(tile.Type != null)
+            if (tile.Type != null)
                 MagicTypeRemoved?.Invoke(new MagicTypeArgs(tile.Type, ApplicationType.None));
-            
+
             tile.Set(magicPickupable.projectileUISprite, magicPickupable.magicAbilityPrefab.GetType());
         }
 
         private void ChooseProjectile(ApplicationType type)
         {
-            var tile = GetTileByAngle(90);
+            var tile = GetProjectilePositionByAngle(90);
 
             if (tile.Type == null)
             {
@@ -119,15 +119,17 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Views
             }
 
             MagicTypeProvided?.Invoke(new MagicTypeArgs(tile.Type, type));
-            
+
             tile.Clear();
         }
 
-        private ProjectileUIElement GetTileByAngle(float angleCounterClockwise) => _uiTiles[GetCurrentSector(angleCounterClockwise)];
+        //TODO: create class 
+        private ProjectilePosition GetProjectilePositionByAngle(float angleCounterClockwise) =>
+            _projectilePositions[GetCurrentSector(angleCounterClockwise)];
 
         private int GetCurrentSector(float angleOffsetCounterClockwise = 0f)
         {
-            var q = rotateCircle.transform.localRotation;
+            var q = rotateBarrel.localRotation;
 
             var angle = 2 * Mathf.Atan2(q.z, q.w) * Mathf.Rad2Deg;
 
@@ -145,7 +147,7 @@ namespace Gameplay.Services.UI.Gameplay.Magic.Views
             var rotor = new Quaternion(0, 0, Mathf.Sin(rotateSpeed * Mathf.Deg2Rad),
                 Mathf.Cos(rotateSpeed / 100 * Mathf.Deg2Rad));
 
-            rotateCircle.transform.rotation *= rotor;
+            rotateBarrel.rotation *= rotor;
 
             CurrentSector.Value = GetCurrentSector();
         }

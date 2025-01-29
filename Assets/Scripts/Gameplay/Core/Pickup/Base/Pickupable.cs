@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Core.Container;
 using UnityEngine;
 using Utils.Activate;
 using Utils.Pooling;
@@ -10,6 +11,7 @@ namespace Gameplay.Core.Pickup.Base
     public abstract class Pickupable : MonoBehaviour, IPickupable, IActivateable, IResetable
     {
         public Action<GameObject> Deactivated { get; set; }
+        public Action<Pickupable> PickedUp { get; set; }
 
         public virtual void Activate(Vector3 position)
         {
@@ -31,6 +33,10 @@ namespace Gameplay.Core.Pickup.Base
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
 
-        public virtual void Pickup() => Deactivate();
+        public virtual void Pickup(ComponentContainer pickuper)
+        {
+            PickedUp?.Invoke(this);
+            Deactivate();
+        }
     }
 }

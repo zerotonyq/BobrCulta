@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Cysharp.Threading.Tasks;
+using Gameplay.Core.Container;
+using Gameplay.Magic.Abilities;
 using Gameplay.Services.Base;
 using Gameplay.Services.Camera.Config;
 using Signals;
@@ -9,6 +11,7 @@ using Signals.Player;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Rendering.Universal;
 using Zenject;
 
 namespace Gameplay.Services.Camera
@@ -16,6 +19,7 @@ namespace Gameplay.Services.Camera
     public class CameraProvider : GameService, IInitializable
     {
         private CinemachineCamera _camera;
+
 
         private Transform _defaultTarget;
         
@@ -25,6 +29,7 @@ namespace Gameplay.Services.Camera
         {
             _camera = (await Addressables.InstantiateAsync(_cameraConfig.cameraReference))
                 .GetComponent<CinemachineCamera>();
+      
             
             _defaultTarget = (await Addressables.InstantiateAsync(_cameraConfig.defaultTarget)).transform;
                 
@@ -33,6 +38,7 @@ namespace Gameplay.Services.Camera
             
             _signalBus.Subscribe<PlayerInitializedSignal>(a =>
             {
+                SetOverlayCamera(a.Player);
                 SetTarget(a.Player.transform);
                 AddLookAt(a.Player.transform);
             });
@@ -47,6 +53,16 @@ namespace Gameplay.Services.Camera
             base.Initialize();
         }
 
+
+        private void SetOverlayCamera(ComponentContainer container)
+        {
+            var camera = container.GetComponentInChildren<UnityEngine.Camera>();
+            if (!camera)
+                return;
+
+            var additionalCameraData = UnityEngine.Camera.main.GetUniversalAdditionalCameraData();
+            additionalCameraData.cameraStack.Add(camera);
+        }
 
         public override void Boot()
         {

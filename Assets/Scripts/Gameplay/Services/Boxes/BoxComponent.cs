@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gameplay.Core.Container;
 using Gameplay.Core.Pickup.Base;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,7 +22,7 @@ namespace Gameplay.Services.Boxes
 
         private Coroutine _currentEmissionCoroutine;
 
-        private List<Pickupable> _pickupablePrefabs = new();
+        protected List<Pickupable> _pickupablePrefabs = new();
 
         public void Initialize(List<Pickupable> pickupablePrefabs)
         {
@@ -29,7 +30,7 @@ namespace Gameplay.Services.Boxes
             _delayInstruction = new WaitForSeconds(emissionDelay);
         }
 
-        public override void Pickup()
+        public override void Pickup(ComponentContainer pickuper)
         {
             if (_currentEmissionCoroutine != null)
                 return;

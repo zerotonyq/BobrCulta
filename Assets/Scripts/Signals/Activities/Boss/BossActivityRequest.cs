@@ -2,8 +2,8 @@
 
 namespace Signals.Activities.Boss
 {
-    public class BossActivityRequest : IActivityRequest
+    public struct BossActivityRequest : IActivityRequest
     {
-        
+        public TreeLevelChangedSignal TreeLevelChangedSignal { get; set; }
     }
 }

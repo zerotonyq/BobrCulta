@@ -1,6 +1,7 @@
 ﻿using Gameplay.Services.Activity.Base;
 using Gameplay.Services.Base;
 using Signals;
+using Signals.Level;
 using UnityEngine;
 using Zenject;
 
@@ -12,37 +13,38 @@ namespace Gameplay.Services.Activity
 
         private ActivityConfig _currentActivity;
 
-        private int _currentActivityIndex;
+        private int _currentActivityIndex = -1;
 
         private int _currentActivityRepeatCount;
 
         public override void Initialize()
         {
             _signalBus.Subscribe<TreeLevelChangedSignal>(ProvideActivity);
+            
+            NextActivity();
+            
             base.Initialize();
         }
 
-        private void ProvideActivity()
+        private void ProvideActivity(TreeLevelChangedSignal signal)
         {
-            _currentActivity = _config.activityConfigs[_currentActivityIndex];
-
             if (_config.activityConfigs[_currentActivityIndex].repeatCount == _currentActivityRepeatCount)
                 NextActivity();
-            
-            _signalBus.Fire(_currentActivity.Request);
+
+            _signalBus.Fire(_currentActivity.ConstructRequest(signal));
 
             ++_currentActivityRepeatCount;
         }
-        
+
         private void NextActivity()
         {
             ++_currentActivityIndex;
-
+            
             if (_currentActivityIndex == _config.activityConfigs.Count)
                 _currentActivityIndex = 0;
-
-
+            
             _currentActivity = _config.activityConfigs[_currentActivityIndex];
+            _currentActivityRepeatCount = 0;
         }
     }
 }

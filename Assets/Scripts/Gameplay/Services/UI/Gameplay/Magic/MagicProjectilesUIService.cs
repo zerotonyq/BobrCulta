@@ -15,11 +15,11 @@ namespace Gameplay.Services.UI.Gameplay.Magic
     {
         [Inject] private MagicProjectilesUIServiceConfig _config;
 
-        private MagicProjectilesUIView _magicProjectilesUIView;
+        private MagicProjectilesBarrel _magicProjectilesBarrel;
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<EndGameRequest>(() => _magicProjectilesUIView.gameObject.SetActive(false));
+            _signalBus.Subscribe<EndGameRequest>(() => _magicProjectilesBarrel.gameObject.SetActive(false));
             base.Initialize();
         }
 
@@ -31,21 +31,21 @@ namespace Gameplay.Services.UI.Gameplay.Magic
 
         private async Task CreateMagicProjectilesView()
         {
-            _magicProjectilesUIView = (await Addressables.InstantiateAsync(_config.projectilesViewReference))
-                .GetComponent<MagicProjectilesUIView>();
+            _magicProjectilesBarrel = (await Addressables.InstantiateAsync(_config.projectilesViewReference))
+                .GetComponent<MagicProjectilesBarrel>();
 
-            _magicProjectilesUIView.Initialize();
+            _magicProjectilesBarrel.Initialize();
 
-            _signalBus.Fire(new MagicProjectilesUIViewInitialized{ View = _magicProjectilesUIView });
+            _signalBus.Fire(new MagicProjectilesUIViewInitialized{ View = _magicProjectilesBarrel });
         }
 
         public void Reset()
         {
-            if (!_magicProjectilesUIView)
+            if (!_magicProjectilesBarrel)
                 return;
             
-            _magicProjectilesUIView.gameObject.SetActive(true);
-            _magicProjectilesUIView.Reset();
+            _magicProjectilesBarrel.gameObject.SetActive(true);
+            _magicProjectilesBarrel.Reset();
         }
     }
 }

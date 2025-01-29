@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Gameplay.Core.Base;
+using Gameplay.Core.Container;
 using Gameplay.Core.Pickup.Base;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ namespace Gameplay.Core.Pickup
             if (pickupable == null)
                 return;
             
-            pickupable.Pickup();
+            pickupable.Pickup(GetComponent<ComponentContainer>());
             PickedUp?.Invoke(pickupable);
         }
     }
