@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Gameplay.Services.Base;
 using Gameplay.Services.Boxes.Emitter.Config;
 using Signals;
+using Signals.Activities.Base;
+using Signals.Activities.Boss;
 using Signals.Chapter;
 using Signals.GameStates;
 using Signals.Level;
@@ -23,9 +25,9 @@ namespace Gameplay.Services.Boxes.Emitter
         private CoroutineExecutor _coroutineExecutor;
         private Coroutine _currentEmissionCoroutine;
         private YieldInstruction _currentWaitInstruction;
-        
+
         private float _currentEmissionPeriod;
-        
+
         private Transform _container;
 
         private float _radius;
@@ -36,13 +38,13 @@ namespace Gameplay.Services.Boxes.Emitter
         public override void Initialize()
         {
             _signalBus.Subscribe<TreeLevelChangedSignal>(ChangeEmissionField);
-            _signalBus.Subscribe<NextLevelRequest>(EmitBoxes);
+            _signalBus.Subscribe<IActivityRequest>(EmitBoxes);
             _signalBus.Subscribe<EndGameRequest>(StopEmission);
             _signalBus.Subscribe<NextChapterRequest>(UpdateEmissionPeriod);
-            
+
             _currentEmissionPeriod = _config.emissionPeriod;
             _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
-            
+
             base.Initialize();
         }
 
@@ -55,10 +57,15 @@ namespace Gameplay.Services.Boxes.Emitter
             base.Boot();
         }
 
-        private void EmitBoxes()
+        private void EmitBoxes(IActivityRequest activityRequest)
         {
+            DeactivateBoxes();
+            
             StopEmission();
             
+            if (activityRequest is not BossActivityRequest)
+                return;
+
             _currentEmissionCoroutine = _coroutineExecutor.Add(EmissionCoroutine());
         }
 
@@ -66,6 +73,8 @@ namespace Gameplay.Services.Boxes.Emitter
         {
             while (true)
             {
+                yield return _currentWaitInstruction;
+                
                 for (var i = 0; i < 5; ++i)
                 {
                     var position = _position +
@@ -73,41 +82,40 @@ namespace Gameplay.Services.Boxes.Emitter
 
                     CreateBox(position);
                 }
-                yield return _currentWaitInstruction;
             }
         }
-        
+
         private void CreateBox(Vector3 position)
         {
             var box = PoolManager.GetFromPool(_config.boxPrefab.GetType(), _config.boxPrefab.gameObject)
                 .GetComponent<BoxComponent>();
 
             box.Reset();
-            
+
             box.transform.SetParent(_container);
-            
+
             box.Initialize(_config.pickupables);
 
             box.Activate(position);
-            
+
             _boxes.Add(box);
         }
-        
+
         private void UpdateEmissionPeriod()
         {
             _currentEmissionPeriod += _config.emissionPeriodIncreaseFactor;
             _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
         }
-        
+
         private void ChangeEmissionField(TreeLevelChangedSignal signal)
         {
             _radius = signal.Radius;
             _position = signal.LevelPosition;
         }
-        
+
         private void StopEmission()
         {
-            if(_currentEmissionCoroutine != null)
+            if (_currentEmissionCoroutine != null)
                 _coroutineExecutor.Remove(_currentEmissionCoroutine);
 
             _currentEmissionCoroutine = null;
@@ -116,9 +124,15 @@ namespace Gameplay.Services.Boxes.Emitter
         public void Reset()
         {
             StopEmission();
-            foreach (var box in _boxes) box.Deactivate();
+
             _currentEmissionPeriod = _config.emissionPeriod;
             _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
+        }
+
+        private void DeactivateBoxes()
+        {
+            foreach (var box in _boxes) 
+                box.Deactivate();
         }
     }
 }

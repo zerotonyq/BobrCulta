@@ -1,9 +1,9 @@
-﻿using Gameplay.Services.UI.Gameplay.Magic.Views;
+﻿using Gameplay.Magic.Barrel;
 
 namespace Signals
 {
     public class MagicProjectilesUIViewInitialized
     {
-        public MagicProjectilesBarrel View;
+        public MagicPickupableBarrelComponent View;
     }
 }

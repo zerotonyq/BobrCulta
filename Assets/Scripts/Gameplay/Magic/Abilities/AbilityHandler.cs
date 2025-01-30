@@ -19,11 +19,11 @@ namespace Gameplay.Magic.Effects
         }
 
 
-        public void AttachAbility(MagicAbility magicAbility, List<Type> antagonistTypes)
+        public void AttachAbility(MagicAbility magicAbility, List<MagicAbility> antagonistPrefabs)
         {
             foreach (var handledAbility in _handledAbilities)
             {
-                if (antagonistTypes.Contains(handledAbility.GetType()))
+                if (antagonistPrefabs.Any( a=> a.GetType() == handledAbility.GetType()))
                 {
                     magicAbility.Deactivate();
                     handledAbility.Deactivate();

@@ -6,11 +6,9 @@ using Gameplay.Core.TargetTracking.Provider;
 using Gameplay.Services.Base;
 using Gameplay.Services.Boss.Config;
 using Signals;
-using Signals.Activities;
 using Signals.Activities.Base;
 using Signals.Activities.Boss;
 using Signals.Chapter;
-using Signals.GameStates;
 using Signals.Level;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -64,11 +62,11 @@ namespace Gameplay.Services.Boss
                 return;
 
             _currentBoss =
-                (await Addressables.InstantiateAsync(_bossesConfigs[_currentBossIndex].bossReference))
+                (await Addressables.InstantiateAsync(_bossesConfigs[_currentBossIndex].BossReference))
                 .GetComponent<ComponentContainer>();
 
             _currentBoss.GetComponent<AutomationMagicComponentBinder>()
-                .SetAbilityIntervals(_bossesConfigs[_currentBossIndex].abilityIntervals);
+                .SetAbilityIntervals(_bossesConfigs[_currentBossIndex].AbilityIntervals);
 
             await _currentBoss.Initialize();
 
@@ -97,7 +95,7 @@ namespace Gameplay.Services.Boss
 
             bossSectionTemp.Generate();
 
-            _bossesConfigs = bossSectionTemp.configs;
+            _bossesConfigs = bossSectionTemp.Configs;
 
             _currentBossIndex = 0;
 

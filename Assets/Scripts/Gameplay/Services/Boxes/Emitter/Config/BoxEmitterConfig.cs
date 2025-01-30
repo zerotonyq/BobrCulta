@@ -8,6 +8,7 @@ namespace Gameplay.Services.Boxes.Emitter.Config
     public class BoxEmitterConfig : ScriptableObject
     {
         public List<Pickupable> pickupables = new();
+        
         public BoxComponent boxPrefab;
 
         public float emissionPeriod = 3f;

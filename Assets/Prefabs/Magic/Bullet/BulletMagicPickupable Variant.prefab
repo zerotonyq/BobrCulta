@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8135545028132219035
+--- !u!1001 &6544630456718444815
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.8584757
+      value: 9.762193
       objectReference: {fileID: 0}
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.850733
+      value: 17.25002
       objectReference: {fileID: 0}
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.019996
+      value: -6.915784
       objectReference: {fileID: 0}
     - target: {fileID: 1979378863576009025, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -50,41 +50,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2442778462107354482, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       propertyPath: m_Name
-      value: BulletPickupable Variant
+      value: BulletMagicPickupable Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 8460859653629658605, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
-      propertyPath: magicAbilityPrefab
-      value: 
-      objectReference: {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}
-    - target: {fileID: 8460859653629658605, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
-      propertyPath: projectileUISprite
-      value: 
-      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2442778462107354482, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4650514059843485190}
+      addedObject: {fileID: 6299239437075627506}
   m_SourcePrefab: {fileID: 100100000, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
---- !u!1 &5837013699887787497 stripped
+--- !u!1 &8878086525204925565 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2442778462107354482, guid: b3e7528139984e24c9d4ebbd82bc36bb, type: 3}
-  m_PrefabInstance: {fileID: 8135545028132219035}
+  m_PrefabInstance: {fileID: 6544630456718444815}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4650514059843485190
+--- !u!114 &6299239437075627506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5837013699887787497}
+  m_GameObject: {fileID: 8878086525204925565}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a310c716f0e43c0b8d99269f0a63e5b, type: 3}
+  m_Script: {fileID: 11500000, guid: f062cf16cb90432ab9b7c25f95c09077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   magicAbilityPrefab: {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}
-  projectileUISprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  primaryApplicationType: 0

@@ -19,8 +19,7 @@ namespace Gameplay.Services.Camera
     public class CameraProvider : GameService, IInitializable
     {
         private CinemachineCamera _camera;
-
-
+        
         private Transform _defaultTarget;
         
         [Inject] private CameraConfig _cameraConfig;

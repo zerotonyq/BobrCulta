@@ -64,8 +64,6 @@ namespace Gameplay.Services.Boxes
             Deactivate();
         }
 
-        
-
         public override void Activate(Vector3 position)
         {
             transform.position = position;

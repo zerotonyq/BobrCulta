@@ -494,7 +494,6 @@ MonoBehaviour:
   shopActivityConfig: {fileID: 11400000, guid: 2f8b21bc388a2c74e9386bc174a064fd, type: 2}
   menuUIManagerConfig: {fileID: 11400000, guid: 89b8fed65e60f3c4ab1738f7ea36f2c1, type: 2}
   playerConfig: {fileID: 11400000, guid: db15040d9d73ecb4b9c255bbaa1ef05d, type: 2}
-  magicProjectilesUIServiceConfig: {fileID: 11400000, guid: 5e3fb867032d8784a9a1db7edc8de5f6, type: 2}
   treeServiceConfig: {fileID: 11400000, guid: 4062ed3c6ca1bd34398dee61f1de3f33, type: 2}
   boxEmitterConfig: {fileID: 11400000, guid: 3e86c301507ab044294c3cf9e006dc45, type: 2}
   activityServiceConfig: {fileID: 11400000, guid: 60bf34c5f6e7f354db487b04bba864e2, type: 2}

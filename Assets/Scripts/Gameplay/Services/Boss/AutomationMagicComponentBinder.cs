@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Core.Base;
 using Gameplay.Magic.Abilities;
+using Gameplay.Magic.Barrel;
 using Gameplay.Services.Boss.Config;
-using Gameplay.Services.UI.Gameplay.Magic.Views;
 using UnityEngine;
 
 namespace Gameplay.Services.Boss
@@ -41,22 +41,18 @@ namespace Gameplay.Services.Boss
 
             while (true)
             {
-                _magicAbilityComponent.AddMagicAbilityPrefab(_abilityIntervals[index].abilityConfig.abilityPrefab);
-
-                var type = _abilityIntervals[index].abilityConfig.abilityPrefab.GetType();
-                
-                _magicAbilityComponent.EmitMagicAbility(new MagicProjectilesBarrel.MagicTypeArgs(type, _abilityIntervals[index].abilityConfig.primaryApplicationType));
+                _magicAbilityComponent.EmitMagicAbility(new MagicPickupableBarrelComponent.MagicTypeArgs(
+                    _abilityIntervals[index].pickupable,
+                    _abilityIntervals[index].pickupable.magicAbilityPrefab.PrimaryApplicationType));
 
                 var current = instructions[index];
 
                 index = index + 1 >= _abilityIntervals.Count ? 0 : index + 1;
-                
+
                 yield return current;
             }
         }
 
         public void OnStopped() => StopCoroutine(_automationCoroutine);
-
-        
     }
 }

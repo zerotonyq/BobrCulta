@@ -5,19 +5,10 @@ namespace Utils
     public static class VectorUtility 
     {
 
-        public static Vector3 GetPointOnCircle(Vector2 positionOnScreen, Vector3 center, int radius)
+        public static Vector3 GetPointOnCircle(float angleDegrees, Vector3 center, float radius, Vector3 up, Vector3 right)
         {
-            var cameraForward = Camera.main.gameObject.transform.forward;
-            
-            var ray = Camera.main.ScreenPointToRay(positionOnScreen);
-            var plane = new Plane( cameraForward, center);
-
-            if (!plane.Raycast(ray, out float enter))
-                return default;
-
-            var point = ray.GetPoint(enter);
-
-            return center + Vector3.ClampMagnitude(point - center, radius);
+            var initial =  Vector3.Cross(up, right) * radius;
+            return  Quaternion.AngleAxis(angleDegrees, up) * initial + center;
         }
         
     }

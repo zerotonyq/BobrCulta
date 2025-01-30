@@ -9,15 +9,9 @@ namespace Gameplay.Core.Pickup
 {
     public class PickupComponent : MonoComponent
     {
-
         [SerializeField] private float scanRadius = 2f;
 
         public Action<IPickupable> PickedUp;
-        
-        public override void Initialize()
-        {
-            
-        }
         
         public void Pickup()
         {

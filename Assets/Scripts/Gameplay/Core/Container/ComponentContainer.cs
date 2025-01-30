@@ -15,7 +15,7 @@ namespace Gameplay.Core.Container
 
         public override Task Initialize()
         {
-            foreach (var monoComponent in GetComponents<MonoComponent>())
+            foreach (var monoComponent in GetComponentsInChildren<MonoComponent>())
             {
                 monoComponent.Initialize();
 

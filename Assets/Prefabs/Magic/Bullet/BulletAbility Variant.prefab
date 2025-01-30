@@ -77,4 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fe3d653c4d4f10911aa8ba4dd9f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: b386bc89f49df7144866179d164a4790, type: 2}
+  <PrimaryApplicationType>k__BackingField: 1
+  antagonistPrefabs:
+  - {fileID: 3763288952361894476, guid: 0dcd0d1c9e944db4c803051d5fe2e701, type: 3}
+  effectConfigs:
+  - {fileID: 11400000, guid: 193726e653c6930499a12a2990d17769, type: 2}

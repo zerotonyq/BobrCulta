@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Gameplay.Core.Container;
 using Gameplay.Core.Movement.Binders;
-using Gameplay.Magic.Abilities.Base.Config;
 using Gameplay.Magic.Effects;
 using Gameplay.Magic.Effects.Base;
 using Gameplay.Services.UI.Gameplay.Magic.Enum;
@@ -19,10 +17,11 @@ namespace Gameplay.Magic.Abilities.Base
     public abstract class MagicAbility : MonoBehaviour, IInitializableMono, IActivateable
     {
         public bool Initialized { get; private set; }
-        
-        [SerializeField] private MagicAbilityConfig config;
 
-        private List<Type> _antagonistTypes = new();
+        [field: SerializeField] public ApplicationType PrimaryApplicationType { get; private set; }
+
+        [SerializeField] private List<MagicAbility> antagonistPrefabs = new();
+        [SerializeField] private List<EffectConfig> effectConfigs = new();
 
         private Dictionary<Effect, EffectConfig> _effects = new();
 
@@ -33,19 +32,14 @@ namespace Gameplay.Magic.Abilities.Base
         public Action<GameObject> Deactivated { get; set; }
 
         private TargetMovementBinderComponent _targetMovementBinder;
-        
+
         public void Initialize()
         {
             if (Initialized)
                 return;
-            
-            _antagonistTypes = config.antagonistAbilities.Select(a => a.GetAbilityType()).ToList();
 
-            if (_effects.Count == 0)
-            {
-                foreach (var effectConfig in config.effectConfigs)
-                    _effects.Add(effectConfig.GetEffect(), effectConfig);
-            }
+            foreach (var effectConfig in effectConfigs)
+                _effects.Add(effectConfig.GetEffect(), effectConfig);
 
             _targetMovementBinder = GetComponent<TargetMovementBinderComponent>();
             _targetMovementBinder.Bind();
@@ -62,7 +56,7 @@ namespace Gameplay.Magic.Abilities.Base
                     GetComponent<Collider>().enabled = true;
                     GetComponent<Rigidbody>().isKinematic = false;
                     _emitterCollider = emitter.GetComponent<Collider>();
-                    
+
                     GetComponent<TargetMovementBinderComponent>().SetTarget(target);
 
                     break;
@@ -72,8 +66,8 @@ namespace Gameplay.Magic.Abilities.Base
                     //TODO hide gfx too
                     GetComponent<Collider>().enabled = false;
                     GetComponent<Rigidbody>().isKinematic = true;
-                    
-                    emitter.GetComponent<AbilityHandler>().AttachAbility(this, _antagonistTypes);
+
+                    emitter.GetComponent<AbilityHandler>().AttachAbility(this, antagonistPrefabs);
 
                     break;
                 }
@@ -97,7 +91,7 @@ namespace Gameplay.Magic.Abilities.Base
             Deactivated?.Invoke(gameObject);
 
             Reset();
-            
+
             gameObject.SetActive(false);
 
             PoolManager.AddToPool(GetType(), gameObject);
@@ -106,20 +100,20 @@ namespace Gameplay.Magic.Abilities.Base
         public void Reset()
         {
             ResetEffects();
-            
+
             foreach (var resetable in GetComponents<IResetable>())
             {
                 resetable.Reset();
             }
         }
-        
+
         #region Effects
 
         public void ApplyEffects(ComponentContainer componentContainer)
         {
             if (!gameObject.activeSelf)
                 return;
-            
+
             ResetEffects();
 
             foreach (var effectAndConfig in _effects)
@@ -162,7 +156,7 @@ namespace Gameplay.Magic.Abilities.Base
         {
             if (_emitterCollider == null)
                 return false;
-            
+
             if (other == _emitterCollider)
             {
                 Debug.Log("Same emitter");
@@ -177,7 +171,6 @@ namespace Gameplay.Magic.Abilities.Base
 
         public virtual void OnTriggerEnter(Collider other)
         {
-            
             if (CheckSelfCollision(other))
                 return;
 
@@ -186,17 +179,16 @@ namespace Gameplay.Magic.Abilities.Base
                 Deactivate();
                 return;
             }
-            
+
 
             GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
-            
+
             Reset();
-            
-            container.AttachAbility(this, _antagonistTypes);
+
+            container.AttachAbility(this, antagonistPrefabs);
         }
 
         #endregion
-        
     }
 }

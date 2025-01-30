@@ -9,7 +9,7 @@ namespace Gameplay.Core.TargetTracking
     public class TargetTrackingComponent : MonoComponent
     {
         [SerializeField] private TargetType targetType;
-       [field: SerializeField] public Transform Target { get; private set; }
+        public Transform Target { get; private set; }
 
         public Action<Transform> TargetChanged;
 

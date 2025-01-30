@@ -30,7 +30,7 @@ namespace DI
 
             Container.DeclareSignal<BossObtainedSignal>();
 
-            Container.DeclareSignal<PlayerInitializedSignal>();
+            Container.DeclareSignal<PlayerInitializedSignal>().RunAsync();
 
             Container.DeclareSignal<InitializedServiceSignal>();
 

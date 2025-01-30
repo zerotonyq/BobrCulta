@@ -15,5 +15,5 @@ MonoBehaviour:
   repeatCount: 1
   shopExitPickupable: {fileID: 9088792514070511704, guid: 9087b5795b043984fb2853680ea850ab, type: 3}
   shopBoxConfigs:
-  - pickupablePrefab: {fileID: -6840826719187674903, guid: 28fad6047d6f96346bee73c4f6c06e1f, type: 3}
+  - pickupablePrefab: {fileID: 4756066099957036124, guid: 022e09826d9ed1943897c9047e9f15b7, type: 3}
     price: 1

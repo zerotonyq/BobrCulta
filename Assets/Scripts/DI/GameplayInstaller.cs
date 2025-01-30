@@ -18,9 +18,6 @@ using Gameplay.Services.Tree;
 using Gameplay.Services.Tree.Config;
 using Gameplay.Services.UI.Gameplay.EndGame;
 using Gameplay.Services.UI.Gameplay.EndGame.Config;
-using Gameplay.Services.UI.Gameplay.Magic;
-using Gameplay.Services.UI.Gameplay.Magic.Binders;
-using Gameplay.Services.UI.Gameplay.Magic.Config;
 using Gameplay.Services.UI.Menu;
 using Gameplay.Services.UI.Menu.Config;
 using GameState;
@@ -40,7 +37,6 @@ namespace DI
 
         [Space] [SerializeField] private MenuUIManagerConfig menuUIManagerConfig;
         [SerializeField] private PlayerConfig playerConfig;
-        [SerializeField] private MagicProjectilesUIServiceConfig magicProjectilesUIServiceConfig;
         [SerializeField] private TreeServiceConfig treeServiceConfig;
         [SerializeField] private BoxEmitterConfig boxEmitterConfig;
         [SerializeField] private ActivityServiceConfig activityServiceConfig;
@@ -56,7 +52,6 @@ namespace DI
             Container.BindInstance(bossActivityConfig);
             Container.BindInstance(menuUIManagerConfig);
             Container.BindInstance(playerConfig);
-            Container.BindInstance(magicProjectilesUIServiceConfig);
             Container.BindInstance(treeServiceConfig);
             Container.BindInstance(boxEmitterConfig);
             Container.BindInstance(activityServiceConfig);
@@ -72,10 +67,6 @@ namespace DI
             Container.BindInterfacesAndSelfTo<PlayerService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<CameraProvider>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<MagicProjectilesUIService>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<MagicProjectilesUIBinder>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<MenuUIService>().AsSingle();
 
@@ -99,8 +90,6 @@ namespace DI
             Container.BindExecutionOrder<GameStateMachine>(-1000);
             Container.BindExecutionOrder<BossService>(-20);
             Container.BindExecutionOrder<PlayerService>(-40);
-            Container.BindExecutionOrder<MagicProjectilesUIService>(-39);
-            Container.BindExecutionOrder<MagicProjectilesUIBinder>(-38);
             Container.BindExecutionOrder<CameraProvider>(-60);
             Container.BindExecutionOrder<MenuUIService>(-70);
         }
