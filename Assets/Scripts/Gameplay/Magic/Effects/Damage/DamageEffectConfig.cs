@@ -8,6 +8,8 @@ namespace Gameplay.Magic.Effects.Damage
         fileName = nameof(DamageEffectConfig))]
     public class DamageEffectConfig : EffectConfig
     {
-        public override Effect GetEffect() => new DamageEffect();
+        [Range(1, 1000)]
+        public int Damage = 1;
+        public override Effect GetEffect() => new DamageEffect(Damage);
     }
 }

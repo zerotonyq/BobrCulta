@@ -23,6 +23,9 @@ namespace Gameplay.Services.Boss
         {
             _magicAbilityComponent = GetComponent<MagicAbilityComponent>();
 
+            if(_automationCoroutine != null)
+                StopCoroutine(_automationCoroutine);
+            
             _automationCoroutine = StartCoroutine(AutomationCoroutine());
         }
 

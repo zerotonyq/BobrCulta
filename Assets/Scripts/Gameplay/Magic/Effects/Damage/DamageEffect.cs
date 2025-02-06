@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using Gameplay.Core.Container;
 using Gameplay.Core.Health;
 using Gameplay.Magic.Effects.Base;
@@ -9,6 +8,10 @@ namespace Gameplay.Magic.Effects.Damage
 {
     public class DamageEffect : Effect
     {
+        private readonly int _damage;
+
+        public DamageEffect(int damage) => _damage = damage;
+
         public override Coroutine CurrentCoroutine { get; set; }
         
         public override Action<Effect> EffectElapsed { get; set; }
@@ -17,7 +20,7 @@ namespace Gameplay.Magic.Effects.Damage
         {
             var c = component.Components.Find(a => a.GetType() == typeof(HealthComponent));
             
-            (c as HealthComponent)?.ChangeHealth(-1);
+            (c as HealthComponent)?.ChangeHealth(-_damage);
         }
 
     }

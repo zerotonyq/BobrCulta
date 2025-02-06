@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BoxEmitterConfig
   m_EditorClassIdentifier: 
   pickupables:
-  - {fileID: 653749969842492659, guid: cb6ebf90998724644b640991d0ccfe5d, type: 3}
+  - {fileID: 5949636257583850189, guid: 5b8e27836379c644aa4f841f87b489cb, type: 3}
   boxPrefab: {fileID: 3649412395768236408, guid: ae5eea73d281e6b4a87b53d3d8a9904c, type: 3}
   emissionPeriod: 3
   emissionPeriodIncreaseFactor: 5

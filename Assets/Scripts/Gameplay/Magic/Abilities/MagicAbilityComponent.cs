@@ -15,6 +15,8 @@ namespace Gameplay.Magic.Abilities
         [SerializeField] private Transform firePoint;
 
         private TargetTrackingComponent _targetTrackingComponent;
+        
+        public MagicPickupableBarrelComponent.MagicTypeArgs LastMagicTypeArgs { get; private set; }
 
         public bool AllowEmit { get; set; } = true;
 
@@ -24,6 +26,8 @@ namespace Gameplay.Magic.Abilities
         {
             if (!AllowEmit)
                 return;
+
+            LastMagicTypeArgs = args;
             
             if (args.Pickupable is not MagicPickupable magicPickupable) return;
             

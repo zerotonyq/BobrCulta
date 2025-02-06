@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4728683365545195956
+--- !u!1001 &3965240752078863131
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -48,37 +48,71 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6810614330338125294, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 6810614330338125294, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
       propertyPath: m_Name
-      value: ShieldAbility Variant
+      value: RepeatCannonMagicAbility Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5727365082431954488, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3763288952361894476}
+      addedObject: {fileID: 1074161357639533651}
+    - targetCorrespondingSourceObject: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3018284511191403200}
   m_SourcePrefab: {fileID: 100100000, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
---- !u!1 &3834549697910408087 stripped
+--- !u!1 &4877393592110711096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
-  m_PrefabInstance: {fileID: 4728683365545195956}
+  m_PrefabInstance: {fileID: 3965240752078863131}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3763288952361894476
+--- !u!136 &1074161357639533651
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4877393592110711096}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 6.17
+  m_Direction: 1
+  m_Center: {x: 0, y: -1.29, z: 0}
+--- !u!114 &3018284511191403200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3834549697910408087}
+  m_GameObject: {fileID: 4877393592110711096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498144472dce4af5b078275a07c9b0bb, type: 3}
+  m_Script: {fileID: 11500000, guid: c60eb8c725ef45e987c22ab42ca3e845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PrimaryApplicationType>k__BackingField: 2
-  antagonistPrefabs:
-  - {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}
-  effectConfigs:
-  - {fileID: 11400000, guid: 130002b4d85cfd5418e2cc93ee3f6271, type: 2}
+  <PrimaryApplicationType>k__BackingField: 1
+  antagonistPrefabs: []
+  effectConfigs: []
+  repeatCannonPrefab: {fileID: 2401457581688534015, guid: 5b69da4161a1acf43b20b02e422d4d58, type: 3}
