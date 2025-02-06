@@ -1,6 +1,8 @@
 ﻿using Signals;
 using Signals.Activities;
 using Signals.Activities.Boss;
+using Signals.Activities.Shop;
+using Signals.Boot;
 using Signals.Chapter;
 using Signals.GameStates;
 using Signals.Initialization;

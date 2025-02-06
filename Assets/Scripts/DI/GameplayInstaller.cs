@@ -10,7 +10,7 @@ using Gameplay.Services.DeadZone;
 using Gameplay.Services.DeadZone.Config;
 using Gameplay.Services.Player;
 using Gameplay.Services.Player.Config;
-using Gameplay.Services.Pool;
+using Gameplay.Services.PoolablesRegistration;
 using Gameplay.Services.PoolablesRegistration.Config;
 using Gameplay.Services.Shop;
 using Gameplay.Services.Shop.Config;

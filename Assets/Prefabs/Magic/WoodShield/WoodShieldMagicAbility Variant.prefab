@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4728683365545195956
+--- !u!1001 &884530877476994880
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -48,37 +48,71 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6810614330338125294, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 6810614330338125294, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
       propertyPath: m_Name
-      value: ShieldAbility Variant
+      value: WoodShieldMagicAbility Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5727365082431954488, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3763288952361894476}
+      addedObject: {fileID: 8450274552424316295}
+    - targetCorrespondingSourceObject: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6353721128705885391}
   m_SourcePrefab: {fileID: 100100000, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
---- !u!1 &3834549697910408087 stripped
+--- !u!1 &8714143055012676963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8406152142189410851, guid: 2e4051cc19e72a74cb9fcb24306b2a2e, type: 3}
-  m_PrefabInstance: {fileID: 4728683365545195956}
+  m_PrefabInstance: {fileID: 884530877476994880}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3763288952361894476
+--- !u!114 &8450274552424316295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3834549697910408087}
+  m_GameObject: {fileID: 8714143055012676963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498144472dce4af5b078275a07c9b0bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bf7bc8f4e6a4c5e98def0e66d9e4f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <PrimaryApplicationType>k__BackingField: 1
-  antagonistPrefabs:
-  - {fileID: 7784903582614201261, guid: 2438a83139c3abe4f97660f15b9b7212, type: 3}
-  effectConfigs:
-  - {fileID: 11400000, guid: 130002b4d85cfd5418e2cc93ee3f6271, type: 2}
+  antagonistPrefabs: []
+  effectConfigs: []
+  woodShieldPrefab: {fileID: 505885741777308938, guid: 776b0116eaabbc14fb78412c2422081c, type: 3}
+--- !u!136 &6353721128705885391
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8714143055012676963}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 6.17
+  m_Direction: 1
+  m_Center: {x: 0, y: -1.29, z: 0}

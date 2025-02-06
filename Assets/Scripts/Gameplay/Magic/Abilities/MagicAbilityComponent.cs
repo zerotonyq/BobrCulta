@@ -9,18 +9,22 @@ using Utils.Pooling;
 
 namespace Gameplay.Magic.Abilities
 {
-    [RequireComponent(typeof(PickupComponent), typeof(TargetTrackingComponent))]
+    [RequireComponent(typeof(TargetTrackingComponent))]
     public class MagicAbilityComponent : MonoComponent
     {
         [SerializeField] private Transform firePoint;
 
         private TargetTrackingComponent _targetTrackingComponent;
-        private MagicPickupableBarrelComponent _magicPickupableBarrelComponent;
+
+        public bool AllowEmit { get; set; } = true;
 
         public override void Initialize() => _targetTrackingComponent = GetComponent<TargetTrackingComponent>();
 
         public void EmitMagicAbility(MagicPickupableBarrelComponent.MagicTypeArgs args)
         {
+            if (!AllowEmit)
+                return;
+            
             if (args.Pickupable is not MagicPickupable magicPickupable) return;
             
             var ability = PoolManager.GetFromPool(magicPickupable.magicAbilityPrefab.GetType(), magicPickupable.magicAbilityPrefab.gameObject)

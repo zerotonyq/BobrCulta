@@ -1,6 +1,6 @@
 ﻿using Signals.Activities.Base;
 
-namespace Signals.Activities
+namespace Signals.Activities.Shop
 {
     public struct ShopActivityRequest : IActivityRequest
     {

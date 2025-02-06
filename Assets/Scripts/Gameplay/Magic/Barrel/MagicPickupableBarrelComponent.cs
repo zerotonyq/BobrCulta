@@ -4,7 +4,7 @@ using Gameplay.Core.Base;
 using Gameplay.Core.Pickup;
 using Gameplay.Core.Pickup.Base;
 using Gameplay.Magic.Abilities.Base.Pickupable;
-using Gameplay.Services.UI.Gameplay.Magic.Enum;
+using Gameplay.Magic.Barrel.Enum;
 using Input;
 using R3;
 using UnityEngine;
@@ -27,10 +27,11 @@ namespace Gameplay.Magic.Barrel
         [SerializeField] private List<MagicPickupableBarrelPosition> _barrelPositions;
         private DisposableBag _disposableBag;
 
+        [Serializable]
         public struct MagicTypeArgs
         {
-            public readonly Pickupable Pickupable;
-            public readonly ApplicationType ApplicationType;
+            public Pickupable Pickupable;
+            public ApplicationType ApplicationType;
 
             public MagicTypeArgs(Pickupable pickupable, ApplicationType applicationType)
             {

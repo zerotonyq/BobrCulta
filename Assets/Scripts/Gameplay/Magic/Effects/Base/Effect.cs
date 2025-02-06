@@ -40,7 +40,11 @@ namespace Gameplay.Magic.Effects.Base
             if (_duration <= 0f)
             {
                 Execute(component);
+                
                 EffectElapsed?.Invoke(this);
+                
+                OnStopped();
+                
                 yield break;
             }
 
@@ -56,8 +60,12 @@ namespace Gameplay.Magic.Effects.Base
             }
 
             EffectElapsed?.Invoke(this);
+            
+            OnStopped();
         }
 
+        protected virtual void OnStopped() {}
+        
         protected abstract void Execute(ComponentContainer component);
     }
 }

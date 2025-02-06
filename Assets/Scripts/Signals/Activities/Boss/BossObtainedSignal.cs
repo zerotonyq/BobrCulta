@@ -1,6 +1,6 @@
 ﻿using Gameplay.Core.Container;
 
-namespace Signals
+namespace Signals.Activities.Boss
 {
     public class BossObtainedSignal
     {

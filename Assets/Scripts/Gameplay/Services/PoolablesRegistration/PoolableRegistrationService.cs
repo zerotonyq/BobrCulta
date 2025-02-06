@@ -3,7 +3,7 @@ using Gameplay.Services.PoolablesRegistration.Config;
 using Utils.Pooling;
 using Zenject;
 
-namespace Gameplay.Services.Pool
+namespace Gameplay.Services.PoolablesRegistration
 {
     public class PoolableRegistrationService : GameService, IInitializable
     {

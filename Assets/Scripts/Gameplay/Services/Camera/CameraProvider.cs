@@ -5,6 +5,7 @@ using Gameplay.Magic.Abilities;
 using Gameplay.Services.Base;
 using Gameplay.Services.Camera.Config;
 using Signals;
+using Signals.Activities.Boss;
 using Signals.GameStates;
 using Signals.Level;
 using Signals.Player;

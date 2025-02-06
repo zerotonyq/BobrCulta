@@ -4,6 +4,7 @@ using Gameplay.Services.Activity.Base;
 using Signals;
 using Signals.Activities;
 using Signals.Activities.Base;
+using Signals.Activities.Shop;
 using UnityEngine;
 using UnityEngine.Serialization;
 

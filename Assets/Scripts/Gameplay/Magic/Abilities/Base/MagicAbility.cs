@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Gameplay.Core.Container;
 using Gameplay.Core.Movement.Binders;
+using Gameplay.Magic.Barrel.Enum;
 using Gameplay.Magic.Effects;
 using Gameplay.Magic.Effects.Base;
-using Gameplay.Services.UI.Gameplay.Magic.Enum;
 using UnityEngine;
 using Utils.Activate;
 using Utils.Initialize;
@@ -152,7 +152,7 @@ namespace Gameplay.Magic.Abilities.Base
 
         #region CollisionDetection
 
-        private bool CheckSelfCollision(Collider other)
+        protected bool CheckSelfCollision(Collider other)
         {
             if (_emitterCollider == null)
                 return false;
@@ -173,6 +173,14 @@ namespace Gameplay.Magic.Abilities.Base
         {
             if (CheckSelfCollision(other))
                 return;
+
+            if (other.TryGetComponent(out MagicAbility magicAbility))
+            {
+                magicAbility.Deactivate();
+                Deactivate();
+                return;
+            }
+
 
             if (!other.TryGetComponent(out AbilityHandler container))
             {

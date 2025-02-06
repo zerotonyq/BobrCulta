@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Gameplay.Core.Base;
 using Gameplay.Core.Container;
 using Gameplay.Magic.Abilities.Base;
 using UnityEngine;
 
-namespace Gameplay.Magic.Effects
+namespace Gameplay.Magic.Abilities
 {
     [RequireComponent(typeof(ComponentContainer))]
     public class AbilityHandler : MonoComponent

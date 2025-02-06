@@ -1,4 +1,4 @@
-﻿namespace Signals.Initialization
+﻿namespace Signals.Boot
 {
     public class BootRequest
     {

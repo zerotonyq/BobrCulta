@@ -5,6 +5,7 @@ using Gameplay.Services.Shop.Config;
 using Signals;
 using Signals.Activities;
 using Signals.Activities.Base;
+using Signals.Activities.Shop;
 using Signals.Level;
 using UnityEngine;
 using Utils.Pooling;

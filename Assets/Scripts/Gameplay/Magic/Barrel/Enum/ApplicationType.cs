@@ -1,4 +1,4 @@
-﻿namespace Gameplay.Services.UI.Gameplay.Magic.Enum
+﻿namespace Gameplay.Magic.Barrel.Enum
 {
     public enum ApplicationType
     {

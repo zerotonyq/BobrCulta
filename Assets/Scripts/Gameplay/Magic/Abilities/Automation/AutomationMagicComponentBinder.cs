@@ -41,15 +41,16 @@ namespace Gameplay.Services.Boss
 
             while (true)
             {
+                var current = instructions[index];
+                
+                yield return current;
+                
                 _magicAbilityComponent.EmitMagicAbility(new MagicPickupableBarrelComponent.MagicTypeArgs(
                     _abilityIntervals[index].pickupable,
                     _abilityIntervals[index].pickupable.magicAbilityPrefab.PrimaryApplicationType));
 
-                var current = instructions[index];
 
                 index = index + 1 >= _abilityIntervals.Count ? 0 : index + 1;
-
-                yield return current;
             }
         }
 

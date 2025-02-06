@@ -12,7 +12,7 @@ namespace Gameplay.Core.Container
     public class ComponentContainer : MonoComponentContainer, IActivateable, IResetable
     {
         public override List<MonoComponent> Components { get; } = new();
-
+        
         public override Task Initialize()
         {
             foreach (var monoComponent in GetComponentsInChildren<MonoComponent>())
