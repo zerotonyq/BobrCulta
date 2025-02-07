@@ -4,12 +4,14 @@ using Signals.Activities.Boss;
 using Signals.Activities.Shop;
 using Signals.Boot;
 using Signals.Chapter;
+using Signals.Cutscenes;
 using Signals.GameStates;
 using Signals.Initialization;
 using Signals.Level;
 using Signals.Menu;
 using Signals.Player;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Playables;
 using Zenject;
 
 namespace DI
@@ -53,6 +55,7 @@ namespace DI
             Container.DeclareSignal<ActivityPassedSignal>();
 
             Container.DeclareSignal<MenuRequestSignal>();
+            Container.DeclareSignal<CutsceneEndSignal>();
         }
     }
 }

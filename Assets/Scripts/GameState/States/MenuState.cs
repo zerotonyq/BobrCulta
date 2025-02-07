@@ -8,7 +8,7 @@ namespace GameState.States
     {
         public MenuState(GameStateMachine gameStateMachine) : base(gameStateMachine)
         {
-            gameStateMachine.SignalBus.Subscribe<StartGameRequest>(_gameStateMachine.SetState<BootState>);
+            gameStateMachine.SignalBus.Subscribe<StartGameRequest>(_gameStateMachine.SetState<CutSceneState>);
         }
 
         public override void Enter()

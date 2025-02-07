@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Gameplay.Services.Camera.Config
@@ -7,6 +8,5 @@ namespace Gameplay.Services.Camera.Config
     public class CameraConfig : ScriptableObject
     {
         public AssetReferenceGameObject cameraReference;
-        public AssetReferenceGameObject defaultTarget;
     }
 }

@@ -26,7 +26,7 @@ namespace GameState
             AddState(new MenuState(this));
             AddState(new BootState(this));
             AddState(new LevelState(this));
-            AddState(new DefeatedState(this));
+            AddState(new CutSceneState(this));
             
             SetState<InitializeState>();
         }

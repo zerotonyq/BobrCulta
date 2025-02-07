@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.Activity;
+﻿using Cutscenes;
+using Gameplay.Services.Activity;
 using Gameplay.Services.Activity.Base;
 using Gameplay.Services.Boss;
 using Gameplay.Services.Boss.Config;
@@ -21,6 +22,7 @@ using Gameplay.Services.UI.Gameplay.EndGame.Config;
 using Gameplay.Services.UI.Menu;
 using Gameplay.Services.UI.Menu.Config;
 using GameState;
+using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
 
@@ -43,6 +45,8 @@ namespace DI
         [SerializeField] private DeadZoneConfig deadZoneConfig;
         [SerializeField] private EndGameUIServiceConfig endGameUIServiceConfig;
         [SerializeField] private PoolableRegistrationServiceConfig poolableRegistrationServiceConfig;
+
+        [SerializeField] private CutsceneController cutsceneController;
 
         public override void InstallBindings()
         {
@@ -83,6 +87,8 @@ namespace DI
             Container.BindInterfacesAndSelfTo<PoolableRegistrationService>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<ShopService>().AsSingle();
+            
+            Container.BindInstance(cutsceneController);
         }
 
         private void BindExecutionOrders()
