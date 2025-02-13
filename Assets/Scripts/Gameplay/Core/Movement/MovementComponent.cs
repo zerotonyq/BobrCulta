@@ -27,6 +27,7 @@ namespace Gameplay.Core.Movement
             _rigidbody.AddForce(resultVelocity);
 
             ClampVelocity();
+            
         }
 
         public void AddAcceleration(Vector3 direction)

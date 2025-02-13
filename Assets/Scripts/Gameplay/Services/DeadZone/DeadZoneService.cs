@@ -18,11 +18,11 @@ namespace Gameplay.Services.DeadZone
 
         public override void Initialize()
         {
-            _signalBus.Subscribe<TreeLevelChangedSignal>(ModeDeadZone);
+            _signalBus.Subscribe<TreeLevelChangedSignal>(MoveDeadZone);
             base.Initialize();
         }
 
-        private void ModeDeadZone(TreeLevelChangedSignal signal)
+        private void MoveDeadZone(TreeLevelChangedSignal signal)
         {
             _deadZoneComponent.transform.position = signal.LevelPosition - Vector3.up * _config.verticalOffset;
         }
@@ -35,6 +35,8 @@ namespace Gameplay.Services.DeadZone
             _deadZoneComponent.Initialize(_config.deadZoneDimension);
 
             _deadZoneComponent.ColliderDetected += ProcessDetectedCollider;
+
+            MoveDeadZone(new TreeLevelChangedSignal());
 
             base.Boot();
         }

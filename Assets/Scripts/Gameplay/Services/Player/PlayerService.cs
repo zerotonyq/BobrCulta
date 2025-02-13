@@ -34,7 +34,6 @@ namespace Gameplay.Services.Player
 
             _player.Activate(Vector3.up * 5);
             _player.Reset();
-            _signalBus.Fire(new PlayerInitializedSignal { Player = _player });
         }
 
         private void DeactivatePlayer()
@@ -61,8 +60,10 @@ namespace Gameplay.Services.Player
             await _player.Initialize();
 
             TargetProvider.SetPlayer(_player.transform);
-
+            
             _signalBus.Fire(new PlayerInitializedSignal { Player = _player });
+
+            DeactivatePlayer();
         }
 
         private void OnPlayerDead() =>

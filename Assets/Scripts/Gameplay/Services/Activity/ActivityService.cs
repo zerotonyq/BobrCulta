@@ -3,11 +3,12 @@ using Gameplay.Services.Base;
 using Signals;
 using Signals.Level;
 using UnityEngine;
+using Utils.Reset;
 using Zenject;
 
 namespace Gameplay.Services.Activity
 {
-    public class ActivityService : GameService, IInitializable
+    public class ActivityService : GameService, IInitializable, IResetable
     {
         [Inject] private ActivityServiceConfig _config;
 
@@ -45,6 +46,12 @@ namespace Gameplay.Services.Activity
             
             _currentActivity = _config.activityConfigs[_currentActivityIndex];
             _currentActivityRepeatCount = 0;
+        }
+
+        public void Reset()
+        {
+            _currentActivityIndex = -1;
+            NextActivity();
         }
     }
 }

@@ -40,6 +40,9 @@ namespace Gameplay.Services.Boss
 
         public void Reset()
         {
+            if (_currentBoss) 
+                Addressables.ReleaseInstance(_currentBoss.gameObject);
+            
             _currentBossSectionIndex = 0;
             NextSection();
         }

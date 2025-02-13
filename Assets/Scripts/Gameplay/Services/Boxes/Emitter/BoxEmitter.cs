@@ -125,6 +125,8 @@ namespace Gameplay.Services.Boxes.Emitter
         {
             StopEmission();
 
+            DeactivateBoxes();
+
             _currentEmissionPeriod = _config.emissionPeriod;
             _currentWaitInstruction = new WaitForSeconds(_currentEmissionPeriod);
         }

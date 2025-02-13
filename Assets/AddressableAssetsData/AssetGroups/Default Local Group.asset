@@ -50,11 +50,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e41b1a5529dea4944a751f90d8fb86c0
-    m_Address: Assets/Prefabs/MagicUI.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f7f7007b8f2058745b3c7261d16ab952
     m_Address: Assets/Prefabs/Camera/defaultCameraTarget.prefab
     m_ReadOnly: 0
